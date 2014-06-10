@@ -1,0 +1,114 @@
+* { margin: 0; padding: 0; }
+body { font: 16px/1.4 Arial; }
+.page-wrap { width: 1000px; margin: 0 auto; background-color: #ffffff; }
+
+textarea { background: none; border: 0; overflow: hidden; resize: none; height: 23px; width: 100%; font: 16px/1.4 Arial; }
+
+.header { 
+  width: 100%;
+  margin: 20px 0;
+  text-align: center;
+  border-bottom: 1px solid black; 
+  padding: 8px 0px;
+  text-transform: uppercase;
+  overflow: auto;
+  clear: both;
+}
+
+.invoice-logo { width: 646px; margin: 0 auto; overflow: auto; }
+.invoice-logo img { float: left; vertical-align: middle; }
+.invoice-logo h1 { font: 1.3em Arial Black, Sans-Serif; margin-bottom: 10px; }
+.invoice-logo h2 { font: 1.1em Bell MT, serif; float: left; margin: 41px 0 0 10px; color: #525255; text-align: left; }
+
+.downloadInvoiceCSV { float: left; }
+
+.meta {
+  font-size: 24px;
+  width: 550px;
+  margin: 15px auto;
+  text-align: left;
+}
+.meta div {
+  overflow: auto;
+}
+.meta .descText {
+  float: left;
+  font-weight: bold;
+  margin-right: 10px;
+  text-align: left;
+  text-transform: uppercase;
+  width: 200px;
+}
+.meta textarea { width: 220px; height: 32px; font-size: 24px; }
+
+.account {
+  text-align: left;
+  overflow: auto;
+  margin: 10px auto;
+  width: 550px;
+}
+.account h3 { font-size: 0.9em; text-transform: uppercase; }
+.account table { border-collapse: separate; border-spacing: 10px 5px; }
+.account table td{ border: none; border-bottom: 1px solid black; width: 250px; }
+
+.specialFunds {
+  border: 1px solid black;
+  font-size: 0.9em;
+  margin: 10px auto;  
+  overflow: auto;
+  padding: 5px;
+  text-align: left;
+  width: 700px;
+}
+.specialFunds h3 { font-size: 0.9em; }
+.specialFunds table { border-collapse: separate; border-spacing: 10px 0px; width: 350px; float: left; margin-bottom: 20px; }
+.specialFunds table td{ border: none; border-bottom: 1px solid black; }
+.specialFunds table td textarea { height: 20px; }
+
+.batch { width: 250px; float: left; text-align: left; }
+.batch textarea { border-bottom: 1px solid black; }
+
+.voucher {width: 250px; float: right; text-align: right; }
+
+table { border-collapse: collapse; }
+table td, table th { border: 1px solid black; padding: 5px; }
+
+.items { clear: both; width: 100%; margin: 30px 0 0 0; border: 1px solid black; page-break-before: always; }
+.items .table-meta { overflow: auto; }
+.items .table-meta div { width: 33%; float: left; }
+.items th { background: #eee; }
+.items tr { page-break-inside: avoid; }
+.items tr.item-row td { border: 0; vertical-align: top; }
+.items td.description { width: 300px; }
+.items td.item-name { width: 175px; }
+.items td.description textarea, .items td.item-name textarea { width: 100%; }
+.items th.total-line { text-align: right; }
+.items td.total-value { border-left: 0; padding: 10px; }
+.items td.total-value textarea { height: 20px; background: none; }
+.items td.balance { background: #eee; }
+
+#link-area {
+  width: 150px;
+  margin: 0 auto;
+  overflow: auto;
+  text-align: center;
+}
+
+#link-area #link-csv {
+  float: left;
+}
+
+#link-area #link-print {
+  float: right;
+}
+
+.page-wrap {
+  page-break-after: always;
+}
+
+@media print
+{
+  .printhidden {
+    display: none;
+  }
+}
