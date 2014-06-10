@@ -1,42 +1,62 @@
-#!/usr/bin/php
 <?php
+function quicklabels($nums, $single="s", $title_p="y") {
 
 /*	php version of quicklabels.c using curl instead of Zend
 	David Cunningham, UNB Libraries, Apr 25, 2014
 */
 
-include 'wskeyv2.php';
+include_once 'wskeyv2.php';
 
-// define ("WSKEY", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
- define ("WSKEY", "MTK9b14WyAlgZn2f3QCeTWR7sEpeKjnV83rC8O5svm8ocrmFHkRisqeF3Fpr8lfPy641mb1EakGeVW20");
-//define ("WSKEY", "psomBeyDZAvtxS5VaQHLwTYUtXam6LE1slugnpfSsnxjYYi99YVGLdqSfdOTBLf9a8wUxs0sjfdszEgn");
+if(!defined('WSKEY')) {
+    // define ("WSKEY", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+     define ("WSKEY", "MTK9b14WyAlgZn2f3QCeTWR7sEpeKjnV83rC8O5svm8ocrmFHkRisqeF3Fpr8lfPy641mb1EakGeVW20");
+    //define ("WSKEY", "psomBeyDZAvtxS5VaQHLwTYUtXam6LE1slugnpfSsnxjYYi99YVGLdqSfdOTBLf9a8wUxs0sjfdszEgn");
+}
 
-// define ("BIBKEY", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
- define ("BIBKEY", "MTK9b14WyAlgZn2f3QCeTWR7sEpeKjnV83rC8O5svm8ocrmFHkRisqeF3Fpr8lfPy641mb1EakGeVW20");
-//define ("BIBKEY", "psomBeyDZAvtxS5VaQHLwTYUtXam6LE1slugnpfSsnxjYYi99YVGLdqSfdOTBLf9a8wUxs0sjfdszEgn");
+if(!defined('BIBKEY')) {
+    // define ("BIBKEY", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+     define ("BIBKEY", "MTK9b14WyAlgZn2f3QCeTWR7sEpeKjnV83rC8O5svm8ocrmFHkRisqeF3Fpr8lfPy641mb1EakGeVW20");
+    //define ("BIBKEY", "psomBeyDZAvtxS5VaQHLwTYUtXam6LE1slugnpfSsnxjYYi99YVGLdqSfdOTBLf9a8wUxs0sjfdszEgn");
+}
 
-// define ("SECRET", "XXXXXXXXXXXXXXXXXXXXXXXX");
- define ("SECRET", "aqyK7qqhB04RHvH5o8yWZw==");
-//define ("SECRET", "Gsw5eHStUPKg47S0Fb2t7w==");
+if(!defined('SECRET')) {
+    // define ("SECRET", "XXXXXXXXXXXXXXXXXXXXXXXX");
+     define ("SECRET", "aqyK7qqhB04RHvH5o8yWZw==");
+    //define ("SECRET", "Gsw5eHStUPKg47S0Fb2t7w==");
+}
 
-// $inst_id = '999999';
-$inst_id = "1822";
-//$inst_id = "128807";
+if(!isset($inst_id)) {
+    // $inst_id = '999999';
+    $inst_id = "1822";
+    //$inst_id = "128807";
+}
 
-// define ("PRINCIPALID", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
- define ("PRINCIPALID", "f41b2eba-08f1-4bf5-8a1c-d0d47d9bff90");
-//define ("PRINCIPALID", "8eaa9f92-3951-431c-975a-d7df26b8d131");
+if(!defined('PRINCIPALID')) {
+    // define ("PRINCIPALID", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    define ("PRINCIPALID", "f41b2eba-08f1-4bf5-8a1c-d0d47d9bff90");
+    //define ("PRINCIPALID", "8eaa9f92-3951-431c-975a-d7df26b8d131");
+}
 
-define ("PRINCIPALIDNS", "urn:oclc:wms:da");
+if(!defined('PRINCIPALIDNS')) {
+    define ("PRINCIPALIDNS", "urn:oclc:wms:da");
+}
 
-// define ("URL", "https://circ.sd04.worldcat.org/LHR");
-define ("URL", "https://circ.sd00.worldcat.org/LHR");
+if(!defined('URL')) {
+    // define ("URL", "https://circ.sd04.worldcat.org/LHR");
+    define ("URL", "https://circ.sd00.worldcat.org/LHR");
+}
 
-define ("BIBURL", "http://www.worldcat.org/webservices/catalog/content");
+if(!defined('BIBURL')) {
+    define ("BIBURL", "http://www.worldcat.org/webservices/catalog/content");
+}
 
-define ("METHOD", "GET");
+if(!defined('METHOD')) {
+    define ("METHOD", "GET");
+}
 
-define ("BODYHASH", "");
+if(!defined('BODYHASH')) {
+    define ("BODYHASH", "");
+}
 
 $months = array("nil","Jan.","Feb.","Mar.","Apr.","May","June","July","Aug.","Sept.","Oct.","Nov.","Dec.");
 
@@ -63,50 +83,37 @@ $buildings = array(
         "IQUW" => "UNM WEST"
     );
 
-
 $lmargin = " ";
 
-echo "Do you want to print Single labels or a Batch? (s/b/q) ";
-$input = trim(fgets(STDIN));
-
+$input = $single;
 if( $input == 'b' || $input == 'B' ) {
-	$single_label = 0;
-}
-elseif( $input == 's' || $input == 'S' ) {
-	$single_label = 1;
-}
-else {
-	exit;
+    $single_label = 0;
+} elseif( $input == 's' || $input == 'S' ) {
+    $single_label = 1;
+} else {
+    exit;
 }
 
-echo "Do you want to print the title on the pocket label? (y/n) ";
-$input = trim(fgets(STDIN));
-
+$input = $title_p;
 if( $input == 'y' || $input == 'Y' ) {
-	$print_title = 1;
-}
-else {
-	$print_title = 0;
+    $print_title = 1;
+} else {
+    $print_title = 0;
 }
 
 $tmpname = tempnam("/tmp", "qlabel");
 $tmpfile = fopen($tmpname, "w");
-fwrite($tmpfile, "[5i");
 
-$count=1;
-
-while(1) {
-
+for($turns = 0; $turns < 1; $turns++) {
 	for( $j=0; $j<4; $j++ ) {
 		$titles[$j] = "";
 	}
-	echo "\nEnter barcode $count: ";
-	$barcode = trim(fgets(STDIN));
-	if( $barcode == 'q' || $barcode == 'Q' ) {
-		break;
-	}
+//	echo "\nEnter barcode $count: ";
+//	$barcode = trim(fgets(STDIN));
+        $barcode = trim($nums);
 
 	$url = URL .'/?q=barcode:' . $barcode . '&inst=' . $inst_id . '&principalID=' . PRINCIPALID . '&principalIDNS=' . PRINCIPALIDNS;
+        
 	$auth = wskey_v2_request_header_value( $url, METHOD, '', WSKEY, SECRET );
 
 	$curl = curl_init();
@@ -114,16 +121,22 @@ while(1) {
 	curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
 	#curl_setopt( $curl, CURLOPT_HEADER, true );
 	curl_setopt( $curl, CURLOPT_HTTPHEADER, array( "Authorization: $auth", "Accept: application/json" ) );
-	$response = curl_exec( $curl );
-#var_dump($response);
-
+        for ($i = 0; $i < 10; $i++) {
+            $response = curl_exec( $curl );
+            if( stristr( $response, "unexpected end of file" ) || $response == "") {
+                continue;
+            } else {
+                break;
+            }
+        }
 	curl_close( $curl );
+	
+#var_dump($response);
 
 	$json = json_decode( $response );
 
 #var_dump($json);
 
-	$count++;
 	if( stristr( $response, "Unknown piece designation" )) {
 		echo "Barcode not found in WMS.\n";
 		continue;
@@ -300,74 +313,87 @@ while(1) {
 	$scheme = $copy->shelvingDesignation->scheme;
 
 	if( $scheme == "LIBRARY_OF_CONGRESS" || $scheme == "UNKNOWN" ) {
+            $d = strcspn($callnum, ".");
+            if( ($d > 0) && !is_numeric(substr($callnum,$d+1,1)) && (substr($callnum,$d-1,1) != ' ')) {
+                    $newcallnum = substr($callnum, 0, $d) . " " . substr($callnum, $d);
+                    $callnum = $newcallnum;
+            }
 
-		$c = strcspn($callnum, "0123456789");
+            $c = strcspn($callnum, "0123456789");
 
-		if( ($c > 0) && (substr($callnum,$c-1,1) != ' ') ) {
-			$newcallnum = substr($callnum, 0, $c) . " " . substr($callnum, $c);
-			$callnum = $newcallnum;
-		}
+            if( ($c > 0) && (substr($callnum,$c-1,1) != ' ') ) {
+                $newcallnum = substr($callnum, 0, $c) . " " . substr($callnum, $c);
+                $callnum = $newcallnum;
+            }
 	}
 
 	if( $print_title ) {
-    	$worldcat_url = BIBURL . '/' . $oclc . '?wskey=' . BIBKEY;
-    
-    	$xml = simplexml_load_file($worldcat_url);
-    	$xml->registerXPathNamespace("marc", "http://www.loc.gov/MARC21/slim");
-    
-    	foreach($xml->xpath('//marc:record') as $book) {
-    		$book['xmlns:marc'] = 'http://www.loc.gov/MARC21/slim';
-    		$field = simplexml_load_string($book->asXML());
-    		$subtitle = "";
-    		if (count($field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='a']")) > 0 ) {
-    			$title = $field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='a']");
-    			if (count($field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='b']")) > 0 ) {
-    				$subtitle = $field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='b']");
-    			}
-    			$full_title = (string)$title[0];
-    			if( $subtitle ) {
-    				$full_title = $full_title . ' ' . $subtitle[0];
-    			}
-    			$full_title = rtrim($full_title, " /");
-    
-    			$length = strlen($full_title);
-    			$clean_title = "";
-    
-    			for($i=0; $i<$length; $i++) { 
-    				if( ord($full_title[$i]) < 128 ) {
-    					$clean_title = $clean_title . $full_title[$i];
-    				}
-    			}
-    
-    			$full_title = $clean_title;
-    			$clength = strlen($clean_title);
-    			$number = $length / 30;
-    			$title1 = substr($full_title, 0, 30);
-    			$title2 = $title3 = $title4 = "";
-    			if( $number > 1 ) {
-    				$title2 = substr($full_title, 30, 30);
-    			}
-    			if( $number > 2 ) {
-    				$title3 = substr($full_title, 60, 30);
-    			}
-    			if( $number > 3 ) {
-    				$title4 = substr($full_title, 90, 30);
-    			}
-    			$titles = array( $title1, $title2, $title3, $title4 );
-    		}
-    	}
+            $worldcat_url = BIBURL . '/' . $oclc . '?wskey=' . BIBKEY;
+
+            $xml = simplexml_load_file($worldcat_url);
+            $xml->registerXPathNamespace("marc", "http://www.loc.gov/MARC21/slim");
+
+            foreach($xml->xpath('//marc:record') as $book) {
+                $book['xmlns:marc'] = 'http://www.loc.gov/MARC21/slim';
+                $field = simplexml_load_string($book->asXML());
+                $subtitle = "";
+                if (count($field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='a']")) > 0 ) {
+                    $title = $field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='a']");
+                    if (count($field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='b']")) > 0 ) {
+                        $subtitle = $field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='b']");
+                    }
+                    $full_title = (string)$title[0];
+                    if( $subtitle ) {
+                        $full_title = $full_title . ' ' . $subtitle[0];
+                    }
+                    $full_title = rtrim($full_title, " /");
+
+                    $length = strlen($full_title);
+                    $clean_title = "";
+
+                    for($i=0; $i<$length; $i++) { 
+                        if( ord($full_title[$i]) < 128 ) {
+                            $clean_title = $clean_title . $full_title[$i];
+                        }
+                    }
+
+                    $full_title = $clean_title;
+                    $clength = strlen($clean_title);
+                    $titles = array( $full_title, "", "", "" );
+                    $return_title = "$full_title";
+                }
+		if (count($field->xpath("marc:datafield[@tag='100']/marc:subfield[@code='a']")) > 0 ) {
+			$author = $field->xpath("marc:datafield[@tag='100']/marc:subfield[@code='a']");
+		} elseif (count($field->xpath("marc:datafield[@tag='110']/marc:subfield[@code='a']")) > 0 ) {
+			$author = $field->xpath("marc:datafield[@tag='110']/marc:subfield[@code='a']");
+		} elseif (count($field->xpath("marc:datafield[@tag='111']/marc:subfield[@code='a']")) > 0 ) {
+			$author = $field->xpath("marc:datafield[@tag='111']/marc:subfield[@code='a']");
+		} elseif (count($field->xpath("marc:datafield[@tag='700']/marc:subfield[@code='a']")) > 0 ) {
+			$author = $field->xpath("marc:datafield[@tag='700']/marc:subfield[@code='a']");
+		} elseif (count($field->xpath("marc:datafield[@tag='710']/marc:subfield[@code='a']")) > 0 ) {
+			$author = $field->xpath("marc:datafield[@tag='710']/marc:subfield[@code='a']");
+		} elseif (count($field->xpath("marc:datafield[@tag='711']/marc:subfield[@code='a']")) > 0 ) {
+			$author = $field->xpath("marc:datafield[@tag='711']/marc:subfield[@code='a']");
+		}
+		$return_author = rtrim($author[0], ',');			
+		if (strpos($return_author, ".") > 0) {
+			$return_author = rtrim($author[0], '.');
+		}
+            }
 	} else {
 	   $titles = array( "", "", "", "" );
 	}
 	
 	fwrite($tmpfile, "$lmargin$branch\n");
+        $return_call_number = "$branch<br />";
 	fwrite($tmpfile, "$lmargin$location");
+        $return_call_number .= "$location<br />";
 	if( $print_title ) {
-    	$length = 12 - strlen($location) + 3;
-    	for( $j=0; $j<$length; $j++) {
-    		fwrite($tmpfile, " ");
-    	}
-    	fwrite($tmpfile, "$titles[0]\n");
+            $length = 12 - strlen($location) + 3;
+            for( $j=0; $j<$length; $j++) {
+                    fwrite($tmpfile, " ");
+            }
+            fwrite($tmpfile, "$titles[0]\n");
 	} else {
 	   fwrite($tmpfile, "\n");
 	}
@@ -375,6 +401,7 @@ while(1) {
 
 	$callparts = substr_count($callnum, " ") + 1;
 	$callnums = explode(" ", $callnum);
+        $return_call_number .= str_replace(" ", "<br />", $callnum);
 	
 	for( $j=0; $j<$callparts; $j++) {
 
@@ -400,42 +427,26 @@ while(1) {
 	}
 
 	$skiplines = 10;
-	if( ($count-1) % 7 == 0 ) {
-		$skiplines = 10;
-	}
 	while( $lines < $skiplines ) {
 		fwrite($tmpfile, "\n");
 		$lines++;
 	}
 	
-	if( $single_label ) {
-		fwrite($tmpfile, "[4i");
-		fclose($tmpfile);
-		$tmpfile = fopen($tmpname, "r");
-		$contents = fread($tmpfile, filesize($tmpname));
-		fclose($tmpfile);
-		echo $contents;
-		unlink($tmpname);
-		$tmpname = tempnam("/tmp", "qlabel");
-		$tmpfile = fopen($tmpname, "w");
-		fwrite($tmpfile, "[5i");
-	}
+    fclose($tmpfile);
+    $tmpfile = fopen($tmpname, "r");
+    $contents = fread($tmpfile, filesize($tmpname));
+    fclose($tmpfile);
+//	echo $contents;
+    unlink($tmpname);
+    $tmpname = tempnam("/tmp", "qlabel");
+    $tmpfile = fopen($tmpname, "w");
 
 }
 
-if( $single_label ) {
-	fclose($tmpfile);
-	unlink($tmpname);
-}
 
-if( !$single_label ) {
-	fwrite($tmpfile, "[4i");
-	fclose($tmpfile);
-	$tmpfile = fopen($tmpname, "r");
-	$contents = fread($tmpfile, filesize($tmpname));
-	fclose($tmpfile);
-	echo $contents;
-	unlink($tmpname);
+    fclose($tmpfile);
+    unlink($tmpname);
+    
+    return array("$return_call_number", "$return_title<br />$return_author<br />$return_call_number");
 }
-
 ?>
