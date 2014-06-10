@@ -32,17 +32,8 @@ $(window).bind('hashchange', function(e) {
 
 function pageChoose(loc) {
   switch (loc) {
-    case "invoice_number":
-      pageLoad("forms/invoice_number.php");
-      break;
-    case "invoice_date_range":
-      pageLoad("forms/invoice_date_range.php");
-      break;
-    case "invoice_fund_number":
-      pageLoad("forms/invoice_fund_number.php");
-      break;
-    case "invoice_vendor_name":
-      pageLoad("forms/invoice_vendor_name.php");
+    case "monograph_label":
+      pageLoad("forms/monograph_label.php");
       break;
   }
 }
@@ -76,17 +67,14 @@ function getLocationHash () {
 </head>
 <body>
 <div id="banner">
-  <img src="/ilsacq/images/ullogo_acq.png" alt="UL Organizational Statistics Application" /><p style="clear: none; float: left; font-size: 50px; font-style: italic; margin-bottom: 0px; margin-left: 50px; margin-top: 30px;">&beta;eta</p>
+  <img src="/images/ullogo_acq.png" alt="UL Label Printing" /><p style="clear: none; float: left; font-size: 50px; font-style: italic; margin-bottom: 0px; margin-left: 50px; margin-top: 30px;">&beta;eta</p>
 </div>
 <div class="clear"></div>
 <div id="container">
   <div id="menu">
-    <div class="menu_header">Invoices By</div>
+    <div class="menu_header">Format Labels for Printing</div>
     <ul class="menu_list">
-      <li><a href="#invoice_number">Invoice Number</a></li>
-      <li><a href="#invoice_date_range">Date/Date Range</a></li>
-      <li><a href="#invoice_fund_number">Fund Number</a></li>
-      <li><a href="#invoice_vendor_name">Vendor Name</a></li>
+      <li><a href="#monograph_label">Monograph Labels</a></li>
     </ul>
   </div>
   <div id="main_content">
