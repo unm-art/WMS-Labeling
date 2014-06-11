@@ -7,9 +7,15 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
   float: left;
   width: 100%;
 }
-#banner img { float: left; }
+#banner img { float: left; margin: 10px; }
 
 .clear { clear: both; }
+
+.cnum {
+    border: 1px solid black;
+    padding-left: 5px;
+    width: 75px;
+}
 
 #container { overflow: auto; }
 
@@ -57,6 +63,11 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
   text-decoration: none;
   text-shadow: 1px 1px 0 #000000;
   width: 150px;
+}
+.pocket {
+    border: 1px solid black;
+    padding-left: 5px;
+    width: 250px;
 }
 
 .selected {
