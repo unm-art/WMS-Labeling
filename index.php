@@ -67,7 +67,7 @@ function getLocationHash () {
 </head>
 <body>
 <div id="banner">
-  <img src="/images/ullogo_acq.png" alt="UL Label Printing" /><p style="clear: none; float: left; font-size: 50px; font-style: italic; margin-bottom: 0px; margin-left: 50px; margin-top: 30px;">&beta;eta</p>
+  <img src="images/ullogo_print.png" alt="UL Label Printing" /><p style="clear: none; float: left; font-size: 50px; font-style: italic; margin-bottom: 0px; margin-left: 50px; margin-top: 30px;">&beta;eta</p>
 </div>
 <div class="clear"></div>
 <div id="container">

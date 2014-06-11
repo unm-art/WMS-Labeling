@@ -7,7 +7,7 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
   float: left;
   width: 100%;
 }
-#banner img { float: left; }
+#banner img { float: left; margin: 10px; }
 
 .clear { clear: both; }
 
