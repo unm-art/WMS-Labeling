@@ -7,14 +7,28 @@ if (isset($_POST["col_num"]) && $_POST["col_num"] == "2") {
 }
 
 if (isset($_POST["nums"]) && $_POST["nums"] != "") {
-    $num_array = explode(",", $_POST["nums"]);
+    $num_array = $_POST["nums"];
+    if (isset($_POST["label_start"]) && is_numeric($_POST["label_start"]) && $_POST["label_start"] < count($num_array)) {
+        $print_position = $_POST["label_start"];
+    } else {
+        $print_position = "0";
+    }
     $print_array = array();
     include_once('quicklabels.php');
     for($x = 0; $x < count($num_array); $x++) {
         $print_array[] = quicklabels($num_array[$x][0], $num_array[$x][1]);
     }
     $table_row = "";
-    for ($x = 0; $x < count($print_array); $x++) {
+    for ($x = 0; $x < $print_position; $x++) {
+        $table_row .= "<tr>\n";
+        $table_row .= "<td class=\"cnum\">&nbsp;</td>\n<td class=\"pocket\">&nbsp;</td>\n";
+        if (isset($col_num) && $col_num == "2" && array_key_exists($x + 1, $print_array)) {
+            $x++;
+            $table_row .= "<td class=\"cnum\">&nbsp;</td>\n<td class=\"pocket\">&nbsp;</td>\n";
+        }
+        $table_row .= "<tr>\n";
+    }
+    for ($x = $print_position; $x < count($print_array); $x++) {
         $table_row .= "<tr>\n";
         $table_row .= "<td class=\"cnum\">{$print_array[$x][0]}</td>\n<td class=\"pocket\">{$print_array[$x][1]}</td>\n";
         if (isset($col_num) && $col_num == "2" && array_key_exists($x + 1, $print_array)) {
