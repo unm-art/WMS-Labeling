@@ -5,10 +5,11 @@
 <title>University Libraries WMS Acquisitions Extension</title>
 <link rel="stylesheet" href="jquery/jquery-ui-1.10.4/css/blitzer/jquery-ui-1.10.4.custom.css" />
 <link rel="stylesheet" href="css/wms.css">
-<link rel="stylesheet" href="css/invoice.css">
+<link rel="stylesheet" href="css/monograph.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="jquery/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
 <script src="jquery/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
+<script src="scripts/js_functions.js" language="JavaScript"></script>
 <script>
 $(document).ready(function() {
   //Load page if user goes to hash page on first browse
