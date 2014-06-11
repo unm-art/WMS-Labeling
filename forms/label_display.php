@@ -23,7 +23,7 @@ if (isset($_POST["nums"]) && $_POST["nums"] != "") {
         }
         $table_row .= "<tr>\n";
     }
-    $table = "<table>\n$table_row</table>\n";
+    $table = "<table class=\"label_table\">\n$table_row</table>\n";
     print "$table";
 }
 

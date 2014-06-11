@@ -11,6 +11,12 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 
 .clear { clear: both; }
 
+.cnum {
+    border: 1px solid black;
+    padding-left: 5px;
+    width: 75px;
+}
+
 #container { overflow: auto; }
 
 #main_content { overflow: auto; margin-right: 180px; }
@@ -57,6 +63,11 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
   text-decoration: none;
   text-shadow: 1px 1px 0 #000000;
   width: 150px;
+}
+.pocket {
+    border: 1px solid black;
+    padding-left: 5px;
+    width: 250px;
 }
 
 .selected {
