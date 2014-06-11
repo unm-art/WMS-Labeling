@@ -84,14 +84,12 @@ function quicklabels($nums, $title_p = "y") {
         "IQUW" => "UNM WEST"
     );
 
-    $input = $title_p;
-    if ($input == 'y' || $input == 'Y') {
+    if ($title_p == 'y' || $title_p == 'Y') {
         $print_title = 1;
     } else {
         $print_title = 0;
     }
 
-    for ($turns = 0; $turns < 1; $turns++) {
         $barcode = trim($nums);
 
         $url = URL . '/?q=barcode:' . $barcode . '&inst=' . $inst_id . '&principalID=' . PRINCIPALID . '&principalIDNS=' . PRINCIPALIDNS;
@@ -115,8 +113,7 @@ function quicklabels($nums, $title_p = "y") {
         $json = json_decode($response);
 
         if (stristr($response, "Unknown piece designation")) {
-            echo "Barcode not found in WMS.\n";
-            continue;
+            return array("$barcode", "This barcode was not found in WMS.");
         }
 
         $copy = $json->entries[0]->content;
@@ -352,7 +349,6 @@ function quicklabels($nums, $title_p = "y") {
 
         $return_call_number = "$branch<br />$location<br />";
         $return_call_number .= str_replace(" ", "<br />", $callnum);
-    }
 
     return array("$return_call_number", "$return_title<br />$return_author<br />$print_call_num");
 }
