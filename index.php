@@ -34,7 +34,7 @@ $(window).bind('hashchange', function(e) {
 function pageChoose(loc) {
   switch (loc) {
     case "monograph_label":
-      pageLoad("forms/monograph_label.php");
+      pageLoad("forms/monograph_label_input.php");
       break;
   }
 }

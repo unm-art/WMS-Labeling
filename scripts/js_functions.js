@@ -24,9 +24,11 @@ function addBarcodeInput() {
 
     new_table_textbox_cell_input.type = "text";
     new_table_textbox_cell_input.value = "";
+    new_table_textbox_cell_input.name = "barcodes";
 
     new_table_checkbox_cell_checkbox.type = "checkbox";
     new_table_checkbox_cell_checkbox.value = "0";
+    new_table_checkbox_cell_checkbox.name = "print_pocket_label";
 
     new_table_textbox_cell.appendChild(new_table_textbox_cell_input);
     new_table_checkbox_cell.appendChild(new_table_checkbox_cell_checkbox);
