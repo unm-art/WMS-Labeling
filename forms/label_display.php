@@ -8,7 +8,7 @@ if (isset($_POST["col_num"]) && $_POST["col_num"] == "2") {
 
 if (isset($_POST["nums"]) && $_POST["nums"] != "") {
     $num_array = $_POST["nums"];
-    if (isset($_POST["label_start"]) && is_numeric($_POST["label_start"]) && $_POST["label_start"] < count($num_array)) {
+    if (isset($_POST["label_start"]) && is_numeric($_POST["label_start"]) && $_POST["label_start"] < count($num_array) && $_POST["label_start"] > 0 && $_POST["label_start"] < 9) {
         $print_position = $_POST["label_start"];
     } else {
         $print_position = "0";

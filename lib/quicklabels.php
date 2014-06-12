@@ -6,83 +6,9 @@ function quicklabels($nums, $title_p = "y") {
       David Cunningham, UNB Libraries, Apr 25, 2014
      */
 
-    include_once 'wskeyv2.php';
-
-    if (!defined('WSKEY')) {
-        // define ("WSKEY", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-        define("WSKEY", "MTK9b14WyAlgZn2f3QCeTWR7sEpeKjnV83rC8O5svm8ocrmFHkRisqeF3Fpr8lfPy641mb1EakGeVW20");
-        //define ("WSKEY", "psomBeyDZAvtxS5VaQHLwTYUtXam6LE1slugnpfSsnxjYYi99YVGLdqSfdOTBLf9a8wUxs0sjfdszEgn");
-    }
-
-    if (!defined('BIBKEY')) {
-        // define ("BIBKEY", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-        define("BIBKEY", "MTK9b14WyAlgZn2f3QCeTWR7sEpeKjnV83rC8O5svm8ocrmFHkRisqeF3Fpr8lfPy641mb1EakGeVW20");
-        //define ("BIBKEY", "psomBeyDZAvtxS5VaQHLwTYUtXam6LE1slugnpfSsnxjYYi99YVGLdqSfdOTBLf9a8wUxs0sjfdszEgn");
-    }
-
-    if (!defined('SECRET')) {
-        // define ("SECRET", "XXXXXXXXXXXXXXXXXXXXXXXX");
-        define("SECRET", "aqyK7qqhB04RHvH5o8yWZw==");
-        //define ("SECRET", "Gsw5eHStUPKg47S0Fb2t7w==");
-    }
-
-    if (!isset($inst_id)) {
-        // $inst_id = '999999';
-        $inst_id = "1822";
-        //$inst_id = "128807";
-    }
-
-    if (!defined('PRINCIPALID')) {
-        // define ("PRINCIPALID", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-        define("PRINCIPALID", "f41b2eba-08f1-4bf5-8a1c-d0d47d9bff90");
-        //define ("PRINCIPALID", "8eaa9f92-3951-431c-975a-d7df26b8d131");
-    }
-
-    if (!defined('PRINCIPALIDNS')) {
-        define("PRINCIPALIDNS", "urn:oclc:wms:da");
-    }
-
-    if (!defined('URL')) {
-        // define ("URL", "https://circ.sd04.worldcat.org/LHR");
-        define("URL", "https://circ.sd00.worldcat.org/LHR");
-    }
-
-    if (!defined('BIBURL')) {
-        define("BIBURL", "http://www.worldcat.org/webservices/catalog/content");
-    }
-
-    if (!defined('METHOD')) {
-        define("METHOD", "GET");
-    }
-
-    if (!defined('BODYHASH')) {
-        define("BODYHASH", "");
-    }
-
-    $months = array("nil", "Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec.");
-
-    $seasons = array(
-        "21" => "Spring",
-        "22" => "Summer",
-        "23" => "Autumn",
-        "24" => "Winter"
-    );
-
-    $quarters = array(
-        "1" => "1st_qtr.",
-        "2" => "2nd_qtr.",
-        "3" => "3rd_qtr.",
-        "4" => "4th_qtr."
-    );
-
-    $buildings = array(
-        "IQUU" => "ZIM",
-        "IQUC" => "CSWR",
-        "IQUF" => "FAL",
-        "IQUP" => "PML",
-        "IQUS" => "CSEL",
-        "IQUW" => "UNM WEST"
-    );
+    include_once('wskeyv2.php');
+    include_once('../config/config.php');
+    include_once('../config/crosswalks.php');
 
     if ($title_p == 'y' || $title_p == 'Y') {
         $print_title = 1;
