@@ -47,7 +47,7 @@ function quicklabels($nums, $title_p = "y") {
         $oclc = substr($bib, 6);
         $copynum = $copy->copyNumber;
         $rectype = $copy->recordType;
-        $branch = $buildings[$copy->holdingLocation];
+        $branch = $copy->holdingLocation;
         $callnum = $copy->shelvingDesignation->information;
 
         if ($rectype == "SERIAL") {
@@ -199,6 +199,7 @@ function quicklabels($nums, $title_p = "y") {
         $location = $copy->shelvingLocation;
         $c = strcspn($location, ":");
         $location = substr($location, 0, $c);
+        $location_full = $shelf_loc[$branch][$location];
         $scheme = $copy->shelvingDesignation->scheme;
 
         if ($scheme == "LIBRARY_OF_CONGRESS" || $scheme == "UNKNOWN") {
@@ -273,7 +274,7 @@ function quicklabels($nums, $title_p = "y") {
             $print_call_num = "";
         }
 
-        $return_call_number = "$branch<br />$location<br />";
+        $return_call_number = "$location_full<br />";
         $return_call_number .= str_replace(" ", "<br />", $callnum);
 
     return array("$return_call_number", "$return_title<br />$return_author<br />$print_call_num");
