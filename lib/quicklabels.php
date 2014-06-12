@@ -7,8 +7,8 @@ function quicklabels($nums, $title_p = "y") {
      */
 
     include_once('wskeyv2.php');
-    include_once('../config/config.php');
-    include_once('../config/crosswalks.php');
+    require('../config/config.php');
+    require('../config/crosswalks.php');
 
     if ($title_p == 'y' || $title_p == 'Y') {
         $print_title = 1;
