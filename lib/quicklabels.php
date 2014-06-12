@@ -203,9 +203,15 @@ function quicklabels($nums, $title_p = "y") {
         $scheme = $copy->shelvingDesignation->scheme;
 
         if ($scheme == "LIBRARY_OF_CONGRESS" || $scheme == "UNKNOWN") {
+            // Ensure space before cutters beginning with decimal
             $d = strcspn($callnum, ".");
             if (($d > 0) && !is_numeric(substr($callnum, $d + 1, 1)) && (substr($callnum, $d - 1, 1) != ' ')) {
                 $newcallnum = substr($callnum, 0, $d) . " " . substr($callnum, $d);
+                $callnum = $newcallnum;
+            }
+            $e = strcspn($callnum, ".", $d);
+            if (($e > 0) && !is_numeric(substr($callnum, $d + $e + 1, 1)) && (substr($callnum, $d + $e - 1, 1) != ' ')) {
+                $newcallnum = substr($callnum, 0, $d + $e) . " " . substr($callnum, $d + $e);
                 $callnum = $newcallnum;
             }
 
