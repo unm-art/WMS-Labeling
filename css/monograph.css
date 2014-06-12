@@ -1,20 +1,20 @@
-.addone_button_container {
+.button_container {
     margin-left: 100px auto;
     margin-right: 100px auto;
     width: 400px;
     height: 35px;
     background-color: #a4a3a7;
     border: 1px solid #000000;
+    text-align: center;
 }
 
-.addone_button_container .btn_submit {
-    -moz-box-shadow:inset 0px 1px 0px 0px #a4a3a7;
-    -webkit-box-shadow:inset 0px 1px 0px 0px #a4a3a7;
-    box-shadow:inset 0px 1px 0px 0px #a4a3a7;
+.btn_submit, .btn_add {
     background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #c10037), color-stop(1, #91022d) );
     background:-moz-linear-gradient( center top, #c10037 5%, #91022d 100% );
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c10037', endColorstr='#91022d');
-    background-color:#c10037;
+    -moz-box-shadow:inset 0px 1px 0px 0px #a4a3a7;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #a4a3a7;
+    box-shadow:inset 0px 1px 0px 0px #a4a3a7;
     -webkit-border-top-left-radius:20px;
     -moz-border-radius-topleft:20px;
     border-top-left-radius:20px;
@@ -27,35 +27,47 @@
     -webkit-border-bottom-left-radius:20px;
     -moz-border-radius-bottomleft:20px;
     border-bottom-left-radius:20px;
-    text-indent:0;
-    margin-left:175px;
-    margin-right:175px;
-    border:1px solid #5e5d60;
+    background-color:#c10037;
     color:#ffffff;
+    text-align:center;
+    height: 35px;
+    text-indent:0;
+    border:1px solid #5e5d60;
     font-family:Arial;
     font-size:15px;
     font-weight:bold;
     font-style:normal;
-    height:35px;
     line-height:35px;
-    width:50px;
     text-decoration:none;
-    text-align:center;
     text-shadow:1px 1px 0px #470418;
 }
-.addone_button_container .btn_submit:hover {
+.button_container .btn_submit:hover {
     background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #91022d), color-stop(1, #c10037) );
     background:-moz-linear-gradient( center top, #91022d 5%, #c10037 100% );
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#91022d', endColorstr='#c10037');
     background-color:#91022d;
 }
-.addone_button_container .btn_submit:active {
+.button_container .btn_submit:active {
      position:relative;
      top:1px;
  }
 
+.button_container .btn_submit {
+    width:100px;
+    float: right;
+    margin-right: 5px;
+}
+
+.button_container .btn_add {
+    width: 35px;
+    float: left;
+    margin-left: 5px;
+}
+
+
 .barcodes_forms_container {
-    margin: 100px auto;
+    /*margin: 100px auto;*/
+    margin: 100px 100px 25px 100px;
     width: 400px;
 }
 
@@ -73,6 +85,23 @@
     background:-moz-linear-gradient( center top, #c10037 5%, #91022d 100% );
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c10037', endColorstr='#91022d');
 }
+
+.output_columns_radio_container {
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 25px;
+    width: 350px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #a9c6c9;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.output_columns_radio_container input {
+    margin: 0 3px 0 10px;
+}
+
 
 #barcodes_container {
     width: 350px;
