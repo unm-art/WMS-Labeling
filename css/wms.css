@@ -13,11 +13,16 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 
 .cnum {
     border: 1px solid black;
+    height: 170px;
     padding-left: 5px;
-    width: 75px;
+    width: 74px;
 }
 
 #container { overflow: auto; }
+
+.label_table {
+    border-spacing: 6px;
+}
 
 #main_content { overflow: auto; margin-right: 180px; }
 
@@ -66,12 +71,17 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 }
 .pocket {
     border: 1px solid black;
+    height: 170px;
     padding-left: 5px;
-    width: 250px;
+    width: 280px;
 }
 
 .selected {
   background-color: #c10037 !important;
+}
+
+.spacer_cell {
+    width: 15px;
 }
 
 #menu .menu_list li:hover {

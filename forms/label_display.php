@@ -24,6 +24,7 @@ if (isset($_POST["nums"]) && $_POST["nums"] != "") {
         $table_row .= "<td class=\"cnum\">&nbsp;</td>\n<td class=\"pocket\">&nbsp;</td>\n";
         if (isset($col_num) && $col_num == "2" && array_key_exists($x + 1, $print_array)) {
             $x++;
+            $table_row .= "<td class=\"spacer_cell\">&nbsp;</td>\n";
             $table_row .= "<td class=\"cnum\">&nbsp;</td>\n<td class=\"pocket\">&nbsp;</td>\n";
         }
         $table_row .= "<tr>\n";
@@ -33,6 +34,7 @@ if (isset($_POST["nums"]) && $_POST["nums"] != "") {
         $table_row .= "<td class=\"cnum\">{$print_array[$x][0]}</td>\n<td class=\"pocket\">{$print_array[$x][1]}</td>\n";
         if (isset($col_num) && $col_num == "2" && array_key_exists($x + 1, $print_array)) {
             $x++;
+            $table_row .= "<td class=\"spacer_cell\">&nbsp;</td>\n";
             $table_row .= "<td class=\"cnum\">{$print_array[$x][0]}</td>\n<td class=\"pocket\">{$print_array[$x][1]}</td>\n";
         }
         $table_row .= "<tr>\n";
