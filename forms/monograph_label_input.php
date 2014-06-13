@@ -1,8 +1,10 @@
 
 <script>
+    /* Initial call to addBarcodeInput to add first barcode and apply style. */
     addBarcodeInput();
 </script>
-<form name="barcode_scan_form" action="lib/monograph_label_controller.php">
+
+<form name="barcode_scan_form" action="forms/label_display.php">
     <div class="barcodes_forms_container">
 
         <h1 class="form_header">Enter Barcode Number</h1>
