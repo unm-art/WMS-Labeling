@@ -36,10 +36,10 @@ else {
     // Error
 }
 
-if (isset($_REQUEST["label_start"]) && is_numeric($_REQUEST["label_start"]) && $_REQUEST["label_start"] < count($num_array) && $_REQUEST["label_start"] > 0 && $_REQUEST["label_start"] < 9) {
+if (isset($_REQUEST["label_start"]) && is_numeric($_REQUEST["label_start"]) && $_REQUEST["label_start"] > 0 && $_REQUEST["label_start"] < 9) {
     $label_start = $_REQUEST["label_start"];
 }
-
+$label_start = "3";
 $barcode_count = count($barcodes);
 
 
@@ -89,7 +89,7 @@ for ($x = 0; $x < count($print_array); $x++) {
 ?>
 
 <div id="link-area" class="print_label_button">
-    <div id="link-print"><a id="print_button" href="#print"><img src="../images/icon-print.png" /><br/>Print Labels</a></div>
+    <div id="link-print"><div class="button_left_div"<a id="print_button" href="#print"><img src="../images/icon-print.png" /><br/>Print Labels</a></div><div class="button_right_div"><input type="radio" name="printer" id="printer" value="dot_matrix" /> Okidata Dot Matrix<br /><input type="radio" name="printer" id="printer" value="laser" /> Laser Printer<br /><input type="radio" name="printer" id="printer" value="dymo" /> Dymo Printer</div></div>
 </div>
 
 <?php
