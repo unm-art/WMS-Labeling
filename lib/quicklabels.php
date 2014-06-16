@@ -1,6 +1,6 @@
 <?php
 
-function quicklabels($nums, $title_p = "y") {
+function quicklabels($nums, $title_p = "0") {
 
     /* 	php version of quicklabels.c using curl instead of Zend
       David Cunningham, UNB Libraries, Apr 25, 2014
@@ -10,7 +10,7 @@ function quicklabels($nums, $title_p = "y") {
     require('../config/config.php');
     require('../config/crosswalks.php');
 
-    if ($title_p == 'y' || $title_p == 'Y') {
+    if ($title_p == '1') {
         $print_title = 1;
     } else {
         $print_title = 0;
@@ -267,6 +267,8 @@ function quicklabels($nums, $title_p = "y") {
                     $author = $field->xpath("marc:datafield[@tag='710']/marc:subfield[@code='a']");
                 } elseif (count($field->xpath("marc:datafield[@tag='711']/marc:subfield[@code='a']")) > 0) {
                     $author = $field->xpath("marc:datafield[@tag='711']/marc:subfield[@code='a']");
+                } else {
+                    $author = "";
                 }
                 $return_author = rtrim($author[0], ',');
                 if (strpos($return_author, ".") > 0) {
