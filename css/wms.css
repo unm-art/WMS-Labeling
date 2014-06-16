@@ -9,6 +9,17 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 }
 #banner img { float: left; margin: 10px; }
 
+.button_left_div {
+    float: left;
+    position: relative;
+    width: 200px;
+}
+
+.button_right_div {
+    float: left;
+    position: relative;
+}
+
 .clear { clear: both; }
 
 .cnum {
