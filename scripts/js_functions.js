@@ -11,6 +11,7 @@ function init() {
 
 function car_ret_add_bc(e) {
     var evt = e || window.event
+    // Check if next sibling has a value of "" in its textfield.  If so, set focus to that instead of adding another field.
     if(evt.keyCode === 17 || evt.keyCode === 13) {
         addBarcodeInput();
     }
