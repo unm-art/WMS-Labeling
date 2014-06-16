@@ -18,6 +18,9 @@ if (isset($_POST["nums"]) && $_POST["nums"] != "") {
     for($x = 0; $x < count($num_array); $x++) {
         $print_array[] = quicklabels($num_array[$x][0], $num_array[$x][1]);
     }
+
+
+
     $table_row = "";
     for ($x = 0; $x < $print_position; $x++) {
         $table_row .= "<tr>\n";
