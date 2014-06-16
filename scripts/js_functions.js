@@ -37,7 +37,7 @@ function addBarcodeInput() {
     new_table_checkbox_cell_checkbox.onclick = setCheckboxValue;
 
     new_table_hidden_cb_value_input.type = "hidden";
-    new_table_hidden_cb_value_input.value = "no";
+    new_table_hidden_cb_value_input.value = 0;
     new_table_hidden_cb_value_input.name = "print_pocket_label[]";
 
     new_table_textbox_cell.appendChild(new_table_textbox_cell_input);
@@ -57,13 +57,13 @@ function setCheckboxValue() {
 
     hidden_sibling = this.nextSibling;
 
-    if (hidden_sibling.value == "no" || hidden_sibling.value == "") {
+    if (hidden_sibling.value == 0 || hidden_sibling.value == "") {
         this.value = "yes";
-        hidden_sibling.value = "yes";
+        hidden_sibling.value = 1;
     }
     else {
         this.value = "no";
-        hidden_sibling.value = "no";
+        hidden_sibling.value = 0;
     }
 }
 
