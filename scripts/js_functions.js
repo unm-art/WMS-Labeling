@@ -12,8 +12,20 @@ function init() {
 function car_ret_add_bc(e) {
     var evt = e || window.event
     // Check if next sibling has a value of "" in its textfield.  If so, set focus to that instead of adding another field.
-    if(evt.keyCode === 17 || evt.keyCode === 13) {
-        addBarcodeInput();
+
+    var row = $(this).parent().parent();
+
+    // If return carriage is present in input (scanner done with input)...
+    if(evt.keyCode == 17 || evt.keyCode == 13) {
+        // Then ... if there are no empty inputs below us, add a new one
+        if (row.index() == row.siblings().length) {
+            addBarcodeInput();
+        }
+        // If there are empty inputs below us, go to the next one and set focus.
+        else {
+            var sib = row.next().find('.barcode_input');
+            sib.focus();
+        }
     }
 }
 
