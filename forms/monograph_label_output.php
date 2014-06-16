@@ -39,7 +39,7 @@ else {
 if (isset($_REQUEST["label_start"]) && is_numeric($_REQUEST["label_start"]) && $_REQUEST["label_start"] > 0 && $_REQUEST["label_start"] < 9) {
     $label_start = $_REQUEST["label_start"];
 }
-$label_start = "3";
+
 $barcode_count = count($barcodes);
 
 
@@ -50,7 +50,9 @@ include_once('../lib/quicklabels.php');
 //var_dump(quicklabels($barcodes[0], "0"));
 
 for($x = 0; $x < $barcode_count; $x++) {
-    $print_array[] = quicklabels($barcodes[$x], $print_pocket_label[$x]);
+    if ($barcodes[$x] != "") {
+        $print_array[] = quicklabels($barcodes[$x], $print_pocket_label[$x]);
+    }
 //    var_dump($print_array[$x]);
 }
 
