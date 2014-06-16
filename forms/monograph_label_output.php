@@ -36,7 +36,7 @@ else {
     // Error
 }
 
-if (isset($_REQUEST["label_start"]) && is_numeric($_REQUEST["label_start"]) && $_REQUEST["label_start"] < count($num_array) && $_REQUEST["label_start"] > 0 && $_REQUEST["label_start"] < 9) {
+if (isset($_REQUEST["label_start"]) && is_numeric($_REQUEST["label_start"]) &&  $_REQUEST["label_start"] > 0 && $_REQUEST["label_start"] < 9) {
     $label_start = $_REQUEST["label_start"];
 }
 
