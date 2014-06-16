@@ -21,7 +21,10 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 #container { overflow: auto; }
 
 .label_table {
+    border: 1px solid black;
     border-spacing: 6px;
+    margin: 0 auto;
+    page-break-after: always;
 }
 
 #main_content { overflow: auto; margin-right: 180px; }
@@ -76,6 +79,10 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
     width: 280px;
 }
 
+.print_label_button {
+    text-align: center;
+}
+
 .selected {
   background-color: #c10037 !important;
 }
@@ -85,7 +92,7 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 }
 
 .spacer_cell_vert {
-    height: 25px;
+    height: 82px;
 }
 
 #menu .menu_list li:hover {
