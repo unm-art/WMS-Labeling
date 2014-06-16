@@ -98,6 +98,27 @@
     text-align: center;
 }
 
+table.output_columns_table {
+    table-layout: fixed;
+    width:350px;
+    margin-bottom: 20px;
+    color:#333333;
+    border-color: #a9c6c9;
+    border-width: 1px;
+    font-family: verdana,arial,sans-serif;
+    font-size:11px;
+}
+
+table.output_columns_table td {
+    background-color:#d4e3e5;
+    /*word-wrap: break-word;*/
+    border-width: 1px;
+    padding: 2px;
+    text-align: center;
+    border-style: solid;
+    border-color: #a9c6c9;
+}
+
 .output_columns_radio_container input {
     margin: 0 3px 0 10px;
 }

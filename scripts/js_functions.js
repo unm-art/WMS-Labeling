@@ -1,6 +1,19 @@
 /**
  * Created by bacchus on 6/11/14.
  */
+
+function init() {
+
+    $('.barcode_input').keyup(function(e) {
+        var evt = e || window.event
+        if(evt.keyCode === 13 || evt.keyCode === 17) {
+            addBarcodeInput();
+        }
+    });
+
+}
+
+
 function addBarcodeInput() {
 
     /*
@@ -30,6 +43,7 @@ function addBarcodeInput() {
     new_table_textbox_cell_input.type = "text";
     new_table_textbox_cell_input.value = "";
     new_table_textbox_cell_input.name = "barcodes[]";
+    new_table_textbox_cell_input.setAttribute("class", "barcode_input");
 
     new_table_checkbox_cell_checkbox.type = "checkbox";
     new_table_checkbox_cell_checkbox.name = "print_pocket_label_cb";
@@ -50,6 +64,10 @@ function addBarcodeInput() {
     barcodes_tbl.appendChild(new_table_row);
 
     altRows('barcodes_table');
+
+    new_table_textbox_cell_input.focus();
+
+    init();
 
 }
 
