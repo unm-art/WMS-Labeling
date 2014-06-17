@@ -1,0 +1,42 @@
+* { margin: 0; padding: 0; }
+
+body { font: 14px "Courier New"; }
+
+.cnum {
+    border: none;
+    height: 170px;
+    padding-left: 5px;
+    vertical-align: top;
+    width: 74px;
+}
+
+.invisible {
+    display: block;
+}
+
+.label_table {
+    border: none;
+    border-spacing: 6px;
+    margin: 0 auto;
+    page-break-after: always;
+}
+.pocket {
+    border: none;
+    height: 170px;
+    padding-left: 5px;
+    vertical-align: top;
+    width: 280px;
+}
+
+.print_label_button {
+    text-align: center;
+}
+
+.spacer_cell {
+    width: 15px;
+}
+
+.spacer_cell_vert {
+    height: 82px;
+}
+
