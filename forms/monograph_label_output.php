@@ -86,6 +86,22 @@ for ($x = 0; $x < count($print_array); $x++) {
     }
 }
 
+if (isset($output_columns) && $output_columns == "1") {
+    reset($print_array);
+    for ($x = 0; $x < count($print_array); $x++) {
+        $call_num_array = explode("<br />", $print_array[$x][0]);
+        $title_array = makeTitleArray($print_array[$x][1]);
+    }
+}
+
+function makeTitleArray($input) {
+    $title = explode("<br />", $input);
+    for ($x = 0; $x < count($title); $x++) {
+        if (isset($title[$x]) && $title[$x] != "") {
+            
+        }
+    }
+}
 
 
 ?>
