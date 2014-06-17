@@ -268,7 +268,7 @@ function quicklabels($nums, $title_p = "0") {
                 } elseif (count($field->xpath("marc:datafield[@tag='711']/marc:subfield[@code='a']")) > 0) {
                     $author = $field->xpath("marc:datafield[@tag='711']/marc:subfield[@code='a']");
                 } else {
-                    $author = "";
+                    $author = array("");
                 }
                 $return_author = rtrim($author[0], ',');
                 if (strpos($return_author, ".") > 0) {

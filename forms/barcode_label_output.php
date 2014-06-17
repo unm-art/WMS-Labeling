@@ -36,8 +36,7 @@ else {
     // Error
 }
 
-
-if (isset($_REQUEST["label_start"]) && is_numeric($_REQUEST["label_start"]) &&  $_REQUEST["label_start"] > 0 && $_REQUEST["label_start"] < 9) {
+if (isset($_REQUEST["label_start"]) && is_numeric($_REQUEST["label_start"]) && $_REQUEST["label_start"] > 0 && $_REQUEST["label_start"] < 9 && $output_columns == "2") {
     $label_start = $_REQUEST["label_start"];
 }
 
@@ -92,7 +91,16 @@ for ($x = 0; $x < count($print_array); $x++) {
 ?>
 
 <div id="link-area" class="print_label_button">
-    <div id="link-print"><div class="button_left_div"<a id="print_button" href="#print"><img src="../images/icon-print.png" /><br/>Print Labels</a></div><div class="button_right_div"><input type="radio" name="printer" id="printer" value="dot_matrix" /> Okidata Dot Matrix<br /><input type="radio" name="printer" id="printer" value="laser" /> Laser Printer<br /><input type="radio" name="printer" id="printer" value="dymo" /> Dymo Printer</div></div>
+    <div id="link-print">
+        <div class="button_left_div"><a id="print_button" href="#print"><img src="../images/icon-print.png" /><br/>Print Labels</a>
+        </div>
+        <div class="button_right_div">
+            <input type="radio" name="printer" id="printer1" value="dot_matrix" /> Okidata Dot Matrix<br />
+            <input type="radio" name="printer" id="printer2" value="laser" /> Laser Printer<br />
+            <input type="radio" name="printer" id="printer3" value="dymo" /> Dymo Printer
+        </div>
+        <div class="clear"></div>
+    </div>
 </div>
 
 <?php
@@ -102,7 +110,12 @@ for ($x = 0; $x < count($print_array); $x++) {
 <script>
     $("a#print_button").click(function(e){
         e.preventDefault();
-        $(".label_table").printArea( { mode: "iframe" } );
+        printer_css = $("input[name=printer]:checked").val();
+        if (typeof printer_css !== "undefined") {
+            $(".label_table").printArea( { mode: "iframe", extraCss: '../css/'+printer_css+'.css' } );
+        } else {
+            alert("Type of printer must be selected.");
+        }
 
     });
 </script>
