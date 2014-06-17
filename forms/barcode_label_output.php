@@ -1,8 +1,4 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="../jquery/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
-<script src="../jquery/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
-<script src="../scripts/js_functions.js" language="JavaScript"></script>
-<link rel="stylesheet" href="../css/wms.css">
+<script src="jquery/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
 <?php
 
 //var_dump($_REQUEST);
@@ -126,7 +122,7 @@ function makeTitleArray($input) {
 
 <div id="link-area" class="print_label_button">
     <div id="link-print">
-        <div class="button_left_div"><a id="print_button" href="#print"><img src="../images/icon-print.png" /><br/>Print Labels</a>
+        <div class="button_left_div"><a id="print_button" href="#print"><img src="images/icon-print.png" /><br/>Print Labels</a>
         </div>
         <div class="button_right_div">
             <input type="radio" name="printer" id="printer1" value="dot_matrix" /> Okidata Dot Matrix<br />
@@ -147,9 +143,9 @@ function makeTitleArray($input) {
         e.preventDefault();
         printer_css = $("input[name=printer]:checked").val();
         if ($("div.invisible").html()) {
-            $(".invisible").printArea( { mode: "iframe", extraCss: '../css/dot_matrix.css' } );
+            $(".invisible").printArea( { mode: "iframe", extraCss: 'css/dot_matrix.css' } );
         } else if (typeof printer_css !== "undefined") {
-            $(".label_table").printArea( { mode: "iframe", extraCss: '../css/'+printer_css+'.css' } );
+            $(".label_table").printArea( { mode: "iframe", extraCss: 'css/'+printer_css+'.css' } );
         } else {
             alert("Type of printer must be selected.");
         }
