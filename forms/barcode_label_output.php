@@ -1,8 +1,4 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="../jquery/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
-<script src="../jquery/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
-<script src="../scripts/js_functions.js" language="JavaScript"></script>
-<link rel="stylesheet" href="../css/wms.css">
+<script src="jquery/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
 <?php
 
 //var_dump($_REQUEST);
@@ -86,13 +82,47 @@ for ($x = 0; $x < count($print_array); $x++) {
     }
 }
 
+if (isset($output_columns) && $output_columns == "1") {
+    reset($print_array);
+    $text = "";
+    for ($x = 0; $x < count($print_array); $x++) {
+        $call_num_array = explode("<br />", $print_array[$x][0]);
+        $title_array = makeTitleArray($print_array[$x][1]);
+        for ($y = 0; $y < 10; $y++) {
+            if (isset($call_num_array[$y]) && $call_num_array[$y] != "") {
+                $call_num_left_pad = "   " . $call_num_array[$y];
+                $call_num_right_pad = str_pad($call_num_left_pad, 12, " ", STR_PAD_RIGHT);
+                $text .= "$call_num_right_pad";
+            }
+            if (isset($title_array[$y]) && $title_array[$y] != "") {
+                $text .= $title_array[$y] . "<br/>\n";
+            } else {
+                $text .= "<br/>\n";
+            }
+        }
+    }
+    $text = str_replace(" ", "&nbsp;", $text);
+    $oki_text = "\n<div class=\"invisible\">\n{$text}</div>\n";
+}
+
+function makeTitleArray($input) {
+    $title = explode("<br />", $input);
+    $return = array();
+    for ($x = 0; $x < count($title); $x++) {
+        if (isset($title[$x]) && $title[$x] != "") {
+            $title_split = explode("\n", wordwrap($title[$x], 30, "\n"));
+            $return = array_merge($return, $title_split);
+        }
+    }
+    return $return;
+}
 
 
 ?>
 
 <div id="link-area" class="print_label_button">
     <div id="link-print">
-        <div class="button_left_div"><a id="print_button" href="#print"><img src="../images/icon-print.png" /><br/>Print Labels</a>
+        <div class="button_left_div"><a id="print_button" href="#print"><img src="images/icon-print.png" /><br/>Print Labels</a>
         </div>
         <div class="button_right_div">
             <input type="radio" name="printer" id="printer1" value="dot_matrix" /> Okidata Dot Matrix<br />
@@ -105,14 +135,17 @@ for ($x = 0; $x < count($print_array); $x++) {
 
 <?php
     print "$table";
+    print "$oki_text";
 ?>
 
 <script>
     $("a#print_button").click(function(e){
         e.preventDefault();
         printer_css = $("input[name=printer]:checked").val();
-        if (typeof printer_css !== "undefined") {
-            $(".label_table").printArea( { mode: "iframe", extraCss: '../css/'+printer_css+'.css' } );
+        if ($("div.invisible").html()) {
+            $(".invisible").printArea( { mode: "iframe", extraCss: 'css/dot_matrix.css' } );
+        } else if (typeof printer_css !== "undefined") {
+            $(".label_table").printArea( { mode: "iframe", extraCss: 'css/'+printer_css+'.css' } );
         } else {
             alert("Type of printer must be selected.");
         }
