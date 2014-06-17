@@ -40,6 +40,10 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 
 #container { overflow: auto; }
 
+.invisible {
+    display: none;
+}
+
 .label_table {
     border: 1px solid black;
     border-spacing: 6px;
