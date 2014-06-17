@@ -22,9 +22,9 @@ $(document).ready(function() {
   });
 });
 
-$(document).on("submit", "#invoiceForm", function(e) {
+$(document).on("submit", "#barcode_scan_form", function(e) {
     e.preventDefault();
-    pageLoad("lib/invoice.php", $("#invoiceForm").serialize());
+    pageLoad("forms/barcode_label_output.php", $("#barcode_scan_form").serialize());
   });
 
 $(window).bind('hashchange', function(e) {
