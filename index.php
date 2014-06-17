@@ -5,7 +5,7 @@
 <title>University Libraries WMS Acquisitions Extension</title>
 <link rel="stylesheet" href="jquery/jquery-ui-1.10.4/css/blitzer/jquery-ui-1.10.4.custom.css" />
 <link rel="stylesheet" href="css/wms.css">
-<link rel="stylesheet" href="css/monograph.css">
+<link rel="stylesheet" href="css/labeling.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="jquery/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
 <script src="jquery/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
@@ -34,7 +34,7 @@ $(window).bind('hashchange', function(e) {
 function pageChoose(loc) {
   switch (loc) {
     case "monograph_label":
-      pageLoad("forms/monograph_label_input.php");
+      pageLoad("forms/barcode_label_input.php");
       break;
   }
 }
@@ -75,7 +75,7 @@ function getLocationHash () {
   <div id="menu">
     <div class="menu_header">Format Labels for Printing</div>
     <ul class="menu_list">
-      <li><a href="#monograph_label">Monograph Labels</a></li>
+      <li><a href="#monograph_label">New/Reset Barcode Form</a></li>
     </ul>
   </div>
   <div id="main_content">
