@@ -24,6 +24,8 @@ $(document).ready(function() {
 
 $(document).on("submit", "#barcode_scan_form", function(e) {
     e.preventDefault();
+    //Set this so user can hit back button to revisit form
+    window.location.hash = "#labelOutput";
     pageLoad("forms/barcode_label_output.php", $("#barcode_scan_form").serialize());
   });
 

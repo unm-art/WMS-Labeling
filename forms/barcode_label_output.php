@@ -110,7 +110,7 @@ function makeTitleArray($input) {
     $return = array();
     for ($x = 0; $x < count($title); $x++) {
         if (isset($title[$x]) && $title[$x] != "") {
-            $title_split = str_split($title[$x], 30);
+            $title_split = explode("\n", wordwrap($title[$x], 30, "\n"));
             $return = array_merge($return, $title_split);
         }
     }
