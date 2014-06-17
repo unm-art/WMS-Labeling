@@ -7,7 +7,7 @@
 
 </script>
 
-<form name="barcode_scan_form" action="forms/monograph_label_output.php">
+<form name="barcode_scan_form" action="forms/barcode_label_output.php">
     <div class="barcodes_forms_container">
 
         <h1 class="form_header">Enter Barcode Number</h1>
