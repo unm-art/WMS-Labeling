@@ -4,6 +4,8 @@
 
 function init() {
 
+    //$(window).unbind("keydown", car_ret_add_bc);
+    //$(window).keydown(car_ret_add_bc);
     $('.barcode_input').unbind("keyup", car_ret_add_bc);
     $('.barcode_input').keyup(car_ret_add_bc);
 
@@ -13,13 +15,17 @@ function car_ret_add_bc(e) {
     var evt = e || window.event
     // Check if next sibling has a value of "" in its textfield.  If so, set focus to that instead of adding another field.
 
+    //alert(evt.keyCode);
+
     var row = $(this).parent().parent();
 
     // If return carriage is present in input (scanner done with input)...
     if(evt.keyCode == 17 || evt.keyCode == 13) {
         // Then ... if there are no empty inputs below us, add a new one
         if (row.index() == row.siblings().length) {
+            evt.preventDefault();
             addBarcodeInput();
+            return false;
         }
         // If there are empty inputs below us, go to the next one and set focus.
         else {
