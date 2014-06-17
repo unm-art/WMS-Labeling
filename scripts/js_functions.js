@@ -4,13 +4,16 @@
 
 function init() {
 
-    $('.barcode_input').keyup(function(e) {
-        var evt = e || window.event
-        if(evt.keyCode === 13 || evt.keyCode === 17) {
-            addBarcodeInput();
-        }
-    });
+    $('.barcode_input').unbind("keyup", car_ret_add_bc);
+    $('.barcode_input').keyup(car_ret_add_bc);
 
+}
+
+function car_ret_add_bc(e) {
+    var evt = e || window.event
+    if(evt.keyCode === 17 || evt.keyCode === 13) {
+        addBarcodeInput();
+    }
 }
 
 

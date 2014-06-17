@@ -11,13 +11,21 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 
 .button_left_div {
     float: left;
+    padding-right: 15px;
     position: relative;
-    width: 200px;
+    text-align: right;
+    width: 47%;
+}
+
+.button_left_div img {
+    margin-right: 12px;
 }
 
 .button_right_div {
     float: left;
+    padding-left: 15px;
     position: relative;
+    text-align: left;
 }
 
 .clear { clear: both; }
@@ -34,7 +42,7 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 .label_table {
     border: 1px solid black;
     border-spacing: 6px;
-    margin: 0 auto;
+    margin: 25px auto 0;
     page-break-after: always;
 }
 
