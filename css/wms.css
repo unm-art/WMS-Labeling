@@ -51,6 +51,10 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
     page-break-after: always;
 }
 
+#link-print {
+    padding-top: 10px;
+}
+
 #main_content { overflow: auto; margin-right: 180px; }
 
 #menu {
