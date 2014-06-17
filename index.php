@@ -22,18 +22,13 @@ $(document).ready(function() {
   });
 });
 
-$(document).on("submit", "#invoiceForm", function(e) {
-    e.preventDefault();
-    pageLoad("lib/invoice.php", $("#invoiceForm").serialize());
-  });
-
 $(window).bind('hashchange', function(e) {
   pageChoose(getLocationHash());
 });
 
 function pageChoose(loc) {
   switch (loc) {
-    case "monograph_label":
+    case "barcode_label":
       pageLoad("forms/barcode_label_input.php");
       break;
   }
@@ -75,7 +70,7 @@ function getLocationHash () {
   <div id="menu">
     <div class="menu_header">Format Labels for Printing</div>
     <ul class="menu_list">
-      <li><a href="#monograph_label">New/Reset Barcode Form</a></li>
+      <li><a href="#barcode_label">New/Reset Barcode Form</a></li>
     </ul>
   </div>
   <div id="main_content">
