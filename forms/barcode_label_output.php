@@ -1,4 +1,6 @@
 <script src="jquery/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
+<script src="jquery/printElement/jquery.printElement.js" type="text/JavaScript" language="javascript"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
 <?php
 
 //var_dump($_REQUEST);
@@ -65,18 +67,28 @@ $table = "";
 for ($x = 0; $x < count($print_array); $x++) {
 //    print_r("1");
 //    var_dump($output_columns);
-        $table_row .= "<tr>\n";
+        $table_row .= "<tr>\n<td class=\"left_spacer_cell\">&nbsp;</td>\n";
         $table_row .= "<td class=\"cnum\">{$print_array[$x][0]}</td>\n<td class=\"pocket\">{$print_array[$x][1]}</td>\n";
-    if (isset($output_columns) && $output_columns == "2" && array_key_exists($x + 1, $print_array)) {
+    if (isset($output_columns) && $output_columns == "2") {
  //       print_r("3");
         $x++;
-        $table_row .= "<td class=\"spacer_cell\">&nbsp;</td>\n";
-        $table_row .= "<td class=\"cnum\">{$print_array[$x][0]}</td>\n<td class=\"pocket\">{$print_array[$x][1]}</td>\n";
+        if (isset($print_array[$x][0]) && $print_array[$x][0] != "") {
+            $cnumval = $print_array[$x][0];
+        } else {
+            $cnumval = "&nbsp;";
+        }
+        if (isset($print_array[$x][1]) && $print_array[$x][1] != "") {
+            $pocketval = $print_array[$x][1];
+        } else {
+            $pocketval = "&nbsp;";
+        }
+        $table_row .= "<td class=\"center_spacer_cell\">&nbsp;</td>\n";
+        $table_row .= "<td class=\"cnum\">{$cnumval}</td>\n<td class=\"pocket\">{$pocketval}</td>\n";
     }
     $table_row .= "</tr>\n";
     $table_row .= "<tr>\n<td class=\"spacer_cell_vert\" colspan=\"5\">&nbsp;</td>\n</tr>\n";
     // Test whether we have eight labels for 2-col printing, or are on the last label
-    if ((($x + 1) % 8 == 0) || $x + 1 == count($print_array)) {
+    if ((($x + 1) % 8 == 0) || $x + 1 >= count($print_array)) {
         $table .= "<table class=\"label_table\">\n{$table_row}</table>\n";
         $table_row = "";
     }
@@ -90,8 +102,7 @@ if (isset($output_columns) && $output_columns == "1") {
         $title_array = makeTitleArray($print_array[$x][1]);
         for ($y = 0; $y < 10; $y++) {
             if (isset($call_num_array[$y]) && $call_num_array[$y] != "") {
-                $call_num_left_pad = "   " . $call_num_array[$y];
-                $call_num_right_pad = str_pad($call_num_left_pad, 12, " ", STR_PAD_RIGHT);
+                $call_num_right_pad = str_pad($call_num_array[$y], 12, " ", STR_PAD_RIGHT);
                 $text .= "$call_num_right_pad";
             }
             if (isset($title_array[$y]) && $title_array[$y] != "") {
@@ -102,7 +113,7 @@ if (isset($output_columns) && $output_columns == "1") {
         }
     }
     $text = str_replace(" ", "&nbsp;", $text);
-    $oki_text = "\n<div class=\"invisible\">\n{$text}</div>\n";
+    $oki_text = "\n<div class=\"invisible\" id=\"textPrint\">\n{$text}</div>\n";
 }
 
 function makeTitleArray($input) {
@@ -126,6 +137,7 @@ function makeTitleArray($input) {
         </div>
         <div class="button_right_div">
             <input type="radio" name="printer" id="printer1" value="dot_matrix" /> Okidata Dot Matrix<br />
+            <a href="#" id="okiprint">Print</a><br />
             <input type="radio" name="printer" id="printer2" value="laser" /> Laser Printer<br />
             <input type="radio" name="printer" id="printer3" value="dymo" /> Dymo Printer
         </div>
@@ -134,18 +146,23 @@ function makeTitleArray($input) {
 </div>
 
 <?php
-    print "$table";
+    print "<div id=\"table_div\">$table</div>";
     print "$oki_text";
 ?>
 
 <script>
+    $("a#okiprint").click(function(e) {
+        e.preventDefault();
+        $("div.invisible").printElement({ overrideElementCSS: true, styleToAdd: "font-family:'Courier New';font-size: 13px;" });
+    });
+
     $("a#print_button").click(function(e){
         e.preventDefault();
         printer_css = $("input[name=printer]:checked").val();
         if ($("div.invisible").html()) {
-            $(".invisible").printArea( { mode: "iframe", extraCss: 'css/dot_matrix.css' } );
+            $(".invisible").printArea( { mode: "popup", retainAttr: [] } );
         } else if (typeof printer_css !== "undefined") {
-            $(".label_table").printArea( { mode: "iframe", extraCss: 'css/'+printer_css+'.css' } );
+            $("#table_div").printArea( { mode: "popup", extraCss: 'css/'+printer_css+'.css' } );
         } else {
             alert("Type of printer must be selected.");
         }

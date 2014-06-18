@@ -28,6 +28,10 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
     text-align: left;
 }
 
+.center_spacer_cell {
+    width: 15px;
+}
+
 .clear { clear: both; }
 
 .cnum {
@@ -49,6 +53,10 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
     border-spacing: 6px;
     margin: 25px auto 0;
     page-break-after: always;
+}
+
+.left_spacer_cell {
+    width: 20px;
 }
 
 #link-print {
@@ -114,10 +122,6 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 
 .selected {
   background-color: #c10037 !important;
-}
-
-.spacer_cell {
-    width: 15px;
 }
 
 .spacer_cell_vert {

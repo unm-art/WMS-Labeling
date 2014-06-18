@@ -225,7 +225,14 @@ function quicklabels($nums, $title_p = "0") {
         if ($print_title) {
             $worldcat_url = BIBURL . '/' . $oclc . '?wskey=' . BIBKEY;
 
-            $xml = simplexml_load_file($worldcat_url);
+            for ($i = 0; $i < 10; $i++) {
+                $xml = simplexml_load_file($worldcat_url);
+                if (!$xml || $xml == "") {
+                    continue;
+                } else {
+                    break;
+                }
+            }
             $xml->registerXPathNamespace("marc", "http://www.loc.gov/MARC21/slim");
 
             foreach ($xml->xpath('//marc:record') as $book) {

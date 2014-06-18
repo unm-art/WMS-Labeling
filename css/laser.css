@@ -1,6 +1,13 @@
 * { margin: 0; padding: 0; }
 
-body { font: 14px "Courier New"; }
+body {
+    font-size: 14px;
+    font-family: "Courier New", monospace;
+}
+
+.center_spacer_cell {
+    width: 15px;
+}
 
 .cnum {
     border: none;
@@ -19,7 +26,13 @@ body { font: 14px "Courier New"; }
     border-spacing: 6px;
     margin: 0 auto;
     page-break-after: always;
+    width: 8.5in;
 }
+
+.left_spacer_cell {
+    width: 20px;
+}
+
 .pocket {
     border: none;
     height: 170px;
@@ -30,10 +43,6 @@ body { font: 14px "Courier New"; }
 
 .print_label_button {
     text-align: center;
-}
-
-.spacer_cell {
-    width: 15px;
 }
 
 .spacer_cell_vert {
