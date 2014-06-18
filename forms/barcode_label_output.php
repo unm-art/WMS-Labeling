@@ -86,7 +86,7 @@ for ($x = 0; $x < count($print_array); $x++) {
         $table_row .= "<td class=\"cnum\">{$cnumval}</td>\n<td class=\"pocket\">{$pocketval}</td>\n";
     }
     $table_row .= "</tr>\n";
-    $table_row .= "<tr>\n<td class=\"spacer_cell_vert\" colspan=\"5\">&nbsp;</td>\n</tr>\n";
+    $table_row .= "<tr>\n<td class=\"spacer_cell_vert\" colspan=\"7\">&nbsp;</td>\n</tr>\n";
     // Test whether we have eight labels for 2-col printing, or are on the last label
     if ((($x + 1) % 8 == 0) || $x + 1 >= count($print_array)) {
         $table .= "<table class=\"label_table\">\n{$table_row}</table>\n";
@@ -147,22 +147,31 @@ function makeTitleArray($input) {
 
 <?php
     print "<div id=\"table_div\">$table</div>";
-    print "$oki_text";
+    if (isset($oki_text)) {
+        print "$oki_text";
+    }
+    
 ?>
 
 <script>
     $("a#okiprint").click(function(e) {
         e.preventDefault();
-        $("div.invisible").printElement({ overrideElementCSS: true, styleToAdd: "font-family:'Courier New';font-size: 13px;" });
+ //       $("div.invisible").printElement({ overrideElementCSS: true, styleToAdd: "font-family:'Courier New';font-size: 13px;" });
+        var printwindow = window.open("", "pw");
+        printwindow.document.write($("div.invisible").html());
+        printwindow.print();
+        printwindow.close();
     });
 
     $("a#print_button").click(function(e){
         e.preventDefault();
         printer_css = $("input[name=printer]:checked").val();
-        if ($("div.invisible").html()) {
+   /*     if ($("div.invisible").html()) {
             $(".invisible").printArea( { mode: "popup", retainAttr: [] } );
-        } else if (typeof printer_css !== "undefined") {
-            $("#table_div").printArea( { mode: "popup", extraCss: 'css/'+printer_css+'.css' } );
+        } else 
+        */
+        if (typeof printer_css !== "undefined") {
+            $("#table_div").printArea( { mode: "popup", retainAttr: [], extraCss: 'css/'+printer_css+'.css' } );
         } else {
             alert("Type of printer must be selected.");
         }
