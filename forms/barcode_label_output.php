@@ -137,7 +137,7 @@ function makeTitleArray($input) {
         </div>
         <div class="button_right_div">
             <input type="radio" name="printer" id="printer1" value="dot_matrix" /> Okidata Dot Matrix<br />
-            <a href="#" id="okiprint">Print</a><br />
+       <!--     <a href="#" id="okiprint">Print</a><br />  -->
             <input type="radio" name="printer" id="printer2" value="laser" /> Laser Printer<br />
             <input type="radio" name="printer" id="printer3" value="dymo" /> Dymo Printer
         </div>
