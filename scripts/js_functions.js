@@ -4,10 +4,8 @@
 
 function init() {
 
-    //$(window).unbind("keydown", car_ret_add_bc);
-    //$(window).keydown(car_ret_add_bc);
-    $('.barcode_input').unbind("keyup", car_ret_add_bc);
-    $('.barcode_input').keyup(car_ret_add_bc);
+    $('.barcode_input').unbind("keydown", car_ret_add_bc);
+    $('.barcode_input').keydown(car_ret_add_bc);
 
 }
 
@@ -21,9 +19,10 @@ function car_ret_add_bc(e) {
 
     // If return carriage is present in input (scanner done with input)...
     if(evt.keyCode == 17 || evt.keyCode == 13) {
+        evt.preventDefault();
         // Then ... if there are no empty inputs below us, add a new one
         if (row.index() == row.siblings().length) {
-            evt.preventDefault();
+            //evt.preventDefault();
             addBarcodeInput();
             return false;
         }
