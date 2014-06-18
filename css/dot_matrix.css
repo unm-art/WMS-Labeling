@@ -24,7 +24,7 @@ body {
 .label_table {
     border: none;
     border-spacing: 6px;
-    margin: 0 auto;
+    margin: 0;
     page-break-after: always;
 }
 
