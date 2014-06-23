@@ -49,3 +49,44 @@ body {
     height: 85px;
 }
 
+@media print
+{
+  @page 
+  {
+      size: auto;   /* auto is the current printer page size */
+      margin: 0.15625in 0.15625in 0 0.4375in;  /* this affects the margin in the printer settings */
+  }
+  
+  .left_spacer_cell {
+    width: 0;
+  }
+  
+  tr {
+    page-break-inside: avoid;
+  }
+  
+  .spacer_cell_vert {
+    display: none;
+  }
+  
+  .label_table {
+    width: 3.71875in;
+    table-layout: fixed;
+    float: left;
+  }
+  
+  .cnum {
+    padding: 0.0393701in;
+    width: 0.7337598in;
+    /* height 2.65625in */
+    height: 2.5775098in;
+    margin-right: 1mm;
+  }
+  
+  .pocket {
+    padding: 0.0393701in;
+    width: 2.82751in;
+    /* 2.6875in - padding 0.0393701in x2 */
+    height: 2.5775098in;
+  }
+}

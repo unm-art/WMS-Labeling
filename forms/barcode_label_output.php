@@ -67,7 +67,7 @@ $table = "";
 for ($x = 0; $x < count($print_array); $x++) {
 //    print_r("1");
 //    var_dump($output_columns);
-        $table_row .= "<tr>\n<td class=\"left_spacer_cell\">&nbsp;</td>\n";
+        //$table_row .= "<tr>\n<td class=\"left_spacer_cell\">&nbsp;</td>\n";
         $table_row .= "<td class=\"cnum\">{$print_array[$x][0]}</td>\n<td class=\"pocket\">{$print_array[$x][1]}</td>\n";
     if (isset($output_columns) && $output_columns == "2") {
  //       print_r("3");
@@ -86,7 +86,7 @@ for ($x = 0; $x < count($print_array); $x++) {
         $table_row .= "<td class=\"cnum\">{$cnumval}</td>\n<td class=\"pocket\">{$pocketval}</td>\n";
     }
     $table_row .= "</tr>\n";
-    $table_row .= "<tr>\n<td class=\"spacer_cell_vert\" colspan=\"7\">&nbsp;</td>\n</tr>\n";
+    //$table_row .= "<tr>\n<td class=\"spacer_cell_vert\" colspan=\"7\">&nbsp;</td>\n</tr>\n";
     // Test whether we have eight labels for 2-col printing, or are on the last label
     if ((($x + 1) % 8 == 0) || $x + 1 >= count($print_array)) {
         $table .= "<table class=\"label_table\">\n{$table_row}</table>\n";
