@@ -13,16 +13,13 @@ function car_ret_add_bc(e) {
     var evt = e || window.event
     // Check if next sibling has a value of "" in its textfield.  If so, set focus to that instead of adding another field.
 
-    //alert(evt.keyCode);
-
     var row = $(this).parent().parent();
 
     // If return carriage is present in input (scanner done with input)...
-    if(evt.keyCode == 17 || evt.keyCode == 13) {
+    if(evt.keyCode == 13) {
         evt.preventDefault();
         // Then ... if there are no empty inputs below us, add a new one
         if (row.index() == row.siblings().length) {
-            //evt.preventDefault();
             addBarcodeInput();
             return false;
         }
@@ -36,17 +33,6 @@ function car_ret_add_bc(e) {
 
 
 function addBarcodeInput() {
-
-    /*
-     <tr>
-        <td>
-            <input type="text" value="TEST1">
-        </td>
-        <td>
-            <input type="checkbox" value="0">
-        </td>
-     </tr>
-     */
 
     var barcodes_tbl = document.getElementById('barcodes_table');
 

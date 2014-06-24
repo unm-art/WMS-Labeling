@@ -3,8 +3,6 @@
 <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
 <?php
 
-//var_dump($_REQUEST);
-
 if(isset($_REQUEST["output_columns"]) && $_REQUEST["output_columns"] == "2") {
     $output_columns = "2";
 }
@@ -19,8 +17,6 @@ if(isset($_REQUEST["barcodes"]) && $_REQUEST["barcodes"] != "") {
     for($i = 0; $i < count($barcodes); $i++) {
         $tmp .= $barcodes[$i];
     }
-    //var_dump(count($barcodes[0]));
-    //var_dump($barcodes[0]);
 }
 else {
     // Error
@@ -45,13 +41,11 @@ $print_array = array();
 
 include_once('../lib/quicklabels.php');
 
-//var_dump(quicklabels($barcodes[0], "0"));
 
 for($x = 0; $x < $barcode_count; $x++) {
     if ($barcodes[$x] != "") {
         $print_array[] = quicklabels($barcodes[$x], $print_pocket_label[$x]);
     }
-//    var_dump($print_array[$x]);
 }
 
 // Add empty rows to print_array to start print on specified label
@@ -65,12 +59,8 @@ $table_row = "";
 $table = "";
 
 for ($x = 0; $x < count($print_array); $x++) {
-//    print_r("1");
-//    var_dump($output_columns);
-        //$table_row .= "<tr>\n<td class=\"left_spacer_cell\">&nbsp;</td>\n";
         $table_row .= "<td class=\"cnum\">{$print_array[$x][0]}</td>\n<td class=\"pocket\">{$print_array[$x][1]}</td>\n";
     if (isset($output_columns) && $output_columns == "2") {
- //       print_r("3");
         $x++;
         if (isset($print_array[$x][0]) && $print_array[$x][0] != "") {
             $cnumval = $print_array[$x][0];
@@ -86,7 +76,6 @@ for ($x = 0; $x < count($print_array); $x++) {
         $table_row .= "<td class=\"cnum\">{$cnumval}</td>\n<td class=\"pocket\">{$pocketval}</td>\n";
     }
     $table_row .= "</tr>\n";
-    //$table_row .= "<tr>\n<td class=\"spacer_cell_vert\" colspan=\"7\">&nbsp;</td>\n</tr>\n";
     // Test whether we have eight labels for 2-col printing, or are on the last label
     if ((($x + 1) % 8 == 0) || $x + 1 >= count($print_array)) {
         $table .= "<table class=\"label_table\">\n{$table_row}</table>\n";
@@ -137,7 +126,6 @@ function makeTitleArray($input) {
         </div>
         <div class="button_right_div">
             <input type="radio" name="printer" id="printer1" value="dot_matrix" /> Okidata Dot Matrix<br />
-       <!--     <a href="#" id="okiprint">Print</a><br />  -->
             <input type="radio" name="printer" id="printer2" value="laser" /> Laser Printer<br />
             <input type="radio" name="printer" id="printer3" value="dymo" /> Dymo Printer
         </div>
@@ -156,7 +144,6 @@ function makeTitleArray($input) {
 <script>
     $("a#okiprint").click(function(e) {
         e.preventDefault();
- //       $("div.invisible").printElement({ overrideElementCSS: true, styleToAdd: "font-family:'Courier New';font-size: 13px;" });
         var printwindow = window.open("", "pw");
         printwindow.document.write($("div.invisible").html());
         printwindow.print();
@@ -166,10 +153,6 @@ function makeTitleArray($input) {
     $("a#print_button").click(function(e){
         e.preventDefault();
         printer_css = $("input[name=printer]:checked").val();
-   /*     if ($("div.invisible").html()) {
-            $(".invisible").printArea( { mode: "popup", retainAttr: [] } );
-        } else 
-        */
         if (typeof printer_css !== "undefined") {
             $("#table_div").printArea( { mode: "popup", retainAttr: [], extraCss: 'css/'+printer_css+'.css' } );
         } else {

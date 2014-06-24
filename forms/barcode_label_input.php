@@ -12,13 +12,6 @@
 
         <h1 class="form_header">Enter Barcode Number</h1>
 
-<!--
-        <div class="output_columns_radio_container">
-            <p>Would you like to print to <b>one</b> or <b>two</b> column label stock?</p>
-            <input type="radio" name="output_columns" value="1" checked="checked">One
-            <input type="radio" name="output_columns" value="2">Two
-        </div>
--->
         <div id="barcodes_container">
 
             <table id="output_columns_table" class="output_columns_table">
