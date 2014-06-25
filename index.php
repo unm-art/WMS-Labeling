@@ -5,6 +5,7 @@
 <title>University Libraries WMS Acquisitions Extension</title>
 <link rel="stylesheet" href="jquery/jquery-ui-1.10.4/css/blitzer/jquery-ui-1.10.4.custom.css" />
 <link rel="stylesheet" href="css/wms.css">
+<link rel="stylesheet" href="css/normalize.css">
 <link rel="stylesheet" href="css/labeling.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="jquery/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
