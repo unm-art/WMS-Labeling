@@ -37,26 +37,19 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 .cnum {
     border: 1px solid black;
     height: 170px;
-    padding-left: 5px;
     vertical-align: top;
     width: 74px;
+    float: left;
+}
+
+.cnum div, .pocket div {
+  padding-left: 5px;
 }
 
 #container { overflow: auto; }
 
 .invisible {
     display: none;
-}
-
-.label_table {
-    border: 1px solid black;
-    border-spacing: 6px;
-    margin: 25px auto 0;
-    page-break-after: always;
-}
-
-.left_spacer_cell {
-    width: 20px;
 }
 
 #link-print {
@@ -110,8 +103,9 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 }
 .pocket {
     border: 1px solid black;
+    float: left;
     height: 170px;
-    padding-left: 5px;
+    margin-left: 5px;
     vertical-align: top;
     width: 280px;
 }
@@ -137,6 +131,11 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 
 #menu .menu_list li a:active {
   background-color: #c10037;
+}
+
+#table_div {
+  width: 800px;
+  margin: 0 auto;
 }
 
 .loading_gif {

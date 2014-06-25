@@ -61,17 +61,13 @@ if (isset($label_start) && $label_start != "") {
     }
 }
 
-$table_row = "";
-$table = "";
+$label_row = "";
+$label_page = "";
 
 for ($x = 0; $x < count($print_array); $x++) {
 //    print_r("1");
 //    var_dump($output_columns);
-        //$table_row .= "<tr>\n<td class=\"left_spacer_cell\">&nbsp;</td>\n";
-        $table_row .= "<td class=\"cnum\">{$print_array[$x][0]}</td>\n<td class=\"pocket\">{$print_array[$x][1]}</td>\n";
-    if (isset($output_columns) && $output_columns == "2") {
- //       print_r("3");
-        $x++;
+        $label_row .= "<div class=\"label_container\">\n";
         if (isset($print_array[$x][0]) && $print_array[$x][0] != "") {
             $cnumval = $print_array[$x][0];
         } else {
@@ -82,15 +78,15 @@ for ($x = 0; $x < count($print_array); $x++) {
         } else {
             $pocketval = "&nbsp;";
         }
-        $table_row .= "<td class=\"center_spacer_cell\">&nbsp;</td>\n";
-        $table_row .= "<td class=\"cnum\">{$cnumval}</td>\n<td class=\"pocket\">{$pocketval}</td>\n";
-    }
-    $table_row .= "</tr>\n";
-    //$table_row .= "<tr>\n<td class=\"spacer_cell_vert\" colspan=\"7\">&nbsp;</td>\n</tr>\n";
+        
+        $label_row .= "<div class=\"cnum\"><div>{$cnumval}</div></div>\n<div class=\"pocket\"><div>{$pocketval}</div></div>\n";
+
+    $label_row .= "</div>\n";
+    //$label_row .= "<tr>\n<td class=\"spacer_cell_vert\" colspan=\"7\">&nbsp;</td>\n</tr>\n";
     // Test whether we have eight labels for 2-col printing, or are on the last label
     if ((($x + 1) % 8 == 0) || $x + 1 >= count($print_array)) {
-        $table .= "<table class=\"label_table\">\n{$table_row}</table>\n";
-        $table_row = "";
+        $label_page .= "<div class=\"label_page\">{$label_row}</div>\n";
+        $label_row = "";
     }
 }
 
@@ -146,7 +142,7 @@ function makeTitleArray($input) {
 </div>
 
 <?php
-    print "<div id=\"table_div\">$table</div>";
+    print "<div id=\"table_div\">$label_page</div>";
     if (isset($oki_text)) {
         print "$oki_text";
     }

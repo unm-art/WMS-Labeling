@@ -5,46 +5,49 @@ body {
     font-family: "Courier New", monospace;
 }
 
-.center_spacer_cell {
-    width: 15px;
-}
-
-.cnum {
-    border: none;
-    height: 290px;
-    padding-left: 5px;
-    vertical-align: top;
-    width: 74px;
-}
-
 .invisible {
     display: block;
 }
 
-.label_table {
-    border: none;
-    border-spacing: 6px;
-    margin: 0;
-}
-
-.left_spacer_cell {
-    display: none;
-}
-
 .pocket {
-    border: none;
-    display: none;
-    height: 170px;
-    padding-left: 5px;
-    vertical-align: top;
-    width: 280px;
+  display: none;
 }
 
 .print_label_button {
     text-align: center;
 }
 
-.spacer_cell_vert {
+@media print
+{
+  @page 
+  {
+    size: auto;   /* auto is the current printer page size */
+    /* margin: 2mm 0 0 1mm; */
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .cnum {
+    margin: 0;
+    padding: 0;
+    width: 28mm;
+    height: 89mm;
+    border: none;
+    page-break-after: always;
+  }
+  
+  .label_container {
+    float: left;
+  }
+  
+  .pocket {
     display: none;
+  }
+  
+  .cnum div, .pocket div {
+    padding: 1mm;
+  }
 }
-
