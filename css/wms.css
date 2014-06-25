@@ -52,6 +52,11 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
     display: none;
 }
 
+.label_container {
+  float: left;
+  margin-left: 5px;
+}
+
 #link-print {
     padding-top: 10px;
 }

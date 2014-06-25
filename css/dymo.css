@@ -41,6 +41,7 @@ body {
   
   .label_container {
     float: left;
+    margin: 0;
   }
   
   .pocket {
@@ -48,6 +49,6 @@ body {
   }
   
   .cnum div, .pocket div {
-    padding: 1mm;
+    padding: 6mm 0 0 3mm;
   }
 }
