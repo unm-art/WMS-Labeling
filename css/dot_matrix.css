@@ -5,46 +5,51 @@ body {
     font-family: "Courier New", monospace;
 }
 
-.center_spacer_cell {
-    width: 15px;
-}
-
-.cnum {
-    border: none;
-    height: 170px;
-    padding-left: 5px;
-    vertical-align: top;
-    width: 74px;
-}
-
 .invisible {
     display: block;
 }
-
-.label_table {
-    border: none;
-    border-spacing: 6px;
-    margin: 0;
-    page-break-after: always;
-}
-
-.left_spacer_cell {
-    width: 20px;
-}
-
-.pocket {
-    border: none;
-    height: 170px;
-    padding-left: 5px;
-    vertical-align: top;
-    width: 280px;
-}
-
 .print_label_button {
     text-align: center;
 }
 
-.spacer_cell_vert {
-    height: 82px;
+@media print
+{
+  @page 
+  {
+    size: auto;   /* auto is the current printer page size */
+    
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .cnum {
+    margin: 0;
+    padding: 0;
+    width: 22mm;
+    height: 67mm;
+    border: none;
+  }
+  
+  .label_container {
+    float: left;
+    margin-left: 1mm;
+  }
+  
+  .pocket {
+    margin-left: 3mm;
+    padding: 0;
+    width: 70mm;
+    height: 67mm;
+    border: none;
+  }
+  
+  .cnum div {
+    padding: 1mm 0 0 1mm;
+  }
+  .pocket div {
+    padding: 1mm 0 0 1mm;
+  }
 }
-

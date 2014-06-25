@@ -70,12 +70,12 @@ function getLocationHash () {
 </script>
 </head>
 <body>
-<div id="banner">
+<div id="banner" class="printhidden">
   <img src="images/ullogo_print.png" alt="UL Label Printing" /><p style="clear: none; float: left; font-size: 50px; font-style: italic; margin-bottom: 0px; margin-left: 50px; margin-top: 30px;">&beta;eta</p>
 </div>
 <div class="clear"></div>
 <div id="container">
-  <div id="menu">
+  <div id="menu" class="printhidden">
     <div class="menu_header">Format Labels for Printing</div>
     <ul class="menu_list">
       <li><a href="#barcode_label">New/Reset Barcode Form</a></li>

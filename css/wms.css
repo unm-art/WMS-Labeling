@@ -115,6 +115,13 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
     width: 280px;
 }
 
+@media print
+{
+  .printhidden {
+    display: none;
+  }
+}
+
 .print_label_button {
     text-align: center;
 }

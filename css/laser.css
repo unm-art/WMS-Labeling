@@ -22,7 +22,7 @@ body {
   @page 
   {
     size: auto;   /* auto is the current printer page size */
-    margin: 3.96875mm 0 0 3.175mm;  /* this affects the margin in the printer settings */
+    margin: 4mm 4mm 0 3mm;  /* this affects the margin in the printer settings */
   }
   
   body {
@@ -30,35 +30,36 @@ body {
     padding: 0;
   }
   
-  .label_page {
-
-    
-    width: 212.725mm;
-    height: 275.43125mm;
+  .label_page {   
+    width: 208mm;
+    height: 273mm;
   }
 
   .cnum {
     margin: 0;
     padding: 0;
-    width: 20.6375mm;
-    height: 68.2625mm;
+    width: 21mm;
+    height: 68mm;
     border: none;
   }
   
   .label_container {
     float: left;
-    margin-left: 7.9375mm;
+    margin-left: 8mm;
   }
   
   .pocket {
     margin-left: 3mm;
     padding: 0;
-    width: 73.81875mm;
-    height: 68.2625mm;
+    width: 71mm;
+    height: 67mm;
     border: none;
   }
   
-  .cnum div, .pocket div {
-    padding: 1mm;
+  .cnum div {
+    padding: 1mm 0 0 1.5mm;
+  }
+  .pocket div {
+    padding: 1mm 0 0 1mm;
   }
 }
