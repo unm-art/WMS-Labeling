@@ -55,8 +55,7 @@ function addBarcodeInput() {
     new_table_checkbox_cell_checkbox.type = "checkbox";
     new_table_checkbox_cell_checkbox.name = "print_pocket_label_cb";
     new_table_checkbox_cell_checkbox.value = "no";
-    //new_table_checkbox_cell_checkbox.onclick = setCheckboxValue;
-    new_table_checkbox_cell_checkbox.onchange = setCheckboxValue;
+    new_table_checkbox_cell_checkbox.onclick = setCheckboxValue;
 
     new_table_hidden_cb_value_input.type = "hidden";
     new_table_hidden_cb_value_input.value = 0;
