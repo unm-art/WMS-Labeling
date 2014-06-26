@@ -55,7 +55,8 @@ function addBarcodeInput() {
     new_table_checkbox_cell_checkbox.type = "checkbox";
     new_table_checkbox_cell_checkbox.name = "print_pocket_label_cb";
     new_table_checkbox_cell_checkbox.value = "no";
-    new_table_checkbox_cell_checkbox.onclick = setCheckboxValue;
+    //new_table_checkbox_cell_checkbox.onclick = setCheckboxValue;
+    new_table_checkbox_cell_checkbox.onchange = setCheckboxValue;
 
     new_table_hidden_cb_value_input.type = "hidden";
     new_table_hidden_cb_value_input.value = 0;
@@ -105,6 +106,23 @@ function altRows(id){
             }else{
                 rows[i].className = "oddrowcolor";
             }
+        }
+    }
+}
+
+function toggleSelected(source) {
+    checkboxes = document.getElementsByName('print_pocket_label_cb');
+    for(var i= 0, n=checkboxes.length; i<n; i++) {
+        hidden_sibling = checkboxes[i].nextSibling;
+        checkboxes[i].checked = source.checked;
+        if(source.checked) {
+
+            checkboxes[i].value = "yes";
+            hidden_sibling.value = 1;
+        }
+        else {
+            checkboxes[i].value = "no";
+            hidden_sibling.value = 0;
         }
     }
 }

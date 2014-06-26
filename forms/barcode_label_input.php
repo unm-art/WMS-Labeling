@@ -16,13 +16,6 @@
 
             <table id="output_columns_table" class="output_columns_table">
                 <tr>
-                    <td>Would you like to print to <strong>one</strong> or <strong>two</strong> column label stock?</td>
-                    <td>
-                        <input type="radio" name="output_columns" value="1" checked="checked">One
-                        <input type="radio" name="output_columns" value="2">Two
-                    </td>
-                </tr>
-                <tr>
                     <td>Which label field do you wish to start printing on?</td>
                     <td>
                         <select id="label_start" name="label_start">
@@ -47,6 +40,11 @@
                 <!-- generated rows of barcode inputs go here -->
 
             </table>
+
+            <div id="select_all_checkbox">
+                <br>
+                Select/Unselect All  <input type="checkbox" onClick="toggleSelected(this)" /><br/>
+            </div>
 
         </div>
 
