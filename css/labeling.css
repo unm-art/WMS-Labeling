@@ -129,6 +129,9 @@ table.output_columns_table td {
     margin:25px;
 }
 
+#select_all_checkbox {
+    text-align: right;
+}
 
 table.barcodes_table {
     font-family: verdana,arial,sans-serif;
