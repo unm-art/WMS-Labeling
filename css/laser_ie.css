@@ -31,7 +31,7 @@ body {
 }
 
 .cnum, .middle_padding, .pocket {
-  height: 67.5mm;
+  height: 68mm;
 }
 
 .cnum {
@@ -48,7 +48,7 @@ body {
 }
 
 .middle_padding {
-  width: 8mm;
+  width: 10mm;
 }
 
 .pocket {
@@ -59,8 +59,8 @@ body {
 }
 
 .cnum div {
-  padding: 1mm 0 0 1.5mm;
+  padding: 1mm 0 0 2mm;
 }
 .pocket div {
-  padding: 1mm 0 0 1mm;
+  padding: 1mm 0 0 2mm;
 }

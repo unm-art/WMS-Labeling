@@ -75,6 +75,9 @@ for ($x = 0; $x < count($print_array); $x++) {
         $label_row .= "<div class=\"cnum\"><div>{$cnumval}</div></div>\n<div class=\"pocket\"><div>{$pocketval}</div></div>\n";
 
     $label_row .= "</div>\n";
+    if ($x % 2 == 0) {
+      $label_row .= '<div class="middle_padding">&nbsp</div>';
+    }
     //$label_row .= "<tr>\n<td class=\"spacer_cell_vert\" colspan=\"7\">&nbsp;</td>\n</tr>\n";
     // Test whether we have eight labels for 2-col printing, or are on the last label
     if ((($x + 1) % 8 == 0) || $x + 1 >= count($print_array)) {
@@ -133,6 +136,26 @@ function makeTitleArray($input) {
     </div>
 </div>
 
+<script>
+$(document).ready(function(){
+  $('input[name="printer"]').click(function(){
+  $('.pocket').css("display", "block");
+  switch($(this).val()) {
+    case "dot_matrix":
+      $('#table_div').css("width", 400);
+      break;
+    case "laser":
+      $('#table_div').css("width", 800);
+      break;
+    case "dymo":
+      $('#table_div').css("width", 100);
+      $('.pocket').css("display", "none");
+      break;
+  }
+  });
+});
+</script>
+
 <?php
     print "<div id=\"table_div\">$label_page</div>";
     if (isset($oki_text)) {
@@ -154,9 +177,18 @@ function makeTitleArray($input) {
         e.preventDefault();
         printer_css = $("input[name=printer]:checked").val();
         if (typeof printer_css !== "undefined") {
-            $("#table_div").printArea( { mode: "popup", retainAttr: [], extraCss: 'css/'+printer_css+'.css' } );
+          //Grab appropriate browser for laser printing
+          if (printer_css == "laser") {
+            if (navigator.userAgent.match(/trident/i))
+              printer_css += "_ie";
+            else if (navigator.userAgent.match(/firefox/i))
+              printer_css += "_firefox";
+            else if (navigator.userAgent.match(/chrome/i))
+              printer_css += "_chrome";
+          }
+          $("#table_div").printArea( { mode: "popup", retainAttr: [], extraCss: 'css/'+printer_css+'.css' } );
         } else {
-            alert("Type of printer must be selected.");
+          alert("Type of printer must be selected.");
         }
 
     });

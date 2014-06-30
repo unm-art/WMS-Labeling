@@ -63,6 +63,8 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 
 #main_content { overflow: auto; margin-right: 180px; }
 
+.middle_padding { width: 10px; height: 170px; float: left; }
+
 #menu {
   float: left;
   padding: 5px;

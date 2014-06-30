@@ -8,6 +8,11 @@ body {
 .invisible {
     display: block;
 }
+
+.label_page {
+  width: 368px;
+}
+
 .print_label_button {
     text-align: center;
 }
@@ -17,7 +22,7 @@ body {
   @page 
   {
     size: auto;   /* auto is the current printer page size */
-    
+    margin: 0;
   }
   
   body {
@@ -25,31 +30,41 @@ body {
     padding: 0;
   }
   
+  .label_page {
+    width: 99mm;
+  }
+  
+  .cnum, .pocket {
+    font-size: 12pt;
+    font-family: Gothic;
+    letter-spacing: 1px;
+  }
+  
   .cnum {
     margin: 0;
     padding: 0;
     width: 22mm;
-    height: 67mm;
+    height: 76mm;
     border: none;
   }
   
   .label_container {
     float: left;
-    margin-left: 1mm;
+    margin: 0;
   }
   
   .pocket {
     margin-left: 3mm;
     padding: 0;
     width: 70mm;
-    height: 67mm;
+    height: 76mm;
     border: none;
   }
   
   .cnum div {
-    padding: 1mm 0 0 1mm;
+    padding: 4mm 0 4mm 3mm;
   }
   .pocket div {
-    padding: 1mm 0 0 1mm;
+    padding: 4mm 0 4mm 3mm;
   }
 }
