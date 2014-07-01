@@ -6,6 +6,8 @@ function init() {
 
     $('.barcode_input').unbind("keydown", car_ret_add_bc);
     $('.barcode_input').keydown(car_ret_add_bc);
+    $('.print_pocket_box').unbind("click", setCheckboxValue);
+    $('.print_pocket_box').click(setCheckboxValue);
 
 }
 
@@ -36,6 +38,8 @@ function addBarcodeInput() {
 
     var barcodes_tbl = document.getElementById('barcodes_table');
 
+    var barcodes_tbl_body = barcodes_tbl.getElementsByTagName('tbody')[0];
+
     var new_table_row = document.createElement('tr');
 
     var new_table_textbox_cell = document.createElement('td');
@@ -55,7 +59,7 @@ function addBarcodeInput() {
     new_table_checkbox_cell_checkbox.type = "checkbox";
     new_table_checkbox_cell_checkbox.name = "print_pocket_label_cb";
     new_table_checkbox_cell_checkbox.value = "no";
-    new_table_checkbox_cell_checkbox.onclick = setCheckboxValue;
+    new_table_checkbox_cell_checkbox.className = "print_pocket_box";
 
     new_table_hidden_cb_value_input.type = "hidden";
     new_table_hidden_cb_value_input.value = 0;
@@ -68,7 +72,9 @@ function addBarcodeInput() {
     new_table_row.appendChild(new_table_textbox_cell);
     new_table_row.appendChild(new_table_checkbox_cell);
 
-    barcodes_tbl.appendChild(new_table_row);
+    //barcodes_tbl.appendChild(new_table_row);
+
+    barcodes_tbl_body.appendChild(new_table_row);
 
     altRows('barcodes_table');
 
@@ -77,7 +83,6 @@ function addBarcodeInput() {
     init();
 
 }
-
 function setCheckboxValue() {
 
     hidden_sibling = this.nextSibling;
@@ -111,6 +116,7 @@ function altRows(id){
 
 function toggleSelected(source) {
     checkboxes = document.getElementsByName('print_pocket_label_cb');
+    alert(checkboxes.length);
     for(var i= 0, n=checkboxes.length; i<n; i++) {
         hidden_sibling = checkboxes[i].nextSibling;
         checkboxes[i].checked = source.checked;
