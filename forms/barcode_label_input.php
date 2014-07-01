@@ -1,11 +1,20 @@
+<?php
+$label_start_options = 8;
+if (!isset($saved_form)) {
+    $saved_form = array(
+        "barcodes" => array(
+            "A14403408420", "A14403408420", "A14403408420", "A14403408420"
+        ),
 
-<script>
+        "print_pocket_label" => array(
+            0, 1, 1, 0
+        ),
 
-    /* Initial call to addBarcodeInput to add first barcode and apply style. */
-    addBarcodeInput();
-    init();
+        "label_start" => 1
+    );
+}
 
-</script>
+?>
 
 <form name="barcode_scan_form" id="barcode_scan_form" action="forms/barcode_label_output.php" method="POST">
     <div class="barcodes_forms_container">
@@ -19,14 +28,35 @@
                     <td>Which label field do you wish to start printing on?</td>
                     <td>
                         <select id="label_start" name="label_start">
-                            <option value="1" selected="selected">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
+                            <?php
+                            $options = array();
+                            if (isset($saved_form)){
+                                for ($i = 0; $i < $label_start_options; $i++){
+                                    if($i == ($saved_form["label_start"] - 1)) {
+                                        $options[] = "<option value=\"".$saved_form["label_start"]."\" selected=\"selected\">".$saved_form["label_start"]."</option>";
+                                    }
+                                    else {
+                                        $opt_no = $i+1;
+                                        $options[] = "<option value=\"".$opt_no."\">".$opt_no."</option>";
+                                    }
+
+                                }
+
+                            }
+                            else {
+                                for ($i = 0; $i < $label_start_options; $i++) {
+                                    if($i == 0) {
+                                        $options[] = "<option value=\"1\" selected=\"selected\">1</option>";
+                                    }
+                                    else {
+                                        $opt_no = $i+1;
+                                        $options[] = "<option value=\"".$opt_no."\">".$opt_no."</option>";
+                                    }
+
+                                }
+                            }
+                            print implode($options);
+                            ?>
                         </select>
                     </td>
                 </tr>
@@ -36,10 +66,46 @@
                 <tr>
                     <th>Barcode No.</th><th>Pocket Label?</th>
                 </tr>
-
                 <!-- generated rows of barcode inputs go here -->
 
+                <!--
+                First we use PHP to generate the elements that may (or may not) already exist
+                (in the form of an 'edit' or 'back' submission from barcode_label_output.php
+                -->
+                <?php
+                if (isset($saved_form['barcodes'])){
+                    $count = count($saved_form['barcodes']);
+                    $initial_barcode_table = array();
+                    for ($i = 0; $i < $count; $i++) {
+                        $barcode = $saved_form['barcodes'][$i];
+                        $print_pocket_label = $saved_form['print_pocket_label'][$i];
+                        $print_pocket_label_checkbox = $print_pocket_label == 0 ? "no" : "yes";
+                        $checked = $print_pocket_label == 0 ? "" : "checked";
+                        $initial_barcode_table[] =
+                        "<tr>
+                            <td>
+                                <input type=\"text\" name=\"barcodes[]\" class=\"barcode_input\" value=\"".$saved_form['barcodes'][$i]."\">
+                            </td>
+                            <td>
+                                <input type=\"checkbox\" name=\"print_pocket_label_cb\" class=\"print_pocket_box\" value=\"".$print_pocket_label_checkbox."\"  ".$checked." >
+                                <input type=\"hidden\" value=\"".$saved_form['print_pocket_label'][$i]."\" name=\"print_pocket_label[]\">
+                            </td>
+                        </tr>";
+                    }
+                }
+                $tmp = implode($initial_barcode_table);
+                print $tmp;
+                ?>
+
             </table>
+
+            <script>
+
+                /* Initial call to addBarcodeInput to add first barcode and apply style. */
+                addBarcodeInput();
+                init();
+
+            </script>
 
             <div id="select_all_checkbox">
                 <br>
