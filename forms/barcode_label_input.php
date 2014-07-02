@@ -1,4 +1,8 @@
 <?php
+session_start();
+$saved_form = $_SESSION['saved_form'];
+//Clear session here
+//session_unset();
 $label_start_options = 8;
 if (!isset($saved_form)) {
     $saved_form = array(
@@ -78,6 +82,8 @@ if (!isset($saved_form)) {
                     $initial_barcode_table = array();
                     for ($i = 0; $i < $count; $i++) {
                         $barcode = $saved_form['barcodes'][$i];
+                        if (empty($barcode) || $barcode == "")
+                          continue;
                         $print_pocket_label = $saved_form['print_pocket_label'][$i];
                         $print_pocket_label_checkbox = $print_pocket_label == 0 ? "no" : "yes";
                         $checked = $print_pocket_label == 0 ? "" : "checked";

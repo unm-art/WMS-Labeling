@@ -3,12 +3,7 @@
 <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
 <?php
 
-if(isset($_REQUEST["output_columns"]) && $_REQUEST["output_columns"] == "2") {
-    $output_columns = "2";
-}
-else {
-    $output_columns = "1";
-}
+session_start();
 
 if(isset($_REQUEST["barcodes"]) && $_REQUEST["barcodes"] != "") {
     // array()
@@ -30,12 +25,13 @@ else {
     // Error
 }
 
-if (isset($_REQUEST["label_start"]) && is_numeric($_REQUEST["label_start"]) && $_REQUEST["label_start"] > 0 && $_REQUEST["label_start"] < 9 && $output_columns == "2") {
+if (isset($_REQUEST["label_start"]) && is_numeric($_REQUEST["label_start"]) && $_REQUEST["label_start"] > 0 && $_REQUEST["label_start"] < 9) {
     $label_start = $_REQUEST["label_start"];
 }
 
 $barcode_count = count($barcodes);
 
+$_SESSION['saved_form'] = $_REQUEST;
 
 $print_array = array();
 
@@ -59,8 +55,6 @@ $label_row = "";
 $label_page = "";
 
 for ($x = 0; $x < count($print_array); $x++) {
-//    print_r("1");
-//    var_dump($output_columns);
         $label_row .= "<div class=\"label_container\">\n";
         if (isset($print_array[$x][0]) && $print_array[$x][0] != "") {
             $cnumval = $print_array[$x][0];
@@ -86,27 +80,6 @@ for ($x = 0; $x < count($print_array); $x++) {
     }
 }
 
-if (isset($output_columns) && $output_columns == "1") {
-    reset($print_array);
-    $text = "";
-    for ($x = 0; $x < count($print_array); $x++) {
-        $call_num_array = explode("<br />", $print_array[$x][0]);
-        $title_array = makeTitleArray($print_array[$x][1]);
-        for ($y = 0; $y < 10; $y++) {
-            if (isset($call_num_array[$y]) && $call_num_array[$y] != "") {
-                $call_num_right_pad = str_pad($call_num_array[$y], 12, " ", STR_PAD_RIGHT);
-                $text .= "$call_num_right_pad";
-            }
-            if (isset($title_array[$y]) && $title_array[$y] != "") {
-                $text .= $title_array[$y] . "<br/>\n";
-            } else {
-                $text .= "<br/>\n";
-            }
-        }
-    }
-    $text = str_replace(" ", "&nbsp;", $text);
-    $oki_text = "\n<div class=\"invisible\" id=\"textPrint\">\n{$text}</div>\n";
-}
 
 function makeTitleArray($input) {
     $title = explode("<br />", $input);
