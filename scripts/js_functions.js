@@ -3,12 +3,9 @@
  */
 
 function init() {
-
-    $('.barcode_input').unbind("keydown", car_ret_add_bc);
     $('.barcode_input').keydown(car_ret_add_bc);
-    $('.print_pocket_box').unbind("click", setCheckboxValue);
-    $('.print_pocket_box').click(setCheckboxValue);
-
+    //$('#barcodes_table').on("change", '.print_pocket_box', setCheckboxValue);
+    $('.print_pocket_box').change(setCheckboxValue);
 }
 
 function car_ret_add_bc(e) {
@@ -79,21 +76,18 @@ function addBarcodeInput() {
     altRows('barcodes_table');
 
     new_table_textbox_cell_input.focus();
-
-    init();
-
 }
+
 function setCheckboxValue() {
-
-    hidden_sibling = this.nextSibling;
-
-    if (hidden_sibling.value == 0 || hidden_sibling.value == "") {
+    hidden_sibling = $(this).siblings('input[name="print_pocket_label[]"]');
+    
+    if (hidden_sibling.val() == 0 || hidden_sibling.val() == "") {
         this.value = "yes";
-        hidden_sibling.value = 1;
+        hidden_sibling.val(1);
     }
     else {
         this.value = "no";
-        hidden_sibling.value = 0;
+        hidden_sibling.val(0);
     }
 }
 
@@ -116,7 +110,6 @@ function altRows(id){
 
 function toggleSelected(source) {
     checkboxes = document.getElementsByName('print_pocket_label_cb');
-    alert(checkboxes.length);
     for(var i= 0, n=checkboxes.length; i<n; i++) {
         hidden_sibling = checkboxes[i].nextSibling;
         checkboxes[i].checked = source.checked;
