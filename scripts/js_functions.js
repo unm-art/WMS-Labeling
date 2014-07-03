@@ -3,9 +3,7 @@
  */
 
 function init() {
-    //$('.barcode_input').keydown(car_ret_add_bc);
     $('#barcodes_table').on("change", '.print_pocket_box', setCheckboxValue);
-    //$('.print_pocket_box').change(setCheckboxValue);
     $('#barcodes_table').on('keydown', '.barcode_input', car_ret_add_bc);
 }
 
@@ -69,8 +67,6 @@ function addBarcodeInput() {
 
     new_table_row.appendChild(new_table_textbox_cell);
     new_table_row.appendChild(new_table_checkbox_cell);
-
-    //barcodes_tbl.appendChild(new_table_row);
 
     barcodes_tbl_body.appendChild(new_table_row);
 

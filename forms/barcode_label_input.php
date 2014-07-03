@@ -2,22 +2,9 @@
 session_start();
 if (isset($_SESSION['saved_form']))
   $saved_form = $_SESSION['saved_form'];
-//Clear session here
-//session_unset();
+
 $label_start_options = 8;
-if (!isset($saved_form)) {
-    $saved_form = array(
-        "barcodes" => array(
-            "A14403408420", "A14403408420", "A14403408420", "A14403408420"
-        ),
 
-        "print_pocket_label" => array(
-            0, 1, 1, 0
-        ),
-
-        "label_start" => 1
-    );
-}
 
 ?>
 
@@ -100,8 +87,9 @@ if (!isset($saved_form)) {
                         </tr>";
                     }
                 }
-                $tmp = implode($initial_barcode_table);
-                print $tmp;
+                if (!empty($initial_barcode_table)) {
+                    print implode($initial_barcode_table);
+                }
                 ?>
 
             </table>
