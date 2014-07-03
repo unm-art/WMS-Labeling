@@ -12,6 +12,7 @@
 <script src="jquery/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
 <script src="scripts/js_functions.js" language="JavaScript"></script>
 <script>
+
 $(document).ready(function() {
   //Load page if user goes to hash page on first browse
   pageChoose(getLocationHash());
