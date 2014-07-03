@@ -17,6 +17,7 @@ $(document).ready(function() {
   pageChoose(getLocationHash());
   
   $('#menu .menu_list li a').click(function(e) {
+    $.get('forms/reset_form.php');
     pageChoose(getLocationHash());
     $(".selected").removeClass('selected');
     $(this).addClass('selected');

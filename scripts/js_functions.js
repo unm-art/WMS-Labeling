@@ -3,9 +3,10 @@
  */
 
 function init() {
-    $('.barcode_input').keydown(car_ret_add_bc);
-    //$('#barcodes_table').on("change", '.print_pocket_box', setCheckboxValue);
-    $('.print_pocket_box').change(setCheckboxValue);
+    //$('.barcode_input').keydown(car_ret_add_bc);
+    $('#barcodes_table').on("change", '.print_pocket_box', setCheckboxValue);
+    //$('.print_pocket_box').change(setCheckboxValue);
+    $('#barcodes_table').on('keydown', '.barcode_input', car_ret_add_bc);
 }
 
 function car_ret_add_bc(e) {
@@ -109,18 +110,15 @@ function altRows(id){
 }
 
 function toggleSelected(source) {
-    checkboxes = document.getElementsByName('print_pocket_label_cb');
-    for(var i= 0, n=checkboxes.length; i<n; i++) {
-        hidden_sibling = checkboxes[i].nextSibling;
-        checkboxes[i].checked = source.checked;
-        if(source.checked) {
-
-            checkboxes[i].value = "yes";
-            hidden_sibling.value = 1;
-        }
-        else {
-            checkboxes[i].value = "no";
-            hidden_sibling.value = 0;
-        }
+  $('input[name="print_pocket_label_cb"]').each(function(){
+    var hidden_sibling = $(this).siblings('input[name="print_pocket_label[]"]');
+    $(this).prop('checked', source.checked);
+    if (source.checked) {
+      $(this).val('yes');
+      hidden_sibling.val(1);
+    } else {
+      $(this).val('no');
+      hidden_sibling.val(0);
     }
+  });
 }
