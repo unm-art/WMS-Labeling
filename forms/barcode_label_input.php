@@ -1,6 +1,7 @@
 <?php
 session_start();
-$saved_form = $_SESSION['saved_form'];
+if (isset($_SESSION['saved_form']))
+  $saved_form = $_SESSION['saved_form'];
 //Clear session here
 //session_unset();
 $label_start_options = 8;
