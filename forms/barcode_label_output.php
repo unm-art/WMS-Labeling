@@ -37,7 +37,7 @@ $print_array = array();
 
 include_once('../lib/quicklabels.php');
 
-
+//Store all spine labels and pocket label counterparts in new, combined array
 for($x = 0; $x < $barcode_count; $x++) {
     if ($barcodes[$x] != "") {
         $print_array[] = quicklabels($barcodes[$x], $print_pocket_label[$x]);
@@ -53,7 +53,7 @@ if (isset($label_start) && $label_start != "") {
 
 $label_row = "";
 $label_page = "";
-
+//Build labels using divs
 for ($x = 0; $x < count($print_array); $x++) {
         $label_row .= "<div class=\"label_container\">\n";
         if (isset($print_array[$x][0]) && $print_array[$x][0] != "") {
@@ -95,7 +95,7 @@ function makeTitleArray($input) {
 
 
 ?>
-
+<!-- Radio list of different printers to choose from -->
 <div id="link-area" class="print_label_button">
     <div id="link-print">
         <div class="button_left_div"><a id="print_button" href="#print"><img src="images/icon-print.png" /><br/>Print Labels</a>
@@ -111,6 +111,7 @@ function makeTitleArray($input) {
 
 <script>
 $(document).ready(function(){
+  // Sets preview appearance for each printer type. This view does not affect actual printing, which is all css.
   $('input[name="printer"]').click(function(){
   $('.pocket').css("display", "block");
   switch($(this).val()) {
@@ -131,21 +132,9 @@ $(document).ready(function(){
 
 <?php
     print "<div id=\"table_div\">$label_page</div>";
-    if (isset($oki_text)) {
-        print "$oki_text";
-    }
-    
 ?>
 
 <script>
-    $("a#okiprint").click(function(e) {
-        e.preventDefault();
-        var printwindow = window.open("", "pw");
-        printwindow.document.write($("div.invisible").html());
-        printwindow.print();
-        printwindow.close();
-    });
-
     $("a#print_button").click(function(e){
         e.preventDefault();
         printer_css = $("input[name=printer]:checked").val();
