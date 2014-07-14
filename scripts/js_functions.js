@@ -8,7 +8,7 @@ function init() {
 }
 
 function car_ret_add_bc(e) {
-    var evt = e || window.event
+    var evt = e || window.event;
     // Check if next sibling has a value of "" in its textfield.  If so, set focus to that instead of adding another field.
 
     var row = $(this).parent().parent();
