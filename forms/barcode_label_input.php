@@ -28,21 +28,21 @@ $options = array();
 if (isset($savedForm) === true) {
     for ($i = 0; $i < $labelStartOptions; $i++) {
         if ($i === ($savedForm['label_start'] - 1)) {
-            $options[] = "<option
-                            value=\"".$savedForm["label_start"]."\"
-                            selected=\"selected\">".$savedForm["label_start"]."</option>";
+            $options[] = '<option
+                            value="'.$savedForm['label_start'].'"
+                            selected="selected">'.$savedForm['label_start'].'</option>';
         } else {
             $optNum = ($i + 1);
-                $options[] = "<option value=\"".$optNum."\">".$optNum."</option>";
+                $options[] = '<option value="'.$optNum.'>'.$optNum.'</option>';
         }
     }
 } else {
     for ($i = 0; $i < $labelStartOptions; $i++) {
         if ($i === 0) {
-            $options[] = '<option value=\"1\" selected=\"selected\">1</option>';
+            $options[] = '<option value="1" selected="selected">1</option>';
         } else {
             $optNum = ($i + 1);
-            $options[] = "<option value=\"".$optNum."\">".$optNum."</option>";
+            $options[] = '<option value="'.$optNum.'">'.$optNum.'</option>';
         }
     }
 }//end if
@@ -77,27 +77,27 @@ if (isset($savedForm['barcodes']) === true) {
         $printPocketLabelCheckbox = ($printPocketLabel === 0 ? 'no' : 'yes');
         $checked = ($printPocketLabel === 0 ? '' : 'checked');
         $initialBarcodeTable[]
-            = "<tr>
+            = '<tr>
                 <td>
                     <input
-                        type=\"text\"
-                        name=\"barcodes[]\"
-                        class=\"barcode_input\"
-                        value=\"".$savedForm['barcodes'][$i]."\">
+                        type="text"
+                        name="barcodes[]"
+                        class="barcode_input"
+                        value="'.$savedForm['barcodes'][$i].'">
                 </td>
                 <td>
                     <input
-                        type=\"checkbox\"
-                        name=\"print_pocket_label_cb\"
-                        class=\"print_pocket_box\"
-                        value=\"".$printPocketLabelCheckbox."\"
-                        ".$checked.">
+                        type="checkbox"
+                        name="print_pocket_label_cb"
+                        class="print_pocket_box"
+                        value="'.$printPocketLabelCheckbox.'"
+                        '.$checked.'>
                     <input
-                        type=\"hidden\"
-                        value=\"".$savedForm["print_pocket_label"][$i]."\"
+                        type="hidden"
+                        value="'.$savedForm['print_pocket_label'][$i].'"
                         name=\"print_pocket_label[]\">
                 </td>
-             </tr>";
+             </tr>';
     }//end for
 }//end if
 if (empty($initialBarcodeTable) === false) {
