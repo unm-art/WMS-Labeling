@@ -28,12 +28,12 @@ $options = array();
 if (isset($savedForm) === true) {
     for ($i = 0; $i < $labelStartOptions; $i++) {
         if ($i === ($savedForm['label_start'] - 1)) {
-            $options[] = '<option
-                            value=\"'.$savedForm["label_start"].'\"
-                            selected=\"selected\">'.$savedForm["label_start"].'</option>';
+            $options[] = "<option
+                            value=\"".$savedForm["label_start"]."\"
+                            selected=\"selected\">".$savedForm["label_start"]."</option>";
         } else {
             $optNum = ($i + 1);
-                $options[] = '<option value=\"'.$optNum.'\">'.$optNum.'</option>';
+                $options[] = "<option value=\"".$optNum."\">".$optNum."</option>";
         }
     }
 } else {
@@ -42,7 +42,7 @@ if (isset($savedForm) === true) {
             $options[] = '<option value=\"1\" selected=\"selected\">1</option>';
         } else {
             $optNum = ($i + 1);
-            $options[] = '<option value=\"'.$optNum.'\">'.$optNum.'</option>';
+            $options[] = "<option value=\"".$optNum."\">".$optNum."</option>";
         }
     }
 }//end if
@@ -74,8 +74,8 @@ if (isset($savedForm['barcodes']) === true) {
         }
 
         $printPocketLabel = $savedForm['print_pocket_label'][$i];
-        $printPocketLabelCheckbox = ($printPocketLabel === 0) ? 'no' : 'yes';
-        $checked = ($printPocketLabel === 0) ? '' : 'checked';
+        $printPocketLabelCheckbox = ($printPocketLabel === 0 ? 'no' : 'yes');
+        $checked = ($printPocketLabel === 0 ? '' : 'checked');
         $initialBarcodeTable[]
             = "<tr>
                 <td>
@@ -109,8 +109,9 @@ if (empty($initialBarcodeTable) === false) {
 
             <script>
 
-                /* Initial call to addBarcodeInput to add first barcode and apply style. */
+                /* Initial call to addBarcodeInput to add first barcode. */
                 addBarcodeInput();
+                /* Init to apply javascript event handlers */
                 init();
 
             </script>
