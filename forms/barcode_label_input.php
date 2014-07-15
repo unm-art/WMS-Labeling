@@ -1,9 +1,12 @@
 <?php
-session_start();
-if (isset($_SESSION['saved_form']))
-  $saved_form = $_SESSION['saved_form'];
 
-$label_start_options = 8;
+session_start();
+
+if (isset($_SESSION['saved_form']) === true) {
+    $savedForm = $_SESSION['saved_form'];
+}
+
+$labelStartOptions = 8;
 
 
 ?>
@@ -20,35 +23,31 @@ $label_start_options = 8;
                     <td>Which label field do you wish to start printing on?</td>
                     <td>
                         <select id="label_start" name="label_start">
-                            <?php
-                            $options = array();
-                            if (isset($saved_form)){
-                                for ($i = 0; $i < $label_start_options; $i++){
-                                    if($i == ($saved_form["label_start"] - 1)) {
-                                        $options[] = "<option value=\"".$saved_form["label_start"]."\" selected=\"selected\">".$saved_form["label_start"]."</option>";
-                                    }
-                                    else {
-                                        $opt_no = $i+1;
-                                        $options[] = "<option value=\"".$opt_no."\">".$opt_no."</option>";
-                                    }
-
-                                }
-
-                            }
-                            else {
-                                for ($i = 0; $i < $label_start_options; $i++) {
-                                    if($i == 0) {
-                                        $options[] = "<option value=\"1\" selected=\"selected\">1</option>";
-                                    }
-                                    else {
-                                        $opt_no = $i+1;
-                                        $options[] = "<option value=\"".$opt_no."\">".$opt_no."</option>";
-                                    }
-
-                                }
-                            }
-                            print implode($options);
-                            ?>
+<?php
+$options = array();
+if (isset($savedForm) === true) {
+    for ($i = 0; $i < $labelStartOptions; $i++) {
+        if ($i === ($savedForm['label_start'] - 1)) {
+            $options[] = '<option
+                            value=\"'.$savedForm["label_start"].'\"
+                            selected=\"selected\">'.$savedForm["label_start"].'</option>';
+        } else {
+            $optNum = ($i + 1);
+                $options[] = '<option value=\"'.$optNum.'\">'.$optNum.'</option>';
+        }
+    }
+} else {
+    for ($i = 0; $i < $labelStartOptions; $i++) {
+        if ($i === 0) {
+            $options[] = '<option value=\"1\" selected=\"selected\">1</option>';
+        } else {
+            $optNum = ($i + 1);
+            $options[] = '<option value=\"'.$optNum.'\">'.$optNum.'</option>';
+        }
+    }
+}//end if
+echo implode($options);
+?>
                         </select>
                     </td>
                 </tr>
@@ -64,33 +63,47 @@ $label_start_options = 8;
                 First we use PHP to generate the elements that may (or may not) already exist
                 (in the form of an 'edit' or 'back' submission from barcode_label_output.php
                 -->
-                <?php
-                if (isset($saved_form['barcodes'])){
-                    $count = count($saved_form['barcodes']);
-                    $initial_barcode_table = array();
-                    for ($i = 0; $i < $count; $i++) {
-                        $barcode = $saved_form['barcodes'][$i];
-                        if (empty($barcode) || $barcode == "")
-                          continue;
-                        $print_pocket_label = $saved_form['print_pocket_label'][$i];
-                        $print_pocket_label_checkbox = $print_pocket_label == 0 ? "no" : "yes";
-                        $checked = $print_pocket_label == 0 ? "" : "checked";
-                        $initial_barcode_table[] =
-                        "<tr>
-                            <td>
-                                <input type=\"text\" name=\"barcodes[]\" class=\"barcode_input\" value=\"".$saved_form['barcodes'][$i]."\">
-                            </td>
-                            <td>
-                                <input type=\"checkbox\" name=\"print_pocket_label_cb\" class=\"print_pocket_box\" value=\"".$print_pocket_label_checkbox."\"  ".$checked." >
-                                <input type=\"hidden\" value=\"".$saved_form['print_pocket_label'][$i]."\" name=\"print_pocket_label[]\">
-                            </td>
-                        </tr>";
-                    }
-                }
-                if (!empty($initial_barcode_table)) {
-                    print implode($initial_barcode_table);
-                }
-                ?>
+<?php
+if (isset($savedForm['barcodes']) === true) {
+    $count = count($savedForm['barcodes']);
+    $initialBarcodeTable = array();
+    for ($i = 0; $i < $count; $i++) {
+        $barcode = $savedForm['barcodes'][$i];
+        if (empty($barcode) === true || $barcode === '') {
+            continue;
+        }
+
+        $printPocketLabel = $savedForm['print_pocket_label'][$i];
+        $printPocketLabelCheckbox = ($printPocketLabel === 0) ? 'no' : 'yes';
+        $checked = ($printPocketLabel === 0) ? '' : 'checked';
+        $initialBarcodeTable[]
+            = "<tr>
+                <td>
+                    <input
+                        type=\"text\"
+                        name=\"barcodes[]\"
+                        class=\"barcode_input\"
+                        value=\"".$savedForm['barcodes'][$i]."\">
+                </td>
+                <td>
+                    <input
+                        type=\"checkbox\"
+                        name=\"print_pocket_label_cb\"
+                        class=\"print_pocket_box\"
+                        value=\"".$printPocketLabelCheckbox."\"
+                        ".$checked.">
+                    <input
+                        type=\"hidden\"
+                        value=\"".$savedForm["print_pocket_label"][$i]."\"
+                        name=\"print_pocket_label[]\">
+                </td>
+             </tr>";
+    }//end for
+}//end if
+if (empty($initialBarcodeTable) === false) {
+    echo implode($initialBarcodeTable);
+}
+?>
 
             </table>
 
