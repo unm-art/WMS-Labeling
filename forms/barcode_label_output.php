@@ -2,97 +2,93 @@
 <script src="jquery/printElement/jquery.printElement.js" type="text/JavaScript" language="javascript"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
 <?php
-
+/**
+ * barcode_label_output
+ *
+ * PHP version 5.3.3
+ *
+ * Output labels grabbed from WMS API and allow user to print.
+ */
 session_start();
+$barcodes         = '';
+$barcodeCount     = '';
+$labelStart       = '';
+$printPocketLabel = '';
 
-if(isset($_REQUEST["barcodes"]) && $_REQUEST["barcodes"] != "") {
-    // array()
-    $barcodes = $_REQUEST["barcodes"];
-    $tmp = "";
-    for($i = 0; $i < count($barcodes); $i++) {
+if (isset($_REQUEST['barcodes']) === true && $_REQUEST['barcodes'] !== '') {
+    $barcodes     = $_REQUEST['barcodes'];
+    $barcodeCount = count($barcodes);
+    $tmp          = '';
+
+    for ($i = 0; $i < $barcodeCount; $i++) {
         $tmp .= $barcodes[$i];
     }
 }
-else {
-    // Error
+
+if (isset($_REQUEST['print_pocket_label']) === true && $_REQUEST['print_pocket_label'] !== '') {
+    $printPocketLabel = $_REQUEST['print_pocket_label'];
 }
 
-if(isset($_REQUEST["print_pocket_label"]) && $_REQUEST["print_pocket_label"] != "") {
-    // array()
-    $print_pocket_label = $_REQUEST["print_pocket_label"];
+if (isset($_REQUEST['label_start']) === true
+    && is_numeric($_REQUEST['label_start']) === true
+    && $_REQUEST['label_start'] > 0
+    && $_REQUEST['label_start'] < 9
+) {
+    $labelStart = $_REQUEST['label_start'];
 }
-else {
-    // Error
-}
-
-if (isset($_REQUEST["label_start"]) && is_numeric($_REQUEST["label_start"]) && $_REQUEST["label_start"] > 0 && $_REQUEST["label_start"] < 9) {
-    $label_start = $_REQUEST["label_start"];
-}
-
-$barcode_count = count($barcodes);
 
 $_SESSION['saved_form'] = $_REQUEST;
 
-$print_array = array();
+$printArray = array();
 
-include_once('../lib/quicklabels.php');
+require_once '../lib/quicklabels.php';
 
-//Store all spine labels and pocket label counterparts in new, combined array
-for($x = 0; $x < $barcode_count; $x++) {
-    if ($barcodes[$x] != "") {
-        $print_array[] = quicklabels($barcodes[$x], $print_pocket_label[$x]);
+// Store all spine labels and pocket label counterparts in new, combined array.
+for ($x = 0; $x < $barcodeCount; $x++) {
+    if ($barcodes[$x] !== '') {
+        $printArray[] = quicklabels($barcodes[$x], $printPocketLabel[$x]);
     }
 }
 
-// Add empty rows to print_array to start print on specified label
-if (isset($label_start) && $label_start != "") {
-    for ($x = 1; $x < $label_start; $x++) {
-        array_unshift($print_array, array("&nbsp;", "&nbsp;"));
+// Add empty rows to print_array to start print on specified label.
+if (isset($labelStart) === true && $labelStart !== '') {
+    for ($x = 1; $x < $labelStart; $x++) {
+        array_unshift($printArray, array('&nbsp;', '&nbsp;'));
     }
 }
 
-$label_row = "";
-$label_page = "";
-//Build labels using divs
-for ($x = 0; $x < count($print_array); $x++) {
-        $label_row .= "<div class=\"label_container\">\n";
-        if (isset($print_array[$x][0]) && $print_array[$x][0] != "") {
-            $cnumval = $print_array[$x][0];
-        } else {
-            $cnumval = "&nbsp;";
-        }
-        if (isset($print_array[$x][1]) && $print_array[$x][1] != "") {
-            $pocketval = $print_array[$x][1];
-        } else {
-            $pocketval = "&nbsp;";
-        }        
-        $label_row .= "<div class=\"cnum\"><div>{$cnumval}</div></div>\n<div class=\"pocket\"><div>{$pocketval}</div></div>\n";
-
-    $label_row .= "</div>\n";
-    if ($x % 2 == 0) {
-      $label_row .= '<div class="middle_padding">&nbsp</div>';
+$labelRow   = '';
+$labelPage  = '';
+$printCount = count($printArray);
+// Build labels using divs.
+for ($x = 0; $x < $printCount; $x++) {
+    $labelRow .= '<div class="label_container">'."\n";
+    if (isset($printArray[$x][0]) === true && $printArray[$x][0] !== '') {
+        $cnumVal = $printArray[$x][0];
+    } else {
+        $cnumVal = '&nbsp;';
     }
-    //$label_row .= "<tr>\n<td class=\"spacer_cell_vert\" colspan=\"7\">&nbsp;</td>\n</tr>\n";
-    // Test whether we have eight labels for 2-col printing, or are on the last label
-    if ((($x + 1) % 8 == 0) || $x + 1 >= count($print_array)) {
-        $label_page .= "<div class=\"label_page\">{$label_row}</div>\n";
-        $label_row = "";
+
+    if (isset($printArray[$x][1]) === true && $printArray[$x][1] !== '') {
+        $pocketVal = $printArray[$x][1];
+    } else {
+        $pocketVal = '&nbsp;';
     }
-}
 
+    $labelRow .= '<div class="cnum"><div>'.$cnumVal.'</div></div>'."\n";
+    $labelRow .= '<div class="pocket"><div>'.$pocketVal.'</div></div>'."\n";
 
-function makeTitleArray($input) {
-    $title = explode("<br />", $input);
-    $return = array();
-    for ($x = 0; $x < count($title); $x++) {
-        if (isset($title[$x]) && $title[$x] != "") {
-            $title_split = explode("\n", wordwrap($title[$x], 30, "\n"));
-            $return = array_merge($return, $title_split);
-        }
+    $labelRow .= "</div>\n";
+    if (($x % 2) === 0) {
+        $labelRow .= '<div class="middle_padding">&nbsp</div>';
     }
-    return $return;
-}
 
+    // Test whether we have eight labels for 2-col printing, or are on the last label.
+    if ((($x + 1) % 8 === 0) || ($x + 1) >= count($printArray)) {
+        $labelPage .= '<div class="label_page">'.$labelRow.'</div>'."\n";
+        $labelRow   = '';
+    }
+}//end for
 
 ?>
 <!-- Radio list of different printers to choose from -->
@@ -131,7 +127,7 @@ $(document).ready(function(){
 </script>
 
 <?php
-    print "<div id=\"table_div\">$label_page</div>";
+echo "<div id=\"table_div\">$labelPage</div>";
 ?>
 
 <script>

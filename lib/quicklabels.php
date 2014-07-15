@@ -1,15 +1,34 @@
 <?php
 
-function quicklabels($nums, $title_p = "0") {
+/* php version of quicklabels.c using curl instead of Zend
+ * David Cunningham, UNB Libraries, Apr 25, 2014
+ * 
+ * Put into a function, added author information, and made
+ * pocket label printing optional, UNM University Libraries,
+ * Jul 14, 2014
+ */
 
-    /* 	php version of quicklabels.c using curl instead of Zend
-      David Cunningham, UNB Libraries, Apr 25, 2014
-     */
+/** 
+ * Function quicklabels 
+ * Takes barcode and returns call number, optionally pocket label text
+ * 
+ * Parameters
+ * $nums    barcode of item
+ * $title_p whether to print pocket label
+ *          1 = print
+ *          0 = do not print (default)
+ * 
+ * Returns array of 
+ *   - call number
+ *   - pocket label text or empty string
+ */
+function quicklabels($nums, $title_p = "0") {
 
     include_once('wskeyv2.php');
     require('../config/config.php');
     require('../config/crosswalks.php');
 
+    //  Set pocket label variable
     if ($title_p == '1') {
         $print_title = 1;
     } else {
@@ -26,6 +45,7 @@ function quicklabels($nums, $title_p = "0") {
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: $auth", "Accept: application/json"));
+        // Try up to 10 times to get a response; avoid failure due to network
         for ($i = 0; $i < 10; $i++) {
             $response = curl_exec($curl);
             if (stristr($response, "unexpected end of file") || $response == "") {
@@ -38,10 +58,12 @@ function quicklabels($nums, $title_p = "0") {
 
         $json = json_decode($response);
 
+        // If barcode not found, return immediately with that info
         if (stristr($response, "Unknown piece designation")) {
             return array("$barcode", "This barcode was not found in WMS.");
         }
 
+        // Set item information
         $copy = $json->entries[0]->content;
         $bib = $copy->bib;
         $oclc = substr($bib, 6);
@@ -196,6 +218,7 @@ function quicklabels($nums, $title_p = "0") {
             }
         }
 
+        // Set building/location using $shelf_loc array
         $location = $copy->shelvingLocation;
         $c = strcspn($location, ":");
         $location = substr($location, 0, $c);
@@ -209,12 +232,13 @@ function quicklabels($nums, $title_p = "0") {
                 $newcallnum = substr($callnum, 0, $d) . " " . substr($callnum, $d);
                 $callnum = $newcallnum;
             }
+            // Ensure space before second cutter 
             $e = strcspn($callnum, ".", $d);
             if (($e > 0) && !is_numeric(substr($callnum, $d + $e + 1, 1)) && (substr($callnum, $d + $e - 1, 1) != ' ')) {
                 $newcallnum = substr($callnum, 0, $d + $e) . " " . substr($callnum, $d + $e);
                 $callnum = $newcallnum;
             }
-
+            // Ensure space between class number's letters and numbers
             $c = strcspn($callnum, "0123456789");
             if (($c > 0) && (substr($callnum, $c - 1, 1) != ' ')) {
                 $newcallnum = substr($callnum, 0, $c) . " " . substr($callnum, $c);
@@ -222,9 +246,11 @@ function quicklabels($nums, $title_p = "0") {
             }
         }
 
+        // Prepare pocket label text if called for
         if ($print_title) {
             $worldcat_url = BIBURL . '/' . $oclc . '?wskey=' . BIBKEY;
 
+            // Try up to 10 times to get a response; avoid failure due to network
             for ($i = 0; $i < 10; $i++) {
                 $xml = simplexml_load_file($worldcat_url);
                 if (!$xml || $xml == "") {
@@ -238,6 +264,7 @@ function quicklabels($nums, $title_p = "0") {
             foreach ($xml->xpath('//marc:record') as $book) {
                 $book['xmlns:marc'] = 'http://www.loc.gov/MARC21/slim';
                 $field = simplexml_load_string($book->asXML());
+                // Title information
                 $subtitle = "";
                 if (count($field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='a']")) > 0) {
                     $title = $field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='a']");
@@ -262,6 +289,7 @@ function quicklabels($nums, $title_p = "0") {
                     $full_title = $clean_title;
                     $return_title = "$full_title";
                 }
+                // Author information
                 if (count($field->xpath("marc:datafield[@tag='100']/marc:subfield[@code='a']")) > 0) {
                     $author = $field->xpath("marc:datafield[@tag='100']/marc:subfield[@code='a']");
                 } elseif (count($field->xpath("marc:datafield[@tag='110']/marc:subfield[@code='a']")) > 0) {
@@ -283,7 +311,7 @@ function quicklabels($nums, $title_p = "0") {
                 }
             }
             $print_call_num = "$callnum";
-        } else {
+        } else { // Set vars to empty if pocket label not desired
             $return_title = "";
             $return_author = "";
             $print_call_num = "";
@@ -291,8 +319,9 @@ function quicklabels($nums, $title_p = "0") {
 
         $return_call_number = "$location_full<br />";
         $return_call_number .= str_replace(" ", "<br />", $callnum);
-
-    return array("$return_call_number", "$return_title<br />$return_author<br />$print_call_num");
+        
+        // Return array of call number, pocket label text
+        return array("$return_call_number", "$return_title<br />$return_author<br />$print_call_num");
 }
 
 ?>
