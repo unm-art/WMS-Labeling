@@ -32,8 +32,8 @@ if (isset($savedForm) === true) {
                             value="'.$savedForm['label_start'].'"
                             selected="selected">'.$savedForm['label_start'].'</option>';
         } else {
-            $optNum = ($i + 1);
-                $options[] = '<option value="'.$optNum.'>'.$optNum.'</option>';
+            $optNum    = ($i + 1);
+            $options[] = '<option value="'.$optNum.'">'.$optNum.'</option>';
         }
     }
 } else {
@@ -41,7 +41,7 @@ if (isset($savedForm) === true) {
         if ($i === 0) {
             $options[] = '<option value="1" selected="selected">1</option>';
         } else {
-            $optNum = ($i + 1);
+            $optNum    = ($i + 1);
             $options[] = '<option value="'.$optNum.'">'.$optNum.'</option>';
         }
     }
@@ -74,8 +74,14 @@ if (isset($savedForm['barcodes']) === true) {
         }
 
         $printPocketLabel = $savedForm['print_pocket_label'][$i];
-        $printPocketLabelCheckbox = ($printPocketLabel === 0 ? 'no' : 'yes');
-        $checked = ($printPocketLabel === 0 ? '' : 'checked');
+        if ($printPocketLabel === '0') {
+            $printPocketLabelCheckbox = 'no';
+            $checked = '';
+        } else {
+            $printPocketLabelCheckbox = 'yes';
+            $checked = 'checked';
+        }
+
         $initialBarcodeTable[]
             = '<tr>
                 <td>
@@ -95,7 +101,7 @@ if (isset($savedForm['barcodes']) === true) {
                     <input
                         type="hidden"
                         value="'.$savedForm['print_pocket_label'][$i].'"
-                        name=\"print_pocket_label[]\">
+                        name="print_pocket_label[]">
                 </td>
              </tr>';
     }//end for
