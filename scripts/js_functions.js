@@ -4,10 +4,10 @@
 
 function init() {
     $('#barcodes_table').on("change", '.print_pocket_box', setCheckboxValue);
-    $('#barcodes_table').on('keydown', '.barcode_input', car_ret_add_bc);
+    $('#barcodes_table').on('keydown', '.barcode_input', carriageReturnAddBarcode);
 }
 
-function car_ret_add_bc(e) {
+function carriageReturnAddBarcode(e) {
     var evt = e || window.event;
     // Check if next sibling has a value of "" in its textfield.  If so, set focus to that instead of adding another field.
 
@@ -19,7 +19,7 @@ function car_ret_add_bc(e) {
         // Then ... if there are no empty inputs below us, add a new one
         if (row.index() == row.siblings().length) {
             addBarcodeInput();
-            return false;
+            //return false;
         }
         // If there are empty inputs below us, go to the next one and set focus.
         else {
@@ -76,7 +76,7 @@ function addBarcodeInput() {
 }
 
 function setCheckboxValue() {
-    hidden_sibling = $(this).siblings('input[name="print_pocket_label[]"]');
+    var hidden_sibling = $(this).siblings('input[name="print_pocket_label[]"]');
     
     if (hidden_sibling.val() == 0 || hidden_sibling.val() == "") {
         this.value = "yes";
