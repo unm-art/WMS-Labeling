@@ -6,6 +6,13 @@ if (isset($_SESSION['saved_form']) === true) {
     $savedForm = $_SESSION['saved_form'];
 }
 
+ /*
+     * This variable defines the number of individual
+     * labels on your sheet of two column label stock.
+     *  This is here so you can prevent waste on partially
+     * used label stock.
+ */
+
 $labelStartOptions = 8;
 
 
