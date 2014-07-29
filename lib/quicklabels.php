@@ -43,6 +43,8 @@ function quicklabels($nums, $title_p = "0") {
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
+        //Used for local server testing without ssl cert
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: $auth", "Accept: application/atom+xml"));
         // Try up to 10 times to get a response; avoid failure due to network

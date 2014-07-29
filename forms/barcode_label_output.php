@@ -1,6 +1,9 @@
 <script src="jquery/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
 <script src="jquery/printElement/jquery.printElement.js" type="text/JavaScript" language="javascript"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
+<script src="scripts/DYMO.Label.Framework.latest.js"
+        type="text/javascript" charset="UTF-8"> </script>
+<script src="scripts/DYMO_print.js"></script>
 <?php
 /**
  * barcode_label_output
@@ -99,7 +102,8 @@ for ($x = 0; $x < $printCount; $x++) {
         <div class="button_right_div">
             <input type="radio" name="printer" id="printer1" value="dot_matrix" /> Okidata Dot Matrix<br />
             <input type="radio" name="printer" id="printer2" value="laser" /> Laser Printer<br />
-            <input type="radio" name="printer" id="printer3" value="dymo" /> Dymo Printer
+            <input type="radio" name="printer" id="printer3" value="dymo" /> Dymo Printer<br />
+            <input type="radio" name="printer" id="printer4" value="newdymo" /> New Dymo Printer
         </div>
         <div class="clear"></div>
     </div>
@@ -118,6 +122,10 @@ $(document).ready(function(){
       $('#table_div').css("width", 800);
       break;
     case "dymo":
+      $('#table_div').css("width", 100);
+      $('.pocket').css("display", "none");
+      break;
+    case "newdymo":
       $('#table_div').css("width", 100);
       $('.pocket').css("display", "none");
       break;
@@ -143,6 +151,17 @@ echo "<div id=\"table_div\">$labelPage</div>";
               printer_css += "_firefox";
             else if (navigator.userAgent.match(/chrome/i))
               printer_css += "_chrome";
+          }
+          else if (printer_css == "newdymo") {
+            $('.cnum').each(function() {
+              //Get contents of spine label
+              var str = $(this).children('div').html();
+              var regex = /<br\s*[\/]?>/gi;
+              var labelStr = str.replace(regex, "\n");
+              printDymoSpine(labelStr);
+            });
+            
+            return;
           }
           $("#table_div").printArea( { mode: "popup", retainAttr: [], extraCss: 'css/'+printer_css+'.css' } );
         } else {
