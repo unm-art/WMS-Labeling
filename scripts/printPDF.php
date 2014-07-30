@@ -42,7 +42,7 @@ $mvPos = 0;
 // Build labels using divs.
 for ($x = 0; $x < $printCount; $x++) {
     $cnumArray = array();
-    if (isset($printArray[$x][0]) === true && $printArray[$x][0] !== '') {
+    if (isset($printArray[$x][0]) === true && $printArray[$x][0] !== '&nbsp;') {
         $cnumVal = preg_replace('#<br\s*/?>#i', "\n", $printArray[$x][0]);
         $strCount = substr_count($cnumVal, "\n");
     } else {
@@ -52,7 +52,7 @@ for ($x = 0; $x < $printCount; $x++) {
     //Spine label
     $pdf->MultiCell(20.6375, 68, $cnumVal, 0, 'L', false, 0, NULL, NULL, true, 0, false, false, 67.4688);
 
-    if (isset($printArray[$x][1]) === true && $printArray[$x][1] !== '') {
+    if (isset($printArray[$x][1]) === true && $printArray[$x][1] !== '&nbsp;') {
         $pocketVal = preg_replace('#<br\s*/?>#i', "\n",$printArray[$x][1]);
         $strCount = substr_count($pocketVal, "\n");
     } else {
