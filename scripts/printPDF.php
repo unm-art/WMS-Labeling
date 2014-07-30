@@ -58,7 +58,7 @@ for ($x = 0; $x < $printCount; $x++) {
     }
     
     //Spine label
-    $pdf->MultiCell(20, 67.4688, $cnumVal, 0, 'L', false, 0, NULL, NULL, true, 1, false, false, 67.4688, 'T', true);
+    $pdf->MultiCell(20, 34.1313, $cnumVal, 0, 'L', false, 0, NULL, NULL, true, 0, false, false, 34.1313, 'T', true);
 
     if (isset($printArray[$x][1]) === true && $printArray[$x][1] !== '&nbsp;') {
         $pocketVal = preg_replace('#<br\s*/?>#i', "\n",$printArray[$x][1]);
@@ -80,11 +80,16 @@ for ($x = 0; $x < $printCount; $x++) {
     }
     
     //Pocket label
-    $pdf->MultiCell(73, 67.4688, $pocketVal, 0, 'L', false, $mvPos, NULL, NULL, true, 0, false, false, 67.4688, 'T', true);
+    $pdf->MultiCell(73, 34.1313, $pocketVal, 0, 'L', false, $mvPos, NULL, NULL, true, 0, false, false, 34.1313, 'T', true);
     
     //Add middle padding if moving to right side
     if (($x % 2) === 0) {
       $pdf->Cell(7, 0, "", 0, 0);
+    }
+    
+    //Padding for horizontal space between cells.
+    if (($x % 2) !== 0 && ($x + 1) % 8 !== 0) {
+      $pdf->MultiCell(202, 34.1313, '', 0, 'L', false, 1);
     }
 
     // Test whether we have eight labels and add new page if we have more
