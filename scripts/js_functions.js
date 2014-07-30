@@ -5,8 +5,7 @@
 function init() {
     // modifies 'Pocket Label?' checkbox upon
     $('#barcodes_table').on("change", '.print_pocket_box', setCheckboxValue);
-    //$('#barcodes_table').on('keydown', '.barcode_input', carriageReturnAddBarcode);
-    $('#barcodes_table').on('keydown', '.barcode_input', aBCWrapper);
+    $('#barcodes_table').on('keydown', '.barcode_input', carriageReturnAddBarcode);
 }
 
 function carriageReturnAddBarcode(e) {
@@ -29,14 +28,6 @@ function carriageReturnAddBarcode(e) {
             sib.focus();
         }
     }
-}
-
-function aBCWrapper(e) {
-    carriageReturnAddBarcode(e);
-    $('#barcodes_table').unbind('keydown', '.barcode_input', carriageReturnAddBarcode);
-    sleep(250);
-    $('#barcodes_table').on('keydown', '.barcode_input', carriageReturnAddBarcode);
-
 }
 
 function addBarcodeInput() {
@@ -128,12 +119,3 @@ function toggleSelected(source) {
   });
 }
 
-function sleep(time) {
-    var start = new Date().getTime();
-    for (var i = 0; i < 1e7; i++) {
-        if ((new Date().getTime() - start) > time) {
-            break;
-        }
-
-    }
-}
