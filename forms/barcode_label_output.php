@@ -103,10 +103,9 @@ $_SESSION['printArray'] = $printArray;
         <div class="button_left_div"><a id="print_button" href="#print"><img src="images/icon-print.png" /><br/>Print Labels</a>
         </div>
         <div class="button_right_div">
-            <input type="radio" name="printer" id="printer1" value="dot_matrix" /> Okidata Dot Matrix<br />
-            <input type="radio" name="printer" id="printer2" value="laser" /> Laser Printer<br />
-            <input type="radio" name="printer" id="printer3" value="dymo" /> Dymo Printer<br />
-            <input type="radio" name="printer" id="printer4" value="newdymo" /> New Dymo Printer
+            <input type="radio" name="printer" id="printer1" value="dot_matrix" /> Okidata Dot Matrix (IE Only)<br />
+            <input type="radio" name="printer" id="printer2" value="laser" /> Laser Printer (IE/Chrome Only)<br />
+            <input type="radio" name="printer" id="printer4" value="dymo" /> Dymo Printer
         </div>
         <div class="clear"></div>
     </div>
@@ -146,11 +145,11 @@ echo "<div id=\"table_div\">$labelPage</div>";
         e.preventDefault();
         printer_css = $("input[name=printer]:checked").val();
         if (typeof printer_css !== "undefined") {
-          //Grab appropriate browser for laser printing
           if (printer_css == "laser") {
+            //Run TCPDF script
             window.location.href = 'scripts/printPDF.php';
-            return;
             /*
+            //Detect browser and load appropriate css
             if (navigator.userAgent.match(/trident/i))
               printer_css += "_ie";
             else if (navigator.userAgent.match(/firefox/i))
@@ -159,7 +158,7 @@ echo "<div id=\"table_div\">$labelPage</div>";
               printer_css += "_chrome";
             */
           }
-          else if (printer_css == "newdymo") {
+          else if (printer_css == "dymo") {
             $('.cnum').each(function() {
               //Get contents of spine label
               var str = $(this).children('div').html();
@@ -167,10 +166,12 @@ echo "<div id=\"table_div\">$labelPage</div>";
               var labelStr = str.replace(regex, "\n");
               printDymoSpine(labelStr);
             });
-            
-            return;
           }
-          $("#table_div").printArea( { mode: "popup", retainAttr: [], extraCss: 'css/'+printer_css+'.css' } );
+          else {
+            //Dot Matrix
+            $("#table_div").printArea( { mode: "popup", retainAttr: [], extraCss: 'css/'+printer_css+'.css' } );
+          }
+          
         } else {
           alert("Type of printer must be selected.");
         }
