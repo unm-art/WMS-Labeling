@@ -1,0 +1,54 @@
+* { margin: 0; padding: 0; }
+
+body {
+    font-size: 14px;
+    font-family: "Courier New", monospace;
+}
+
+.invisible {
+    display: block;
+}
+
+.pocket {
+  display: none;
+}
+
+.print_label_button {
+    text-align: center;
+}
+
+@media print
+{
+  @page 
+  {
+    size: auto;   /* auto is the current printer page size */
+    /* margin: 2mm 0 0 1mm; */
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .cnum {
+    margin: 0;
+    padding: 0;
+    width: 28mm;
+    height: 89mm;
+    border: none;
+    page-break-after: always;
+  }
+  
+  .label_container {
+    float: left;
+    margin: 0;
+  }
+  
+  .pocket {
+    display: none;
+  }
+  
+  .cnum div, .pocket div {
+    padding: 6mm 0 0 3mm;
+  }
+}

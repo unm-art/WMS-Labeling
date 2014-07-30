@@ -1,0 +1,66 @@
+* { margin: 0; padding: 0; }
+
+body {
+    font-size: 14px;
+    font-family: "Courier New", monospace;
+}
+
+.invisible {
+    display: block;
+}
+
+.print_label_button {
+    text-align: center;
+}
+
+.label_page {
+  page-break-after: always;
+}
+
+@page 
+{
+  size: auto;   /* auto is the current printer page size */
+  margin: 0;  /* this affects the margin in the printer settings */
+}
+
+.label_page {
+  overflow: hidden;
+  height: 262mm;
+  width: 201mm;
+  margin: 0mm 4mm 4mm 5mm;
+}
+
+.cnum, .middle_padding, .pocket {
+  height: 67.5mm;
+}
+
+.cnum {
+  margin: 0;
+  padding: 0;
+  width: 20mm;
+  border: none;
+}
+
+.label_container {
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+
+.middle_padding {
+  width: 11mm;
+}
+
+.pocket {
+  margin-left: 3mm;
+  padding: 0;
+  width: 70.5mm;
+  border: none;
+}
+
+.cnum div {
+  padding: 1mm 0 0 2mm;
+}
+.pocket div {
+  padding: 1mm 0 0 2mm;
+}
