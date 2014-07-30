@@ -43,8 +43,10 @@ function quicklabels($nums, $title_p = "0") {
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
+        //Used for local server testing without ssl cert
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: $auth", "Accept: application/json"));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: $auth", "Accept: application/atom+xml"));
         // Try up to 10 times to get a response; avoid failure due to network
         for ($i = 0; $i < 10; $i++) {
             $response = curl_exec($curl);
@@ -56,7 +58,7 @@ function quicklabels($nums, $title_p = "0") {
         }
         curl_close($curl);
 
-        $json = json_decode($response);
+        $xml = new SimpleXMLElement($response);
 
         // If barcode not found, return immediately with that info
         if (stristr($response, "Unknown piece designation")) {
@@ -64,7 +66,7 @@ function quicklabels($nums, $title_p = "0") {
         }
 
         // Set item information
-        $copy = $json->entries[0]->content;
+        $copy = $xml->entry->content->copy;
         $bib = $copy->bib;
         $oclc = substr($bib, 6);
         $copynum = $copy->copyNumber;
@@ -222,7 +224,7 @@ function quicklabels($nums, $title_p = "0") {
         $location = $copy->shelvingLocation;
         $c = strcspn($location, ":");
         $location = substr($location, 0, $c);
-        $location_full = $shelf_loc[$branch][$location];
+        $location_full = $shelf_loc[(string)$branch][(string)$location];
         $scheme = $copy->shelvingDesignation->scheme;
 
         if ($scheme == "LIBRARY_OF_CONGRESS" || $scheme == "UNKNOWN") {

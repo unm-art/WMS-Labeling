@@ -90,6 +90,9 @@ for ($x = 0; $x < $printCount; $x++) {
     }
 }//end for
 
+//Store print array for FPDF to print from
+$_SESSION['printArray'] = $printArray;
+
 ?>
 <!-- Radio list of different printers to choose from -->
 <div id="link-area" class="print_label_button">
@@ -137,12 +140,16 @@ echo "<div id=\"table_div\">$labelPage</div>";
         if (typeof printer_css !== "undefined") {
           //Grab appropriate browser for laser printing
           if (printer_css == "laser") {
+            window.location.href = 'scripts/printPDF.php';
+            return;
+            /*
             if (navigator.userAgent.match(/trident/i))
               printer_css += "_ie";
             else if (navigator.userAgent.match(/firefox/i))
               printer_css += "_firefox";
             else if (navigator.userAgent.match(/chrome/i))
               printer_css += "_chrome";
+            */
           }
           $("#table_div").printArea( { mode: "popup", retainAttr: [], extraCss: 'css/'+printer_css+'.css' } );
         } else {
