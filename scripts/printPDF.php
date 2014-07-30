@@ -1,6 +1,12 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/tcpdf/tcpdf.php');
 
+
+/* Config variables here */
+//TODO
+
+
+//This class is used so that we can disable 'Fit to Scale' by default when printing.
 class TCPDFE extends TCPDF {
     /**
      * @author Brian Wendt (http://ontodevelopment.blogspot.com/)
@@ -13,6 +19,7 @@ class TCPDFE extends TCPDF {
     }
 }
 
+//Grab labels from session stored in label output screen
 session_start();
 $printArray = $_SESSION['printArray'];
 
@@ -22,7 +29,8 @@ $pdf->setViewerPreference('PrintScaling', 'None');
 
 // set default monospaced font
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-$pdf->SetMargins(12, 3.96875, 11.1125); //in mm
+$pdf->SetFont("helveticaB", "B", 12);
+$pdf->SetMargins(13, 3.96875, 11.1125); //in mm
 
 // remove default header/footer
 $pdf->setPrintHeader(false);
@@ -50,7 +58,7 @@ for ($x = 0; $x < $printCount; $x++) {
     }
     
     //Spine label
-    $pdf->MultiCell(20.6375, 68, $cnumVal, 0, 'L', false, 0, NULL, NULL, true, 0, false, false, 67.4688);
+    $pdf->MultiCell(20, 67.4688, $cnumVal, 0, 'L', false, 0, NULL, NULL, true, 1, false, false, 67.4688, 'T', true);
 
     if (isset($printArray[$x][1]) === true && $printArray[$x][1] !== '&nbsp;') {
         $pocketVal = preg_replace('#<br\s*/?>#i', "\n",$printArray[$x][1]);
@@ -61,19 +69,26 @@ for ($x = 0; $x < $printCount; $x++) {
     
     //Gap between spine and pocket-label
     $pdf->Cell(3, 0, "", 0, 0);
-
+    
+    //Check if on left or ride side of label sheet
     if (($x % 2) === 0) {
-      //Pocket label
-      $pdf->MultiCell(73.8187, 68, $pocketVal, 0, 'L', false, 0, NULL, NULL, true, 0, false, false, 67.4688);
-      $pdf->Cell(7, 0, "", 0, 0);
+      //Make next label start to right
+      $mvPos = 0;
     } else {
-      $pdf->MultiCell(73.8187, 68, $pocketVal, 0, 'L', false, 1, NULL, NULL, true, 0, false, false, 67.4688);
+      //Make next label start below
+      $mvPos = 1;
+    }
+    
+    //Pocket label
+    $pdf->MultiCell(73, 67.4688, $pocketVal, 0, 'L', false, $mvPos, NULL, NULL, true, 0, false, false, 67.4688, 'T', true);
+    
+    //Add middle padding if moving to right side
+    if (($x % 2) === 0) {
+      $pdf->Cell(7, 0, "", 0, 0);
     }
 
-    // Test whether we have eight labels for 2-col printing, or are on the last label.
+    // Test whether we have eight labels and add new page if we have more
     if ((($x + 1) % 8 === 0) && count($printArray) > ($x + 1)) {
-      //May be automatic
-      //TODO
       $pdf->AddPage();
     }
 }//end for
