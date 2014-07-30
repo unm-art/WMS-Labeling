@@ -46,7 +46,7 @@ for ($x = 0; $x < $printCount; $x++) {
         $cnumVal = preg_replace('#<br\s*/?>#i', "\n", $printArray[$x][0]);
         $strCount = substr_count($cnumVal, "\n");
     } else {
-        $cnumVal = '&nbsp;';
+        $cnumVal = '';
     }
     
     //Spine label
@@ -56,7 +56,7 @@ for ($x = 0; $x < $printCount; $x++) {
         $pocketVal = preg_replace('#<br\s*/?>#i', "\n",$printArray[$x][1]);
         $strCount = substr_count($pocketVal, "\n");
     } else {
-        $pocketVal = '&nbsp;';
+        $pocketVal = '';
     }
     
     //Gap between spine and pocket-label
