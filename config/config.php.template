@@ -1,0 +1,41 @@
+<?php
+
+if (defined('WSKEY') === FALSE) {
+    define('WSKEY', 'Your WSKey');
+}
+
+if (defined('BIBKEY') === FALSE) {
+    define('BIBKEY', 'Your BIBKey');
+}
+
+if (defined('SECRET') === FALSE) {
+    define('SECRET', 'Your Secret pass');
+}
+
+if (isset($inst_id) === FALSE) {
+    $inst_id = 'Your InstitutionID';
+}
+
+if (defined('PRINCIPALID') === FALSE) {
+    define('PRINCIPALID', 'Your PrincipleID');
+}
+
+if (defined('PRINCIPALIDNS') === FALSE) {
+    define('PRINCIPALIDNS', 'urn:oclc:wms:da');
+}
+
+if (defined('URL') === FALSE) {
+    define('URL', 'https://circ.sd00.worldcat.org/LHR');
+}
+
+if (defined('BIBURL') === FALSE) {
+    define('BIBURL', 'http://www.worldcat.org/webservices/catalog/content');
+}
+
+if (defined('METHOD') === FALSE) {
+    define('METHOD', 'GET');
+}
+
+if (defined('BODYHASH') === FALSE) {
+    define('BODYHASH', '');
+}
