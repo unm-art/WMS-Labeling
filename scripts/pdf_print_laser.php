@@ -25,7 +25,7 @@ $marginTop = 3.96875;
 //Font settings
 //http://www.tcpdf.org/doc/code/classTCPDF.html#afd56e360c43553830d543323e81bc045
 $fontFamily = 'helveticaB';
-$fontSize = '12';
+$fontSize = '10';
 $fontStyle = 'B';
 
 //This class extends TCPDF class and is used so that we can 
@@ -79,6 +79,7 @@ for ($x = 0; $x < $printCount; $x++) {
         $cnumVal = '';
     }
     //Output spine to pdf
+    $pdf->SetFontSize(10);
     $pdf->MultiCell($spineWidth, $spineHeight, $cnumVal, 0, 'L', false, 0, NULL, NULL, true, 0, false, false, $spineHeight, 'T', true);
 
     //Gap between spine and pocket-label
