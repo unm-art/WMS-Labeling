@@ -1,5 +1,5 @@
 /nbproject/
 .idea
-/config/config.php
-/config/crosswalks.php
+config/config.php
+config/crosswalks.php
 *~
