@@ -30,7 +30,6 @@ function carriageReturnAddBarcode(e) {
     }
 }
 
-
 function addBarcodeInput() {
 
     var barcodesTable = document.getElementById('barcodes_table');
