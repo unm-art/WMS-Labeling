@@ -105,7 +105,7 @@ $_SESSION['printArray'] = $printArray;
         <div class="button_right_div">
             <input type="radio" name="printer" id="printer1" value="dot_matrix" /> Okidata Dot Matrix (IE Only)<br />
             <input type="radio" name="printer" id="printer2" value="laser" /> Laser Printer (IE/Chrome Only)<br />
-            <input type="radio" name="printer" id="printer4" value="dymo" /> Dymo Printer
+            <input type="radio" name="printer" id="printer3" value="dymo" /> Dymo Printer
         </div>
         <div class="clear"></div>
     </div>
@@ -124,10 +124,6 @@ $(document).ready(function(){
       $('#table_div').css("width", 800);
       break;
     case "dymo":
-      $('#table_div').css("width", 100);
-      $('.pocket').css("display", "none");
-      break;
-    case "newdymo":
       $('#table_div').css("width", 100);
       $('.pocket').css("display", "none");
       break;
@@ -171,7 +167,7 @@ echo "<div id=\"table_div\">$labelPage</div>";
             //Dot Matrix
             $("#table_div").printArea( { mode: "popup", retainAttr: [], extraCss: 'css/'+printer_css+'.css' } );
           }
-          
+
         } else {
           alert("Type of printer must be selected.");
         }
