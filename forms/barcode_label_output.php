@@ -147,7 +147,7 @@ echo "<div id=\"table_div\">$labelPage</div>";
         if (typeof printer_css !== "undefined") {
           if (printer_css == "laser") {
             //Run TCPDF script
-            window.location.href = 'scripts/printPDF.php';
+            window.location.href = 'scripts/pdf_print_laser.php';
             /*
             //Detect browser and load appropriate css
             if (navigator.userAgent.match(/trident/i))
