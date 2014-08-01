@@ -79,7 +79,6 @@ for ($x = 0; $x < $printCount; $x++) {
         $cnumVal = '';
     }
     //Output spine to pdf
-    $pdf->SetFontSize(10);
     $pdf->MultiCell($spineWidth, $spineHeight, $cnumVal, 0, 'L', false, 0, NULL, NULL, true, 0, false, false, $spineHeight, 'T', true);
 
     //Gap between spine and pocket-label

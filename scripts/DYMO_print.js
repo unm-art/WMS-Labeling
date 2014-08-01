@@ -32,7 +32,7 @@ function printDymoSpine (labelText) {
     A64 \
     1969</String> \
               <Attributes> \
-                <Font Family="Tahoma" Size="14" Bold="True" Italic="False" Underline="False" Strikeout="False" /> \
+                <Font Family="Tahoma" Size="10" Bold="True" Italic="False" Underline="False" Strikeout="False" /> \
                 <ForeColor Alpha="255" Red="0" Green="0" Blue="0" /> \
               </Attributes> \
             </Element> \
