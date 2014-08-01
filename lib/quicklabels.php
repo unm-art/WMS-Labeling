@@ -83,6 +83,7 @@ function quicklabels($nums, $title_p = "0") {
                 }
             }
 
+
             $itemparts = $copy->shelvingDesignation->itemPart;
             $result = count($itemparts);
             if ($result > 0) {
@@ -95,16 +96,16 @@ function quicklabels($nums, $title_p = "0") {
             $enumerations = $copy->holding[$j]->caption->enumeration;
             $result = count($enumerations);
             for ($k = 0; $k < $result; $k++) {
-                $label = $enumerations[$k]->label;
+                $label = $enumerations[$k]['label'];
                 if ($label == "(year)") {
                     $label = "";
                 }
                 if ($label == "(month)") {
                     $label = "";
                 }
-                $value = $enumerations[$k]->value;
+                $value = $enumerations[$k];
                 if ($label == "(month)") {
-                    $value = $months[(int) $enumerations[$k]->value];
+                    $value = $months[(int) $enumerations[$k]];
                 }
                 $callnum = $callnum . " " . $label . $value;
             }
@@ -116,14 +117,14 @@ function quicklabels($nums, $title_p = "0") {
             $chronologies = $copy->holding[$j]->caption->chronology;
             $result = count($chronologies);
             for ($k = 0; $k < $result; $k++) {
-                if ($chronologies[$k]->label == "(year)") {
-                    $year = $chronologies[$k]->value;
-                } elseif ($chronologies[$k]->label == "(month)") {
-                    $month = $chronologies[$k]->value;
-                } elseif ($chronologies[$k]->label == "(season)") {
-                    $season = $chronologies[$k]->value;
-                } elseif ($chronologies[$k]->label == "(quarter)") {
-                    $quarter = $chronologies[$k]->value;
+                if ($chronologies[$k]['label'] == "(year)") {
+                    $year = $chronologies[$k];
+                } elseif ($chronologies[$k]['label'] == "(month)") {
+                    $month = $chronologies[$k];
+                } elseif ($chronologies[$k]['label'] == "(season)") {
+                    $season = $chronologies[$k];
+                } elseif ($chronologies[$k]['label'] == "(quarter)") {
+                    $quarter = $chronologies[$k];
                 }
             }
             if ($year) {
@@ -225,7 +226,7 @@ function quicklabels($nums, $title_p = "0") {
         $c = strcspn($location, ":");
         $location = substr($location, 0, $c);
         $location_full = $shelf_loc[(string)$branch][(string)$location];
-        $scheme = $copy->shelvingDesignation->scheme;
+        $scheme = $copy->shelvingDesignation['scheme'];
 
         if ($scheme == "LIBRARY_OF_CONGRESS" || $scheme == "UNKNOWN") {
             // Ensure space before cutters beginning with decimal

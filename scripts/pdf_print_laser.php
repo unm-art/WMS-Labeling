@@ -15,7 +15,7 @@ $spineHeight = 34.1313;
 
 $spacingLabel = 3; //Spacing between spine and pocket.
 $spacingHorz = 34.1313; //Spacing below set of labels.
-$spacingVert = 7; //Spacing in middle of page.
+$spacingVert = 8; //Spacing in middle of page.
 
 //Page Margin Settings
 $marginLeft = 13;
@@ -47,7 +47,7 @@ session_start();
 $printArray = $_SESSION['printArray'];
 
 //Create TCPDF object
-$pdf = new TCPDFE($pageOrientation, $pageRuling, $pageFormat);
+$pdf = new TCPDFE($pageOrientation, $pageRuling, $pageFormat, true, 'UTF-8');
 //Remove 'Print Scaling' option so labels aren't resized
 $pdf->setViewerPreference('PrintScaling', 'None');
 //Set default font
