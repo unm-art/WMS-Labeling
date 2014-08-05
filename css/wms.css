@@ -36,9 +36,9 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 
 .cnum {
     border: 1px solid black;
-    height: 170px;
+    min-height: 170px;
     vertical-align: top;
-    width: 74px;
+    width: 20mm;
     float: left;
 }
 
@@ -111,10 +111,10 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 .pocket {
     border: 1px solid black;
     float: left;
-    height: 170px;
+    min-height: 170px;
     margin-left: 5px;
     vertical-align: top;
-    width: 280px;
+    width: 79mm;
 }
 
 @media print
