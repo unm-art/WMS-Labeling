@@ -1,32 +1,13 @@
 <?php
 require_once('../../tcpdf/tcpdf.php');
 
-/* CONFIG VARIABLES */
-//http://www.tcpdf.org/doc/code/classTCPDF.html#a134232ae3ad1ec186ed45046f94b7755
-$pageFormat = "Letter";
-$pageOrientation = "P";
-$pageRuling = "mm";
-
-$labelsPerPage = 8; //Spine and pocket count as one label.
-$pocketWidth = 73;
-$pocketHeight = 34.1313;
-$spineWidth = 20;
-$spineHeight = 34.1313;
-
-$spacingLabel = 3; //Spacing between spine and pocket.
-$spacingHorz = 34.1313; //Spacing below set of labels.
-$spacingVert = 8; //Spacing in middle of page.
-
-//Page Margin Settings
-$marginLeft = 13;
-$marginRight = 11.1125;
-$marginTop = 3.96875;
-
-//Font settings
-//http://www.tcpdf.org/doc/code/classTCPDF.html#afd56e360c43553830d543323e81bc045
-$fontFamily = 'helveticaB';
-$fontSize = '10';
-$fontStyle = 'B';
+//Load the config file for appropriate label stock
+if (isset($_GET['config'])) {
+    $labelConfig = $_GET['config'];
+} else {
+    $labelConfig = 'laser';
+}
+require_once($labelConfig . '.config.php');
 
 //This class extends TCPDF class and is used so that we can 
 //disable 'Fit to Scale' by default when printing.
@@ -110,7 +91,7 @@ for ($x = 0; $x < $printCount; $x++) {
     }
     
     //Padding for horizontal space between cells.
-    if (($x % 2) !== 0 && ($x + 1) % 8 !== 0) {
+    if (($x % 2) !== 0 && ($x + 1) % $labelsPerPage !== 0) {
       $pdf->MultiCell(0, $spacingHorz, '', 0, 'L', false, 1);
     }
 

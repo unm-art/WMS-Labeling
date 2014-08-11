@@ -103,9 +103,10 @@ $_SESSION['printArray'] = $printArray;
         <div class="button_left_div"><a id="print_button" href="#print"><img src="images/icon-print.png" /><br/>Print Labels</a>
         </div>
         <div class="button_right_div">
-            <input type="radio" name="printer" id="printer1" value="dot_matrix" /> Okidata Dot Matrix (IE Only)<br />
-            <input type="radio" name="printer" id="printer2" value="laser" /> Laser Printer (IE/Chrome Only)<br />
-            <input type="radio" name="printer" id="printer3" value="dymo" /> Dymo Printer
+            <input type="radio" name="printer" value="dot_matrix" /> Okidata Dot Matrix (IE Only)<br />
+            <input type="radio" name="printer" value="laser" /> Laser Printer (IE/Chrome Only)<br />
+            <input type="radio" name="printer" value="laser_old" /> Old Laser Layout (IE/Chrome Only)<br />
+            <input type="radio" name="printer" value="dymo" /> Dymo Printer
         </div>
         <div class="clear"></div>
     </div>
@@ -143,16 +144,19 @@ echo "<div id=\"table_div\">$labelPage</div>";
         if (typeof printer_css !== "undefined") {
           if (printer_css == "laser") {
             //Run TCPDF script
-            window.location.href = 'scripts/pdf_print_laser.php';
-            /*
-            //Detect browser and load appropriate css
-            if (navigator.userAgent.match(/trident/i))
-              printer_css += "_ie";
-            else if (navigator.userAgent.match(/firefox/i))
-              printer_css += "_firefox";
-            else if (navigator.userAgent.match(/chrome/i))
-              printer_css += "_chrome";
-            */
+            window.location.href = 'scripts/pdf_print_laser.php?config=laser';
+          }
+          else if (printer_css == "laser_old") {
+            window.location.href = 'scripts/pdf_print_laser.php?config=laser_old';
+          /*
+           //Detect browser and load appropriate css
+           if (navigator.userAgent.match(/trident/i))
+           printer_css += "_ie";
+           else if (navigator.userAgent.match(/firefox/i))
+           printer_css += "_firefox";
+           else if (navigator.userAgent.match(/chrome/i))
+           printer_css += "_chrome";
+           */
           }
           else if (printer_css == "dymo") {
             $('.cnum').each(function() {
