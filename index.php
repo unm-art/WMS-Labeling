@@ -58,7 +58,7 @@ function pageLoad(page, params) {
       $("#main_content").html(data);
     })
     .fail(function(data, status, jqXHR) {
-      $("#main_content").text(status + ": " + jqXHR);
+      $("#main_content").text('<div class="errorMsg"><h2>Error</h2>We are having problems connecting to OCLC's servers. Please press the back button on your browser and try again.</div>');
     })
     .always(function() {
       $('#loadingScreen').hide();

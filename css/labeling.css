@@ -86,6 +86,15 @@
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c10037', endColorstr='#91022d');
 }
 
+.errorMsg {
+    width: 400px;
+    text-align: center;
+    padding: 5px;
+    margin: 20px auto;
+    border: 3px solid red;
+    font-weight: bold;
+}
+
 .output_columns_radio_container {
     margin-left: 25px;
     margin-right: 25px;
