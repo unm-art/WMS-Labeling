@@ -50,7 +50,7 @@ function quicklabels($nums, $title_p = "0") {
         // Try up to 10 times to get a response; avoid failure due to network
         for ($i = 0; $i < 10; $i++) {
             $response = curl_exec($curl);
-            if (stristr($response, "unexpected end of file") || $response == "") {
+            if (stristr($response, "unexpected end of file") || $response == "" || stristr($response, "The Server Failed to Respond Correctly")) {
                 continue;
             } else {
                 break;
@@ -62,11 +62,17 @@ function quicklabels($nums, $title_p = "0") {
 
         // If barcode not found, return immediately with that info
         if (stristr($response, "Unknown piece designation")) {
-            return array("$barcode", "This barcode was not found in WMS.");
+            return array("&nbsp;", "$barcode<br/>This barcode was not found in WMS.");
         }
 
         // Set item information
-        $copy = $xml->entry->content->copy;
+        if (isset($xml->entry->content->copy)) {
+            $copy = $xml->entry->content->copy;
+        } else {
+            //Temp fix for now
+            header("HTTP/1.1 500 Internal Server Error");
+            exit();
+        }
         $bib = $copy->bib;
         $oclc = substr($bib, 6);
         $copynum = $copy->copyNumber;
