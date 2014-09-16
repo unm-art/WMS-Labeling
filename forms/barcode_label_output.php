@@ -104,8 +104,8 @@ $_SESSION['printArray'] = $printArray;
         </div>
         <div class="button_right_div">
             <input type="radio" name="printer" value="dot_matrix" /> Okidata Dot Matrix (IE Only)<br />
-            <input type="radio" name="printer" value="laser" /> Laser Printer (IE/Chrome Only)<br />
-            <input type="radio" name="printer" value="laser_old" /> Old Laser Layout (IE/Chrome Only)<br />
+            <input type="radio" name="printer" value="laser" /> Zebra TLP2844<br />
+            <!--<input type="radio" name="printer" value="laser_old" /> Old Laser Layout (IE/Chrome Only)<br />-->
             <input type="radio" name="printer" value="dymo" /> Dymo Printer
         </div>
         <div class="clear"></div>
