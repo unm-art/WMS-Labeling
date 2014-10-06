@@ -1,6 +1,7 @@
 <?php session_start(); ?>;
 <script src="jquery/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
 <script src="jquery/printElement/jquery.printElement.js" type="text/JavaScript" language="javascript"></script>
+<script src="jquery/jeditable/jquery.jeditable.js" type="text/JavaScript" language="javascript"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
 <script src="scripts/DYMO.Label.Framework.latest.js"
         type="text/javascript" charset="UTF-8"> </script>
@@ -103,10 +104,10 @@ $_SESSION['printArray'] = $printArray;
         <div class="button_left_div"><a id="print_button" href="#print"><img src="images/icon-print.png" /><br/>Print Labels</a>
         </div>
         <div class="button_right_div">
-            <input type="radio" name="printer" value="dot_matrix" /> Okidata Dot Matrix (IE Only)<br />
-            <input type="radio" name="printer" value="laser" /> Zebra TLP2844<br />
+            <!--Print to PDF-->
+            <input type="radio" name="printer" value="laser" checked="checked"/>Print PDF<br />
             <!--<input type="radio" name="printer" value="laser_old" /> Old Laser Layout (IE/Chrome Only)<br />-->
-            <input type="radio" name="printer" value="dymo" /> Dymo Printer
+            <!--<input type="radio" name="printer" value="dymo" /> Dymo Printer-->
         </div>
         <div class="clear"></div>
     </div>
