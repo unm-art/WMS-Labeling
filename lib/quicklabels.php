@@ -248,7 +248,17 @@ function quicklabels($nums, $title_p = "0") {
                 $callnum = $newcallnum;
             }
         }
-
+        // If Dewey, split on the decimal if the Dewey string is more than 6 digits
+        if ($scheme == "DEWEY_DECIMAL") {
+          //If more than 6 numbers in the number after the cutter, put the decimal on a new line 
+            $f = strlen($callnum);
+            if ($f > 6) {
+                $deweyparts = explode(".", $callnum);
+                $newcallnum = $deweyparts[0] . " " . "." . $deweyparts[1];
+                $callnum = $newcallnum;
+            }
+        } 
+        
         // Prepare pocket label text if called for
         if ($print_title) {
             $worldcat_url = BIBURL . '/' . $oclc . '?wskey=' . BIBKEY;
