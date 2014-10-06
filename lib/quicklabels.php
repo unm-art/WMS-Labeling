@@ -254,7 +254,7 @@ function quicklabels($nums, $title_p = "0") {
             $f = strcspn($callnum, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
             if ($f > 7) {
                 $deweyparts = explode(".", $callnum);
-                $newcallnum = $deweyparts[0] . " " . "." . $deweyparts[1];
+                $newcallnum = $deweyparts[0] . "." . " " . $deweyparts[1];
                 $callnum = $newcallnum;
             }
         } 
@@ -330,7 +330,9 @@ function quicklabels($nums, $title_p = "0") {
             $print_call_num = "";
         }
 
-        $return_call_number = "$location_full<br />";
+        if ($location_full !="") {
+             $return_call_number = "$location_full<br />";
+        }
         $return_call_number .= str_replace(" ", "<br />", $callnum);
         
         // Return array of call number, pocket label text
