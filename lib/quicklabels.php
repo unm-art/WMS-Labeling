@@ -329,7 +329,7 @@ function quicklabels($nums, $title_p = "0") {
             $return_author = "";
             $print_call_num = "";
         }
-
+        // Only print the location prefix if it exists and avoid extra spacing
         if ($location_full !="") {
              $return_call_number = "$location_full<br />";
         }
