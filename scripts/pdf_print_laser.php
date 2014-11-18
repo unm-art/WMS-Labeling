@@ -26,7 +26,7 @@ class TCPDFE extends TCPDF {
 //Grab labels from session stored in label output screen
 session_start();
 $printArray = $_SESSION['printArray'];
-
+$cnumVal = $_SESSION['cnumVal'];
 //Create TCPDF object
 $pdf = new TCPDFE($pageOrientation, $pageRuling, $pageFormat, true, 'UTF-8');
 //Remove 'Print Scaling' option so labels aren't resized
@@ -55,12 +55,14 @@ for ($x = 0; $x < $printCount; $x++) {
     //Replace <br /> with line breaks, or make label blank if just &nbsp;
     if (isset($printArray[$x][0]) === true && $printArray[$x][0] !== '&nbsp;') {
         $cnumVal = preg_replace('#<br\s*/?>#i', "\n", $printArray[$x][0]);
+        //$_SESSION['cnumVal'] = $cnumVal;
         $strCount = substr_count($cnumVal, "\n");
     } else {
         $cnumVal = '';
     }
+    
     //Output spine to pdf
-    $pdf->MultiCell($spineWidth, $spineHeight, $cnumVal, 0, 'L', false, 0, NULL, NULL, true, 0, false, false, $spineHeight, 'T', true);
+    $pdf->MultiCell($spineWidth, $spineHeight, $_SESSION['cnumVal'], 0, 'L', false, 0, NULL, NULL, true, 0, false, false, $spineHeight, 'T', true);
 
     //Gap between spine and pocket-label
     $pdf->Cell($spacingLabel, 0, "", 0, 0);

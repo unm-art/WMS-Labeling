@@ -1,4 +1,4 @@
-<?php session_start(); ?>;
+<?php session_start(); ?>
 <script src="jquery/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
 <script src="jquery/printElement/jquery.printElement.js" type="text/JavaScript" language="javascript"></script>
 <script src="jquery/jeditable/jquery.jeditable.js" type="text/JavaScript" language="javascript"></script>
@@ -6,6 +6,22 @@
 <script src="scripts/DYMO.Label.Framework.latest.js"
         type="text/javascript" charset="UTF-8"> </script>
 <script src="scripts/DYMO_print.js"></script>
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+$('.cnum').css("white-space", "pre-line");
+$('.cnum').editable('forms/edited.php', {
+type : 'textarea',
+cancel : 'Cancel',
+submit : 'OK',
+tooltip : 'Click to edit...',
+data: function(value, settings) {
+           /* Convert <br> to newline. */
+           var retval = value.replace(/<br[\s\/]?>/gi, '\n').replace(/<div[\s\/]?>/gi, '').replace(/<\/div[\s\/]?>/gi, '');
+           return retval;
+      }
+});
+});
+</script>
 <?php
 /**
  * barcode_label_output
@@ -46,7 +62,6 @@ $_SESSION['saved_form'] = $_REQUEST;
 $printArray = array();
 
 require_once '../lib/quicklabels.php';
-
 // Store all spine labels and pocket label counterparts in new, combined array.
 for ($x = 0; $x < $barcodeCount; $x++) {
     if ($barcodes[$x] !== '') {
@@ -60,7 +75,7 @@ if (isset($labelStart) === true && $labelStart !== '') {
         array_unshift($printArray, array('&nbsp;', '&nbsp;'));
     }
 }
-
+require 'edited.php';
 $labelRow   = '';
 $labelPage  = '';
 $printCount = count($printArray);
@@ -69,6 +84,7 @@ for ($x = 0; $x < $printCount; $x++) {
     $labelRow .= '<div class="label_container">'."\n";
     if (isset($printArray[$x][0]) === true && $printArray[$x][0] !== '') {
         $cnumVal = $printArray[$x][0];
+        
     } else {
         $cnumVal = '&nbsp;';
     }
@@ -81,7 +97,7 @@ for ($x = 0; $x < $printCount; $x++) {
 
     $labelRow .= '<div class="cnum"><div>'.$cnumVal.'</div></div>'."\n";
     $labelRow .= '<div class="pocket"><div>'.$pocketVal.'</div></div>'."\n";
-
+     
     $labelRow .= "</div>\n";
     if (($x % 2) === 0) {
         $labelRow .= '<div class="middle_padding">&nbsp</div>';
@@ -92,11 +108,13 @@ for ($x = 0; $x < $printCount; $x++) {
         $labelPage .= '<div class="label_page">'.$labelRow.'</div>'."\n";
         $labelRow   = '';
     }
+    $_SESSION['cnumVal'] = preg_replace(array('#<br\s*/?>#i', '#<\/div\s*/?>#i', '#<div\s*/?>#i'),array("\n","",""), $cnumVal);
+    $cnumVal = $_SESSION['cnumVal'];
 }//end for
 
 //Store print array for FPDF to print from
 $_SESSION['printArray'] = $printArray;
-
+$_SESSION['cnumVal'] = $cnumVal;
 ?>
 <!-- Radio list of different printers to choose from -->
 <div id="link-area" class="print_label_button">
@@ -159,7 +177,7 @@ echo "<div id=\"table_div\">$labelPage</div>";
            printer_css += "_chrome";
            */
           }
-          else if (printer_css == "dymo") {
+          else if (printer_css == "dymo") { 
             $('.cnum').each(function() {
               //Get contents of spine label
               var str = $(this).children('div').html();
