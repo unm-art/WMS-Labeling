@@ -17,7 +17,7 @@ $labelStartOptions = 8;
 
 
 ?>
-
+<link href="jquery/jeditable/jquery.jeditable.js" />
 <form name="barcode_scan_form" id="barcode_scan_form" action="forms/barcode_label_output.php" method="POST">
     <div class="barcodes_forms_container">
 

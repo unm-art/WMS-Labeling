@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>University Libraries WMS Acquisitions Extension</title>
 <link rel="stylesheet" href="jquery/jquery-ui-1.10.4/css/blitzer/jquery-ui-1.10.4.custom.css" />
+<link href="jquery/jeditable/jquery.jeditable.js" />
 <link rel="stylesheet" href="css/wms.css">
 <link rel="stylesheet" href="css/normalize.css">
 <link rel="stylesheet" href="css/labeling.css">
@@ -30,6 +31,13 @@ $(document).on("submit", "#barcode_scan_form", function(e) {
     //Set this so user can hit back button to revisit form
     window.location.hash = "#labelOutput";
     pageLoad("forms/barcode_label_output.php", $("#barcode_scan_form").serialize());
+  });
+  
+$(document).on("submit", "#cnum", function(e) {
+    e.preventDefault();
+    //Set this so user can hit back button to revisit form
+    window.location.hash = "#edited";
+    pageLoad("edited.php", $("#barcode_scan_form").serialize());
   });
 
 $(window).bind('hashchange', function(e) {

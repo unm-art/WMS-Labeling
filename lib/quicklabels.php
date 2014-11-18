@@ -248,7 +248,17 @@ function quicklabels($nums, $title_p = "0") {
                 $callnum = $newcallnum;
             }
         }
-
+        // If Dewey, split on the decimal if the Dewey string is more than 6 digits
+        if ($scheme == "DEWEY_DECIMAL") {
+          //If more than 6 numbers in the number after the cutter, put the decimal on a new line 
+            $f = strcspn($callnum, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            if ($f > 7) {
+                $deweyparts = explode(".", $callnum);
+                $newcallnum = $deweyparts[0] . "." . " " . $deweyparts[1];
+                $callnum = $newcallnum;
+            }
+        } 
+        
         // Prepare pocket label text if called for
         if ($print_title) {
             $worldcat_url = BIBURL . '/' . $oclc . '?wskey=' . BIBKEY;
@@ -319,8 +329,10 @@ function quicklabels($nums, $title_p = "0") {
             $return_author = "";
             $print_call_num = "";
         }
-
-        $return_call_number = "$location_full<br />";
+        // Only print the location prefix if it exists and avoid extra spacing
+        if ($location_full !="") {
+             $return_call_number = "$location_full<br />";
+        }
         $return_call_number .= str_replace(" ", "<br />", $callnum);
         
         // Return array of call number, pocket label text
