@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <script src="jquery/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
 <script src="jquery/printElement/jquery.printElement.js" type="text/JavaScript" language="javascript"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
@@ -12,7 +13,6 @@
  *
  * Output labels grabbed from WMS API and allow user to print.
  */
-session_start();
 $barcodes         = '';
 $barcodeCount     = '';
 $labelStart       = '';
