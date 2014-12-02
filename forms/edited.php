@@ -1,9 +1,24 @@
-<?php 
-
+<?php
 session_start();
-$cnumVal = (isset($_POST['value'])) ? $_POST['value'] : "";
-$cnumVal = str_replace('\n', "<br>", $cnumVal);
-print $cnumVal;
-$_SESSION['cnumVal'] = preg_replace(array('#<br\s*/?>#i', '#<\/div\s*/?>#i', '#<div\s*/?>#i'),array("\n","",""), $cnumVal);
-$_SESSION['printArray'] = $_SESSION['cnumVal'];
+if (isset($_POST['id'])) {
+    $split = explode('_', $_POST['id']);
+    //Will be 'cnum' or 'pocket'
+    $type = $split[0];
+    //Position in the label array
+    $labelNum = $split[1];
+
+    if ($type == 'cnum') {
+        $labelType = 0;
+    }
+    else
+        $labelType = 1;
+    //Re-convert edited text to html
+    $value = str_replace( "\n", '<br />', $_POST['value']);
+    //Save value in existing session for printing functions
+    $_SESSION['printArray'][$labelNum][$labelType] = $value;
+    //Returns value to the html output
+    print $value;
+}
+
+
 ?>
