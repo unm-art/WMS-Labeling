@@ -50,7 +50,7 @@ function quicklabels($nums, $title_p = "0") {
         // Try up to 10 times to get a response; avoid failure due to network
         for ($i = 0; $i < 10; $i++) {
             $response = curl_exec($curl);
-            if (stristr($response, "unexpected end of file") || $response == "" || stristr($response, "The Server Failed to Respond Correctly")) {
+            if (stristr($response, "unexpected end of file") || $response == "" || (stristr($response, "The Server Failed to Respond Correctly") && !stristr($response, "Unknown piece designation"))) {
                 continue;
             } else {
                 break;
