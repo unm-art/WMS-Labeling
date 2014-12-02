@@ -14,7 +14,6 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
     padding-right: 15px;
     position: relative;
     text-align: right;
-    width: 47%;
 }
 
 .button_left_div img {
@@ -33,6 +32,15 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 }
 
 .clear { clear: both; }
+
+.cnum, .pocket {
+    background-color: #ffffff;
+}
+
+.cnum:hover, .pocket:hover {
+    cursor: pointer;
+    border: 1px dashed #c10037;
+}
 
 .cnum {
     border: 1px solid black;
@@ -55,10 +63,13 @@ body { font: 14px/1.4 Arial; background-color: #eff2fb; }
 .label_container {
   float: left;
   margin-left: 5px;
+  margin-top: 5px;
 }
 
 #link-print {
+    margin: 0 auto;
     padding-top: 10px;
+    width: 350px;
 }
 
 #main_content { overflow: auto; margin-right: 180px; }

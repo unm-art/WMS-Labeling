@@ -16,8 +16,8 @@ if (isset($_POST['id'])) {
     $value = str_replace( "\n", '<br />', $_POST['value']);
     //Save value in existing session for printing functions
     $_SESSION['printArray'][$labelNum][$labelType] = $value;
-    //Returns value to the html output
-    print $value;
+    //Returns value to the html output. Add divs to keep padding for readability
+    print '<div>'. $value . '</div>';
 }
 
 

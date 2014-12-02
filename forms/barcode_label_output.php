@@ -116,8 +116,7 @@ $_SESSION['printArray'] = $printArray;
 <!-- Radio list of different printers to choose from -->
 <div id="link-area" class="print_label_button">
     <div id="link-print">
-        <div class="button_left_div"><a id="print_button" href="#print"><img src="images/icon-print.png" /><br/>Print Labels</a>
-        </div>
+        <div class="button_left_div"><a id="print_button" href="#print"><img src="images/icon-print.png" /><br/>Print Labels</a></div>
         <div class="button_right_div">
             <input type="radio" name="printer" value="dot_matrix" /> Okidata Dot Matrix (IE Only)<br />
             <input type="radio" name="printer" value="laser" /> Laser Printer (IE/Chrome Only)<br />
@@ -150,7 +149,10 @@ $(document).ready(function(){
 </script>
 
 <?php
-echo "<div id=\"table_div\">$labelPage</div>";
+echo "<div id=\"table_div\">
+        <div id=\"edit_text\">Click on any label to edit it for printing.</div>
+        $labelPage
+      </div>";
 ?>
 
 <script>
