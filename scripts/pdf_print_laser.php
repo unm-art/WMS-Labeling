@@ -26,7 +26,6 @@ class TCPDFE extends TCPDF {
 //Grab labels from session stored in label output screen
 session_start();
 $printArray = $_SESSION['printArray'];
-
 //Create TCPDF object
 $pdf = new TCPDFE($pageOrientation, $pageRuling, $pageFormat, true, 'UTF-8');
 //Remove 'Print Scaling' option so labels aren't resized
