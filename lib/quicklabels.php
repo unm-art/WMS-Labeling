@@ -79,6 +79,11 @@ function quicklabels($nums, $title_p = "0") {
         $rectype = $copy->recordType;
         $branch = $copy->holdingLocation;
         $callnum = $copy->shelvingDesignation->information;
+        //Add extra space to any callnumbers with more than one period
+        if (substr_count($callnum, ".") > 1) {
+            $d = strrpos($callnum, ".");
+            $callnum = substr_replace($callnum, " .", $d, 1);
+        }
 
         if ($rectype == "SERIAL") {
             $i = count($copy->holding);
@@ -96,6 +101,16 @@ function quicklabels($nums, $title_p = "0") {
                 for ($k = 0; $k < $result; $k++) {
                     $itempart = $itemparts[$k];
                     $callnum = $callnum . " " . $itempart;
+                }
+            }
+
+            //Add copy number / suffix to callnum
+            $suffixes = $copy->shelvingDesignation->suffix;
+            $result = count($suffixes);
+            if ($result > 0) {
+                for ($k = 0; $k < $result; $k++) {
+                    $suffix = $suffixes[$k];
+                    $callnum = $callnum . " " . $suffix;
                 }
             }
 
