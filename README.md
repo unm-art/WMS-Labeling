@@ -30,7 +30,5 @@ After scanning a barcode, hit Enter on your keyboard, or press +1 at the bottom 
 
 When you click "Print Labels" each call number will print on a separate 'page' of the resulting PDF.
 
-While you could edit these barcodes, right now editing a barcode results in printing only the label you edited, rather than the entire batch.
-
 [1]: http://www.tcpdf.org/installation.php  
 [2]: http://oclc.org/developer/develop/authentication/how-to-request-a-wskey.en.html
