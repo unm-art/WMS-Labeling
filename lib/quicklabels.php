@@ -94,6 +94,11 @@ function quicklabels($nums, $title_p = "0") {
                 }
             }
 
+            //Add description field to callnum
+            $description = $copy->holding[$j]->caption->description;
+            if ($description) {
+                $callnum = $callnum . " " . $description;
+            }
 
             $itemparts = $copy->shelvingDesignation->itemPart;
             $result = count($itemparts);
@@ -174,11 +179,6 @@ function quicklabels($nums, $title_p = "0") {
             if ($quarter) {
                 $callnum .= " " . $quarters[(int) $quarter];
             }
-
-            $description = $copy->holding[$j]->caption->description;
-            if ($description) {
-                $callnum = $callnum . " " . $description;
-            }
         } elseif ($rectype == "SINGLE_PART") {        # MONOGRAPH
             $itemparts = $copy->shelvingDesignation->itemPart;
             $result = count($itemparts);
@@ -211,6 +211,11 @@ function quicklabels($nums, $title_p = "0") {
                 }
             }
 
+            $description = $copy->holding[$j]->caption->description;
+            if ($description) {
+                $callnum = $callnum . " " . $description;
+            }
+
             $itemparts = $copy->shelvingDesignation->itemPart;
             $result = count($itemparts);
 
@@ -234,11 +239,6 @@ function quicklabels($nums, $title_p = "0") {
                 $label = $enumerations[$i]->label;
                 $value = $enumerations[$i]->value;
                 $callnum = $callnum . " " . $label . $value;
-            }
-
-            $description = $copy->holding[$j]->caption->description;
-            if ($description) {
-                $callnum = $callnum . " " . $description;
             }
         }
 
