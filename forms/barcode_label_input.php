@@ -13,7 +13,7 @@ if (isset($_SESSION['saved_form']) === true) {
      * used label stock.
  */
 
-$labelStartOptions = 20;
+$labelStartOptions = 12;
 
 
 ?>
