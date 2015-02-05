@@ -211,19 +211,18 @@ function quicklabels($nums, $title_p = "0") {
                 }
             }
 
-            $description = $copy->holding[$j]->caption->description;
-            if ($description) {
-                $callnum = $callnum . " " . $description;
-            }
-
             $itemparts = $copy->shelvingDesignation->itemPart;
             $result = count($itemparts);
-
             if ($result > 0) {
                 for ($k = 0; $k < $result; $k++) {
                     $itempart = $itemparts[$k];
                     $callnum = $callnum . " " . $itempart;
                 }
+            }
+
+            $description = $copy->holding[$j]->caption->description;
+            if ($description) {
+                $callnum = $callnum . " " . $description;
             }
 
             $suffixes = $copy->shelvingDesignation->suffix;
