@@ -14,6 +14,7 @@ if (isset($_SESSION['saved_form']) === true) {
  */
 
 $labelStartOptions = 12;
+$_SESSION['labelStartOptions'] =  $labelStartOptions;
 
 
 ?>

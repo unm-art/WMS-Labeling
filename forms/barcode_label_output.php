@@ -34,6 +34,7 @@ $barcodes         = '';
 $barcodeCount     = '';
 $labelStart       = '';
 $printPocketLabel = '';
+$labelStartOptions = $_SESSION['labelStartOptions'];
 
 if (isset($_REQUEST['barcodes']) === true && $_REQUEST['barcodes'] !== '') {
     $barcodes     = $_REQUEST['barcodes'];
@@ -52,7 +53,7 @@ if (isset($_REQUEST['print_pocket_label']) === true && $_REQUEST['print_pocket_l
 if (isset($_REQUEST['label_start']) === true
     && is_numeric($_REQUEST['label_start']) === true
     && $_REQUEST['label_start'] > 0
-    && $_REQUEST['label_start'] < 9
+    && $_REQUEST['label_start'] <= $labelStartOptions
 ) {
     $labelStart = $_REQUEST['label_start'];
 }
@@ -104,7 +105,7 @@ for ($x = 0; $x < $printCount; $x++) {
     }
 
     // Test whether we have eight labels for 2-col printing, or are on the last label.
-    if ((($x + 1) % 8 === 0) || ($x + 1) >= count($printArray)) {
+    if ((($x + 1) % $labelStartOptions === 0) || ($x + 1) >= count($printArray)) {
         $labelPage .= '<div class="label_page">'.$labelRow.'</div>'."\n";
         $labelRow   = '';
     }
