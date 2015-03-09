@@ -70,6 +70,6 @@ include('../inc/header.php') ;
         </form>
     </div>
 
-    <div class="loading_gif"><img src="/ilsarchive/img/loading.gif" ></div>
+    <div class="loading_gif"><img src="<?php echo $base_url ?>/img/loading.gif" ></div>
     <div id="results"><!-- content will be loaded here --></div>
 <?php include('../inc/footer.php') ?>
