@@ -1,4 +1,17 @@
 <?php
+//Base folder, if any. Leave blank if site is in root web folder.
+$base_url = '/ilslabel';
+$site_title = 'Labeling';
+//Default page title
+$page_title = 'ILS Labeling';
+
+/*
+    * This variable defines the number of individual
+    * labels on your sheet of two column label stock.
+    *  This is here so you can prevent waste on partially
+    * used label stock.
+*/
+$labelStartOptions = 12;
 
 if (defined('WSKEY') === FALSE) {
     define('WSKEY', 'Your WSKey');

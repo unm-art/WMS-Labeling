@@ -1,6 +1,7 @@
 /nbproject/
 .idea
 /vendor/
+/tcpdf/
 config/config.php
 config/crosswalks.php
 scripts/*.config.php
