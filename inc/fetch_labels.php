@@ -177,8 +177,9 @@ if ($printCount > 0) {
                 case "dot_matrix":
                     $(".label_page").printArea({mode: "popup", retainAttr: [], extraCss: 'css/' + printer_css + '.css'});
                     break;
-                case "undefined":
+                case undefined:
                 case "":
+                    e.preventDefault();
                     alert("Type of printer must be selected.");
                     break;
                 default:
