@@ -60,7 +60,7 @@ include('../inc/header.php') ;
                         </tbody>
                     </table>
                 </div>
-                <div style="overflow: auto;">
+                <div style="overflow: none;">
                     <input type="button" class="btn_submit" style="float:left;" value="Add More" onClick="addBarcodeInput()">
                     <a href="#" id="clearForm">Clear Form</a>
                     <input id="selectAll" style="float:right;" type="checkbox" onClick="toggleSelected(this)" /><label for="selectAll" style="float:right;">Select All/None</label>
