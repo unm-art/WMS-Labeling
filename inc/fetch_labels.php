@@ -40,7 +40,7 @@ $barcodes         = '';
 $barcodeCount     = '';
 $labelStart       = '';
 $printPocketLabel = '';
-$labelStartOptions = $_SESSION['labelStartOptions'];
+$_SESSION['labelStartOptions'] = $labelStartOptions;
 
 if (isset($_SESSION['saved_form']['barcodes']) === true && $_SESSION['saved_form']['barcodes'] !== '') {
     $barcodes     = $_SESSION['saved_form']['barcodes'];
