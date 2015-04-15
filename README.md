@@ -10,7 +10,7 @@ Installation
 
 Clone this repository into your web directory ("git clone {url} labeling") or download directly from GitHub.  Install [TCPDF][1] inside /labeling (e.g., if WMS-Labeling is at /www/labeling then tcpdf should be at /www/labeling/tcpdf).
 
-Copy config/config.php.template to config/config.php. Open config/config.php and add your [OCLC WSKey][2] credentials.
+Copy config/config.php.template to config/config.php. Open config/config.php and add your [OCLC WSKey][2] credentials. Set your ```base_url``` to match your folder or leave blank if your site will be the root folder.
 
 Copy config/crosswalks.php.example to config/crosswalks.php. Open config/crosswalks.php to map shelving locations to desired call number prefixes (e.g., Reference should print as REF on your label).
 
