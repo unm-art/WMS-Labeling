@@ -18,7 +18,7 @@ if (defined('WSKEY') === FALSE) {
 }
 
 if (defined('BIBKEY') === FALSE) {
-    define('BIBKEY', 'Your BIBKey');
+    define('BIBKEY', 'Your BIBKey. Use WSKey unless told otherwise');
 }
 
 if (defined('SECRET') === FALSE) {
@@ -26,11 +26,11 @@ if (defined('SECRET') === FALSE) {
 }
 
 if (isset($inst_id) === FALSE) {
-    $inst_id = 'Your InstitutionID';
+    $inst_id = 'Your InstitutionID/Registry ID';
 }
 
 if (defined('PRINCIPALID') === FALSE) {
-    define('PRINCIPALID', 'Your PrincipleID');
+    define('PRINCIPALID', 'Your PrincipleID/PrincipalDNS. Should be in the form of xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx or similar.');
 }
 
 if (defined('PRINCIPALIDNS') === FALSE) {
