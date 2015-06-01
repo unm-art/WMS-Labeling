@@ -1,5 +1,5 @@
 /**
- * Created by bacchus on 6/11/14.
+ * Created by Cameron Stewart on 6/11/14.
  */
 $(document).ready(function() {
     // modifies 'Pocket Label?' checkbox upon
