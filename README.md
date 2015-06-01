@@ -2,6 +2,8 @@
 
 Custom application to add label printing capabilities to OCLC's WMS system. This application is powered by PHP, HTML, and JavaScript. It is entirely self-contained in one folder and can be installed on an existing web server or a new one.
 
+Some core functionality provided in the 'quicklabels.php' file was provided by David Cunningham, University of New Brunswick Libraries
+
 ![Screenshot](img/example1.png)
 
 ##Request a WSKey
