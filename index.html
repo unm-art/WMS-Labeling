@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640">
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Wms-labeling by unm-art</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/unm-art/WMS-Labeling">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Wms-labeling</h1>
+            <h2>Custom application to add label printing capabilities to OCLC&#39;s WMS system.</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/unm-art/WMS-Labeling/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/unm-art/WMS-Labeling/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>
+<a id="wms-labeling" class="anchor" href="#wms-labeling" aria-hidden="true"><span class="octicon octicon-link"></span></a>WMS-Labeling</h1>
+
+<p>Custom application to add label printing capabilities to OCLC's WMS system. This application is powered by PHP, HTML, and JavaScript. It is entirely self-contained in one folder and can be installed on an existing web server or a new one.</p>
+
+<p>Some core functionality provided in the 'quicklabels.php' file was provided by David Cunningham, University of New Brunswick Libraries</p>
+
+<p><img src="img/example1.png" alt="Screenshot"></p>
+
+<h2>
+<a id="request-a-wskey" class="anchor" href="#request-a-wskey" aria-hidden="true"><span class="octicon octicon-link"></span></a>Request a WSKey</h2>
+
+<p>This web application uses a WSKey from OCLC in order to authenticate your connection. Read about how to <a href="http://www.oclc.org/developer/develop/authentication/how-to-request-a-wskey.en.html">request a WSKey here</a>.</p>
+
+<p>On the "Request a WSKey" page, here are the settings you need to utilize this application:</p>
+
+<ul>
+<li>
+<strong>Environment:</strong> Production</li>
+<li>
+<strong>Services:</strong> Check "WMS Collection Management API" and "WorldCat Search API"</li>
+<li>
+<strong>What is the reason for this request?</strong> To use the University of New Mexico's custom labeling application</li>
+<li>
+<strong>Redirect URI:</strong> Leave blank</li>
+<li>
+<strong>Usage:</strong> Check "I am an OCLC Partner accessing data on behalf of libraries"</li>
+</ul>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Clone this repository into your web directory ("git clone {url} labeling") or download directly from GitHub.  Install <a href="http://www.tcpdf.org/installation.php">TCPDF</a> inside /labeling (e.g., if WMS-Labeling is at /www/labeling then tcpdf should be at /www/labeling/tcpdf).</p>
+
+<p>Copy config/config.php.template to config/config.php. Open config/config.php and add your <a href="http://oclc.org/developer/develop/authentication/how-to-request-a-wskey.en.html">OCLC WSKey</a> credentials. Set your <code>base_url</code> to match your folder or leave blank if your site will be the root folder.</p>
+
+<p>Copy config/crosswalks.php.example to config/crosswalks.php. Open config/crosswalks.php to map shelving locations to desired call number prefixes (e.g., Reference should print as REF on your label).</p>
+
+<p>Copy scripts/laser.config.sample.php to any scripts/{name}.config.php (Default: laser.config.php). Edit desired margins/spacing and settings for your label printer stock. <strong>Note:</strong> If you add label style
+files aside from "laser.config.php", you will need to add extra radio inputs in inc/fetch_labels.php. Search for <code>&lt;div class="print-area"&gt;</code> and add to the inputs below it.</p>
+
+<h2>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h2>
+
+<h3>
+<a id="configphp" class="anchor" href="#configphp" aria-hidden="true"><span class="octicon octicon-link"></span></a>config.php</h3>
+
+<p>After you get your WSKey, you'll need to go back to <a href="https://platform.worldcat.org/wskey/">WSKey Management</a>, browse to "WsKey" on the left sidebar, and click on your listed WSKey to display all your information. This page will contain all the information you need for config.php.</p>
+
+<h3>
+<a id="crosswalksphp" class="anchor" href="#crosswalksphp" aria-hidden="true"><span class="octicon octicon-link"></span></a>crosswalks.php</h3>
+
+<p>The crosswalks array is utilized in order to take various codes/wording from WMS and translate them to building locations and other specifics.</p>
+
+<h3>
+<a id="laserconfigphp" class="anchor" href="#laserconfigphp" aria-hidden="true"><span class="octicon octicon-link"></span></a>laser.config.php</h3>
+
+<p>Edit this file to create the layout of your label stock. We used a ruler with millimeters to measure the layout of our label sheets. This config file will most likely need many test prints and tweaks before you get it right.</p>
+
+<h2>
+<a id="printing" class="anchor" href="#printing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Printing</h2>
+
+<h3>
+<a id="printedit-a-single-label" class="anchor" href="#printedit-a-single-label" aria-hidden="true"><span class="octicon octicon-link"></span></a>Print/edit a single label</h3>
+
+<p>Launch yoursite.com/labeling and scan in a barcode and indicate whether a pocket label is desired. Click the "Make Labels" button.</p>
+
+<p>In the preview screen, click anywhere on the call number to edit it if needed. Make your changes and click OK.</p>
+
+<p><img src="img/example2.png" alt="Editing"></p>
+
+<p>Select "Laser Printer" or any other config that you've added. Click "Print Labels". A PDF will be generated. Press Ctrl + P to send the PDF to your printer.</p>
+
+<h3>
+<a id="print-labels-in-a-batch" class="anchor" href="#print-labels-in-a-batch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Print labels in a batch</h3>
+
+<p>After scanning a barcode, hit Enter on your keyboard, or press "Add More" button at the bottom of the screen to add multiple barcodes. The maximum labels per page is set in the config/{name}.config.php file.</p>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/unm-art">unm-art</a> can be found on <a href="https://github.com/unm-art/WMS-Labeling">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="https://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
