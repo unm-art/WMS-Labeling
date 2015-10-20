@@ -16,7 +16,7 @@ function printDymoSpine (labelText) {
           <ForeColor Alpha="255" Red="0" Green="0" Blue="0" /> \
           <BackColor Alpha="0" Red="255" Green="255" Blue="255" /> \
           <LinkedObjectName></LinkedObjectName> \
-          <Rotation>Rotation0</Rotation> \
+          <Rotation>Rotation180</Rotation> \
           <IsMirrored>False</IsMirrored> \
           <IsVariable>True</IsVariable> \
           <HorizontalAlignment>Left</HorizontalAlignment> \
