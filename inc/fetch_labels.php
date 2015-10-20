@@ -171,7 +171,7 @@ if ($printCount > 0) {
                         var str = $(this).children('div').html();
                         var regex = /<br\s*[\/]?>/gi;
                         var labelStr = str.replace(regex, "\n");
-                        printDymoSpine(labelStr);
+                        printDymoSpine(labelStr.replace(/&amp;/gi, '&'));
                     });
                     break;
                 case "dot_matrix":
