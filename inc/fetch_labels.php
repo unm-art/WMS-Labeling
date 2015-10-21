@@ -129,10 +129,10 @@ if ($printCount > 0) {
         <div class="icon"><a id="print_button" href="#print" target="_blank"><img src="../img/icon-print.png"/><br/>Print
                 Labels</a></div>
         <div>
-            <input type="radio" name="printer" value="dot_matrix"/> Okidata Dot Matrix (IE Only)<br/>
-            <input type="radio" name="printer" value="laser"/> Laser Printer (IE/Chrome Only)<br/>
-            <input type="radio" name="printer" value="laser_old"/> Old Laser Layout (IE/Chrome Only)<br/>
-            <input type="radio" name="printer" value="dymo"/> Dymo Printer (Firefox/IE Only)
+            <label><input type="radio" name="printer" value="dot_matrix"/> Okidata Dot Matrix (IE Only)</label><br/>
+            <label><input type="radio" name="printer" value="laser"/> Laser Printer (IE/Chrome Only)</label><br/>
+            <label><input type="radio" name="printer" value="laser_old"/> Old Laser Layout (IE/Chrome Only)</label><br/>
+            <label><input type="radio" name="printer" value="dymo"/> Dymo Printer (Firefox/IE Only)</label>
         </div>
     </div>
 
