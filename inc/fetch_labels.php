@@ -138,10 +138,8 @@ if ($printCount > 0) {
 
     <script>
         $(document).ready(function () {
-            // Sets preview appearance for each printer type. This view does not affect actual printing, which is all css.
-            $('input[name="printer"]').click(function () {
-                $('.pocket').css("display", "block");
-                switch ($(this).val()) {
+            function setPrinterDisplay(printer) {
+                switch (printer) {
                     case "dot_matrix":
                         $('.label_page').css("width", 400);
                         break;
@@ -153,7 +151,20 @@ if ($printCount > 0) {
                         $('.label_page').css("width", 800);
                         break;
                 }
+            }
+
+            // Sets preview appearance for each printer type. This view does not affect actual printing, which is all css.
+            $('input[name="printer"]').click(function () {
+                $('.pocket').css("display", "block");
+                setPrinterDisplay($(this).val());
             });
+
+            // Pre-select the preferred printer
+            prefPrinter = document.cookie.match('prefLabelPrinter=([^;]*)[;|$]');
+            if(prefPrinter) {
+                setPrinterDisplay(prefPrinter[1]);
+                $("input[name=printer]").val([prefPrinter[1]]);
+            }
         });
     </script>
 
@@ -163,6 +174,10 @@ if ($printCount > 0) {
     <script>
         $("a#print_button").click(function (e) {
             printer_css = $("input[name=printer]:checked").val();
+
+            // save the printer to set as preferred
+            document.cookie = "prefLabelPrinter="+printer_css+"; expires=Fri, 31 Dec 9999 23:59:59 GMT;"
+
             switch(printer_css) {
                 case "dymo":
                     e.preventDefault();
@@ -175,6 +190,7 @@ if ($printCount > 0) {
                     });
                     break;
                 case "dot_matrix":
+                    e.preventDefault();
                     $(".label_page").printArea({mode: "popup", retainAttr: [], extraCss: 'css/' + printer_css + '.css'});
                     break;
                 case undefined:
