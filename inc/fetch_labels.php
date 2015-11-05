@@ -202,6 +202,12 @@ if ($printCount > 0) {
                     $(this).attr('href', '../inc/pdf_print_laser.php?config=' + printer_css);
                     break;
             }
+
+            // Expose a clean entry form leaving the previous work below.
+            var f = $('#barcode_scan_form').stop().slideDown().get(0);
+            f.reset();
+            $('input:hidden',f).val(0);
+            $('input:text', f).first().focus();
         });
     </script>
 <?php
