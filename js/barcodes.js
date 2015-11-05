@@ -5,6 +5,13 @@ $(document).ready(function() {
     // modifies 'Pocket Label?' checkbox upon
     $('#barcodes_table').on('change', '.print_pocket_box', setCheckboxValue);
     $('#barcodes_table').on('keydown', '.barcode_input', carriageReturnAddBarcode);
+    $('#barcode_scan_form').on('keydown', function (e){
+        var evt = e || window.event;
+        // shift-enter submits the form.
+        if(evt.keyCode == 13 && evt.shiftKey) {
+            $('#barcode_scan_form').submit();
+        }
+    });
 });
 
 function carriageReturnAddBarcode(e) {
@@ -14,7 +21,7 @@ function carriageReturnAddBarcode(e) {
     var row = $(this).parent().parent();
 
     // If return carriage is present in input (scanner done with input)...
-    if(evt.keyCode == 13) {
+    if(evt.keyCode == 13) { // return carriage moves to the next input field or adds a new one
         evt.preventDefault();
         // Then ... if there are no empty inputs below us, add a new one
         if (row.index() == row.siblings().length) {

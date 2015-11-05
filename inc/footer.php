@@ -1,6 +1,10 @@
 </div>
 </div>
 
+<div>
+  <p style="text-align: center; font-size: 14px; color: #666;">Shortcuts: &lt;Enter&gt; to add a new barcode; &lt;Shift&gt; + &lt;Enter&gt; to submit form.</p>
+</div>
+
 <div class="footer-container">
   <footer class="wrapper">
     <p>© The University of New Mexico, Albuquerque, NM 87131, (505) 277-0111 <br>
