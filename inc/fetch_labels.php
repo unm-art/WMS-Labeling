@@ -125,16 +125,19 @@ $_SESSION['printArray'] = $printArray;
 if ($printCount > 0) {
     ?>
     <!-- Radio list of different printers to choose from -->
-    <div class="print-area">
-        <div class="icon"><a id="print_button" href="#print" target="_blank"><img src="../img/icon-print.png"/><br/>Print
-                Labels</a></div>
-        <div>
-            <label><input type="radio" name="printer" value="dot_matrix"/> Okidata Dot Matrix (IE Only)</label><br/>
-            <label><input type="radio" name="printer" value="laser"/> Laser Printer (IE/Chrome Only)</label><br/>
-            <label><input type="radio" name="printer" value="laser_old"/> Old Laser Layout (IE/Chrome Only)</label><br/>
-            <label><input type="radio" name="printer" value="dymo"/> Dymo Printer (Firefox/IE Only)</label>
+    <form id="print_area_form">
+        <div class="print-area">
+            <div class="icon"><button id="print_button" type="submit"><img src="../img/icon-print.png"/><br/>Print
+                    Labels</button></div>
+            <div>
+                <label><input type="radio" name="printer" value="dot_matrix" id="dot_matrix"/> Okidata Dot Matrix (IE Only)</label><br/>
+                <label><input type="radio" name="printer" value="laser" id="laser"/> Laser Printer (IE/Chrome Only)</label><br/>
+                <label><input type="radio" name="printer" value="laser_old" id="laser_old"/> Old Laser Layout (IE/Chrome Only)</label><br/>
+                <label><input type="radio" name="printer" value="dymo" id="dymo"/> Dymo Printer (Firefox/IE Only)</label>
+            </div>
         </div>
-    </div>
+    </form>
+
 
     <script>
         $(document).ready(function () {
@@ -164,6 +167,7 @@ if ($printCount > 0) {
             if(prefPrinter) {
                 setPrinterDisplay(prefPrinter[1]);
                 $("input[name=printer]").val([prefPrinter[1]]);
+                $('#'+prefPrinter[1]).focus();
             }
         });
     </script>
@@ -172,7 +176,7 @@ if ($printCount > 0) {
     <?php echo $labelPage ?>
 
     <script>
-        $("a#print_button").click(function (e) {
+        var printfunc = function(){
             printer_css = $("input[name=printer]:checked").val();
 
             // save the printer to set as preferred
@@ -180,7 +184,6 @@ if ($printCount > 0) {
 
             switch(printer_css) {
                 case "dymo":
-                    e.preventDefault();
                     $('.cnum').each(function () {
                         //Get contents of spine label
                         var str = $(this).children('div').html();
@@ -190,16 +193,14 @@ if ($printCount > 0) {
                     });
                     break;
                 case "dot_matrix":
-                    e.preventDefault();
-                    $(".label_page").printArea({mode: "popup", retainAttr: [], extraCss: 'css/' + printer_css + '.css'});
+                    $(".label_page").printArea({mode: "popup", popTitle: "Dot Matrix Print", retainAttr: [], extraCss: 'css/' + printer_css + '.css'});
                     break;
                 case undefined:
                 case "":
-                    e.preventDefault();
                     alert("Type of printer must be selected.");
                     break;
                 default:
-                    $(this).attr('href', '../inc/pdf_print_laser.php?config=' + printer_css);
+                    window.open('../inc/pdf_print_laser.php?config=' + printer_css, 'print_window');
                     break;
             }
 
@@ -208,6 +209,11 @@ if ($printCount > 0) {
             f.reset();
             $('input:hidden',f).val(0);
             $('input:text', f).first().focus();
+        };
+
+        $("#print_button").click(function (e) {
+            e.preventDefault();
+            printfunc();
         });
     </script>
 <?php
