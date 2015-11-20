@@ -47,7 +47,7 @@ include('../inc/header.php') ;
                             ?>
                             <tr>
                                 <td>
-                                    <input type="text" name="barcodes[]" class="barcode_input" value="">
+                                    <input type="text" name="barcodes[]" class="barcode_input" value="" <?php if ($i == 0) echo "autofocus"; ?>>
                                 </td>
                                 <td>
                                     <input type="checkbox" name="print_pocket_label_cb" class="print_pocket_box">
