@@ -9,13 +9,13 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
   <link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/ilslabel/js/vendor/jquery-ui-1.10.4/css/blitzer/jquery-ui-1.10.4.custom.css" />
-  <link rel="stylesheet" href="/ilslabel/css/normalize.min.css">
-  <link rel="stylesheet" href="/ilslabel/css/main.css">
+  <link rel="stylesheet" href="<?php echo $base_url ?>/js/vendor/jquery-ui-1.10.4/css/blitzer/jquery-ui-1.10.4.custom.css" />
+  <link rel="stylesheet" href="<?php echo $base_url ?>/css/normalize.min.css">
+  <link rel="stylesheet" href="<?php echo $base_url ?>/css/main.css">
 
   <script src="<?php echo $base_url ?>/js/vendor/modernizr-2.8.3.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="/ilsacq/js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="<?php echo $base_url ?>/js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
   <script src="<?php echo $base_url ?>/js/vendor/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
   <script src="<?php echo $base_url ?>/js/vendor/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
   <script src="<?php echo $base_url ?>/js/main.js"></script>
