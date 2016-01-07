@@ -38,7 +38,7 @@ if (defined('PRINCIPALIDNS') === FALSE) {
 }
 
 if (defined('URL') === FALSE) {
-    define('URL', 'https://circ.sd00.worldcat.org/LHR');
+    define('URL', 'https://circ.{your datacenter}.worldcat.org/LHR');
 }
 
 if (defined('BIBURL') === FALSE) {
