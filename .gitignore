@@ -6,3 +6,5 @@ config/config.php
 config/crosswalks.php
 scripts/*.config.php
 *~
+/.buildpath
+/.project
