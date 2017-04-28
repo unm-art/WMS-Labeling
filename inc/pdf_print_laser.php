@@ -1,5 +1,5 @@
 <?php
-require_once('../tcpdf/tcpdf.php');
+require_once('../vendor/autoload.php'); 
 
 //Load the config file for appropriate label stock
 if (isset($_GET['config'])) {
