@@ -51,10 +51,10 @@ class CopyLogTest extends \PHPUnit_Framework_TestCase
         $options = array(
             'logger' => $logger
         );
-        $copy = Copy::find(55171589, $this->mockAccessToken);
+        $copy = Copy::find(206732470, $this->mockAccessToken);
         
         $records = $handler->getRecords();
-        $this->assertContains('/LHR/55171589', $records[0]['message']);
+        $this->assertContains('/LHR/206732470', $records[0]['message']);
         
     }
     
@@ -72,7 +72,7 @@ class CopyLogTest extends \PHPUnit_Framework_TestCase
     	$copy = Copy::find(55171589, $this->mockAccessToken);
     	
     	$records = $handler->getRecords();
-    	$this->assertContains('Request - GET - https://circ.sd00.worldcat.org/LHR/55171589 - 200', $records[0]['message']);
+    	$this->assertContains('Request - GET - https://circ.sd00.worldcat.org/LHR/206732470 - 200', $records[0]['message']);
     	
     }
     

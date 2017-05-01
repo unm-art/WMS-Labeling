@@ -41,7 +41,7 @@ class CopyTest extends \PHPUnit_Framework_TestCase
      *@vcr copySuccess
      */
     function testGetCopy(){
-    	$copy = Copy::find(55171589, $this->mockAccessToken);
+    	$copy = Copy::find(206732470, $this->mockAccessToken);
         $this->assertInstanceOf('WorldShare\WMS\Copy', $copy);
         return $copy;
     }

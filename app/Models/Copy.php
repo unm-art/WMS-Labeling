@@ -137,7 +137,7 @@ class Copy
 		
 		try {
 			$searchResponse = $client->get($copySearchURI);
-			$search = Copy::parseSearchResponse($searchResponse->getBody());
+			$search = new SearchResults($searchResponse->getBody());
 			return $search;
 		} catch (RequestException $error) {
 			return Error::parseError($error);
@@ -168,55 +168,6 @@ class Copy
 			$this->shelvingInfo = $entry->xpath('//copy/shelvingInfo');
 			$this->itemPart = $entry->xpath('//copy/itemPart');
 			$this->suffix = $entry->xpath('//copy/suffix');
-			
-		} catch (RequestException $error) {
-			throw new \Exception('Invalid XML');
-		}
-	}
-	
-	private static function parseSearchResponse($response)
-	{
-		try {
-			$results = simplexml_load_string($response);
-			$search = new CopySearch();
-			
-			$results->registerXPathNamespace("atom", "http://www.w3.org/2005/Atom");
-			$results->registerXPathNamespace("os", "http://a9.com/-/spec/opensearch/1.1/");
-			
-			// want an array of resource objects with their XML
-			$entries = array();
-			foreach ($results->xpath('/atom:feed/atom:entry') as $entry) {
-				// create a new resource using class name
-				$copy = new Copy();
-				//extract all the properties
-				
-				$entries[] = $resource;
-			}
-			$search->setResultSet($entries);
-			
-			// set the currentPage
-			$currentPage = $results->xpath('/atom:feed/os:startIndex');
-			$search->setCurrentPage((string)$currentPage[0]);
-			//set the total results
-			$totalResults = $results->xpath('/atom:feed/os:totalResults');
-			$search->setTotalResults((string)$totalResults[0]);
-			// set the items per page
-			$search= $results->xpath('/atom:feed/os:itemsPerPage');
-			if ((string)$totalResults[0]  == 0) {
-				$itemsPerPage = 0;
-				$totalPages = 0;
-			} elseif((string)$totalResults[0] < (string)$itemsPerPage[0]) {
-				$itemsPerPage = (string)$totalResults[0];
-				$totalPages = 1;
-			} else {
-				$totalPages = (string)$totalResults[0] /(string)$itemsPerPage[0];
-				$itemsPerPage = (string)$itemsPerPage[0];
-			}
-			$search->setItemsPerPage((string)$itemsPerPage[0]);
-			// calculate and set the total # of pages
-			$search->setTotalPages($totalPages);
-			
-			return $search;
 			
 		} catch (RequestException $error) {
 			throw new \Exception('Invalid XML');

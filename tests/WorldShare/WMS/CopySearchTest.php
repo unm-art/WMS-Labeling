@@ -42,7 +42,7 @@ class CopyTest extends \PHPUnit_Framework_TestCase
      * can parse set of Copies from a Search Result */
     
     function testSearchByOCLCNumber(){
-    	$query = 'oclc:33252178';
+    	$query = 'oclc:6692485';
     	$search = Copy::Search($query, $this->mockAccessToken);
     	
     	$this->assertInstanceOf('WorldShare\WMS\SearchResults', $search);
@@ -64,7 +64,7 @@ class CopyTest extends \PHPUnit_Framework_TestCase
      * can parse set of Copies from a Search Result */
     
     function testSearchByBarcode(){
-    	$query = 'barcode:33252178';
+    	$query = 'barcode:99887766112299';
     	$search = Copy::Search($query, $this->mockAccessToken);
     	
     	$this->assertInstanceOf('WorldShare\WMS\SearchResults', $search);
