@@ -22,7 +22,11 @@ On the "Request a WSKey" page, here are the settings you need to utilize this ap
 
 ##Installation
 
-Clone this repository into your web directory ("git clone {url} labeling") or download directly from GitHub.  Install [TCPDF][2] inside /labeling (e.g., if WMS-Labeling is at /www/labeling then tcpdf should be at /www/labeling/tcpdf).
+Clone this repository into your web directory ("git clone {url} labeling") or download directly from GitHub.
+
+Change into the labeling directory
+
+Run composer install from the command line 
 
 Copy config/config.php.template to config/config.php. Open config/config.php and add your [OCLC WSKey][3] credentials. Set your ```base_url``` to match your folder or leave blank if your site will be the root folder.
 
