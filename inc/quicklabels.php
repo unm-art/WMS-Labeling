@@ -353,13 +353,39 @@ function quicklabels($nums, $title_p = "0") {
         	// Return array of call number, pocket label text
         	return array("$return_call_number", "$return_title<br />$return_author<br />$print_call_num");
         } catch (RequestException $error) {
-        	echo $error->getResponse()->getStatusCode();
-        	echo $error->getResponse()->getBody(true);
-        	// need to catch unknown piece designation here
+        	if ($error->getResponse()){
+        		$status = $error->getResponse()->getStatusCode();
+        		if (implode($error->getResponse()->getHeader('Content-Type')) !== 'text/html;charset=utf-8'){
+	        		$error_xml = new SimpleXMLElement($error->getResponse()->getBody());
+	        		$message = $error_xml->children('http://worldcat.org/xmlschemas/response')->message;
+	        		$detail = $error_xml->children('http://worldcat.org/xmlschemas/response')->detail;
+        		} else {
+        			$message = "";
+        			$detail = "";
+        		}
+        	} else {
+        		$status = 'Bad url';
+        		$message = '';
+        		$detail = '';
+        	}
         	
         	// If barcode not found, return immediately with that info
-        	if (stristr($response, "Unknown piece designation")) {
+        	if (stristr($detail, "Unknown piece designation")) {
         		return array("&nbsp;", "$barcode<br/>This barcode was not found in WMS.");
+        	// If user invalid, return immediately with that info
+        	} elseif (stristr($detail, "No SecurityContext present.") || stristr($message, "AuthorizationException.defaultMessage")){
+        		return array("&nbsp;", "Please check your config.php file. Your principalID and principalIDNS are invalid");
+        	// If Wskey is for the wrong service
+        	}elseif (stristr($message, "&quot;WMS Collection Management&quot; (WMS_COLLECTION_MANAGEMENT) not found on WSKey")){
+        		return array("&nbsp;", "Please check your config.php file. Your Wskey is not for the right web service");
+        	// If Wskey is invalid, return immediately with that info	
+        	} elseif ($status == '401' || $status == '403'){
+        		return array("&nbsp;", "Please check your config.php file. Your Wskey is invalid");
+        	// if URL bad, return immediately with that info
+        	} elseif ($status == 'Bad url'){
+        		return array("&nbsp;", "Please check your config.php file. Your URL is invalid");
+        	} else{
+        		return array("&nbsp;", "WMS Collection Management Service is unavailable");
         	}
         }
                 
