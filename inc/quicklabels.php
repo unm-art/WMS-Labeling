@@ -364,8 +364,8 @@ function quicklabels($nums, $title_p = "0") {
         			$detail = "";
         		}
         	} else {
-        		$status = 'Bad url';
-        		$message = '';
+        		$status = 'Bad HTTP request';
+        		$message = 'Curl Error - ' . $error->getHandlerContext()['errno'] . ' - ' . $error->getHandlerContext()['error'];
         		$detail = '';
         	}
         	
@@ -382,8 +382,8 @@ function quicklabels($nums, $title_p = "0") {
         	} elseif ($status == '401' || $status == '403'){
         		return array("&nbsp;", "Please check your config.php file. Your Wskey is invalid");
         	// if URL bad, return immediately with that info
-        	} elseif ($status == 'Bad url'){
-        		return array("&nbsp;", "Please check your config.php file. Your URL is invalid");
+        	} elseif ($status == 'Bad HTTP request'){
+        		return array("&nbsp;", "Please check your config.php file. Your URL may be invalid. <br/>" . $message);
         	} else{
         		return array("&nbsp;", "WMS Collection Management Service is unavailable");
         	}

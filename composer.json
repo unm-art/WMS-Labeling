@@ -28,7 +28,7 @@
 		"bin-dir" : "vendor/bin"
 	},
 	"name" : "OCLC/WMSLabel",
-	"version" : "2.1",
+	"version" : "2.22",
 	"license" : "Apache-2.0",
 	"support" : {
 		"email" : "devnet@oclc.org"
