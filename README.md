@@ -17,7 +17,7 @@ On the "Request a WSKey" page, here are the settings you need to utilize this ap
 * **Services:** Check "WMS Collection Management API" and "WorldCat Search API"
 * **What is the reason for this request?** To use the University of New Mexico's custom labeling application
 * **Redirect URI:** Leave blank
-* **Usage:** Check "I am an OCLC Partner accessing data on behalf of libraries"
+* **Usage:** Don't check anything
 
 
 ##Installation
