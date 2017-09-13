@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once('../config/config.php');
+require_once(__DIR__ . '/../config/config.php');
 ?>
 <link rel="stylesheet" href="../css/labeling.css">
 <script src="../js/vendor/printarea/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>

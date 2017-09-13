@@ -1,5 +1,5 @@
 <?php
-require_once('../vendor/autoload.php'); 
+require_once(__DIR__ . '/../vendor/autoload.php'); 
 
 //Load the config file for appropriate label stock
 if (isset($_GET['config'])) {
@@ -7,7 +7,7 @@ if (isset($_GET['config'])) {
 } else {
     $labelConfig = 'laser';
 }
-require_once('../config/' .$labelConfig. '.config.php');
+require_once(__DIR__ . '/../config/' .$labelConfig. '.config.php');
 
 //This class extends TCPDF class and is used so that we can 
 //disable 'Fit to Scale' by default when printing.
