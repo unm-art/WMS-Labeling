@@ -1,5 +1,5 @@
 <?php
-require_once('../vendor/autoload.php'); 
+require_once(__DIR__ . '/../vendor/autoload.php'); 
 
 use OCLC\Auth\WSKey;
 use OCLC\User;
@@ -50,12 +50,7 @@ function quicklabels($nums, $title_p = "0") {
         
         $authorizationHeader = $wskey->getHMACSignature('GET', $url, $options);
         
-        $client = new Client(
-        		[
-        				'curl' => [
-        						CURLOPT_SSLVERSION => '3'
-        				]]
-        		);
+        $client = new Client();
         $headers = array();
         $headers['Authorization'] = $authorizationHeader;
         
