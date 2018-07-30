@@ -176,16 +176,19 @@ function quicklabels($nums, $title_p = "0") {
         		$itemparts = $copy->shelvingDesignation->itemPart;
         		$result = count($itemparts);
         		
-        		if (isset($copy->holding[0]->caption->description)) {
-        			$description = $copy->holding[0]->caption->description;
-        			$callnum = $callnum . " " . $description;
-        		}
         		if ($result > 0) {
         			for ($k = 0; $k < $result; $k++) {
         				$itempart = $itemparts[$k];
         				$callnum = $callnum . " " . $itempart;
         			}
         		}
+        		
+        		//moves caption description (876$3) under item part so it appears at the end of the call number
+        		if (isset($copy->holding[0]->caption->description)) {
+        			$description = $copy->holding[0]->caption->description;
+        			$callnum = $callnum . " " . $description;
+        		}
+        		
         		$suffixes = $copy->shelvingDesignation->suffix;
         		$result = count($suffixes);
         		if ($result > 0) {
