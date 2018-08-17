@@ -133,7 +133,7 @@ if ($printCount > 0) {
                 <label><input type="radio" name="printer" value="dot_matrix" id="dot_matrix"/> Okidata Dot Matrix (IE Only)</label><br/>
                 <label><input type="radio" name="printer" value="laser" id="laser"/> Laser Printer (IE/Chrome Only)</label><br/>
                 <label><input type="radio" name="printer" value="laser_old" id="laser_old"/> Old Laser Layout (IE/Chrome Only)</label><br/>
-                <label><input type="radio" name="printer" value="dymo" id="dymo"/> Dymo Printer (Firefox/IE Only)</label>
+                <label><input type="radio" name="printer" value="dymo" id="dymo"/> Dymo Printer (Firefox/IE/Chrome Only)</label>
             </div>
         </div>
     </form>
