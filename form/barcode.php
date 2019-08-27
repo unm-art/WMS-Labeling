@@ -1,6 +1,6 @@
 <?php
-include('../config/config.php');
-include('../inc/header.php') ;
+include(__DIR__ . '/../config/config.php');
+include(__DIR__ . '/../inc/header.php') ;
 ?>
     <script src="../js/barcodes.js"></script>
     <div class="form_container">
@@ -72,4 +72,4 @@ include('../inc/header.php') ;
 
     <div class="loading_gif"><img src="<?php echo $base_url ?>/img/loading.gif" ></div>
     <div id="results"><!-- content will be loaded here --></div>
-<?php include('../inc/footer.php') ?>
+<?php include(__DIR__ . '/../inc/footer.php') ?>

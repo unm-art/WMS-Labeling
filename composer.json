@@ -28,19 +28,16 @@
 		"bin-dir" : "vendor/bin"
 	},
 	"name" : "OCLC/WMSLabel",
+	"version" : "2.22",
 	"license" : "Apache-2.0",
 	"support" : {
 		"email" : "devnet@oclc.org"
 	},
 	"type" : "project",
-	"autoload" : {
-		"psr-4" : {
-			"WorldCat\\Registry\\" : "app/models"
-		}
-	},
 	"keywords" : [
 		"OCLC",
 		"WMS",
 		"Labels"
-	]
+	],
+	"minimum-stability" : "stable"
 }
