@@ -23,10 +23,12 @@ On the "Request a WSKey" page, here are the settings you need to utilize this ap
 ## Installation
 
 NOTE: The latest version of the code requires PHP 5.6. Older versions of PHP are no longer support per [http://php.net/supported-versions.php]
-
-Clone this repository into your web directory (`git clone {url} labeling`) or download directly from GitHub.
+=======
+Clone this repository into your web directory ("git clone {url} labeling") or download directly from GitHub.
 
 Change into the labeling directory
+
+
 
 Run `composer install` from the command line 
 
