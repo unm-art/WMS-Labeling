@@ -1,10 +1,9 @@
 <?php
 require_once(__DIR__ . '/../vendor/autoload.php'); 
 
-use OCLC\Auth\WSKey;
-use OCLC\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+
 
 /* Fetch labels using OCLC Auth and Guzzle
  * 
@@ -27,7 +26,7 @@ use GuzzleHttp\Exception\RequestException;
  *   - call number
  *   - pocket label text or empty string
  */
-function quicklabels($nums, $title_p = "0") {
+function quicklabels($nums, $title_p = "0", $accessToken) {
 
     require('../config/config.php');
     require('../config/crosswalks.php');
@@ -43,16 +42,11 @@ function quicklabels($nums, $title_p = "0") {
         
         $url = URL . '/?q=barcode:' . $barcode;
         
-        $wskey = new WSKey(WSKEY, SECRET);
         
-        $user = new User($inst_id, PRINCIPALID, PRINCIPALIDNS);
-        $options = array('user'=> $user);
-        
-        $authorizationHeader = $wskey->getHMACSignature('GET', $url, $options);
         
         $client = new Client();
         $headers = array();
-        $headers['Authorization'] = $authorizationHeader;
+        $headers['Authorization'] = "Bearer " . $accessToken->getToken();
         
         try {
         	$response = $client->request('GET', $url, ['headers' => $headers]);
@@ -383,7 +377,6 @@ function quicklabels($nums, $title_p = "0") {
         		return array("&nbsp;", "WMS Collection Management Service is unavailable");
         	}
         }
-                
 
         
 }

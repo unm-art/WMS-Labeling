@@ -1,4 +1,6 @@
 <?php
+use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
+use League\OAuth2\Client\Provider\GenericProvider;
 session_start();
 require_once(__DIR__ . '/../config/config.php');
 ?>
@@ -69,17 +71,36 @@ require_once 'quicklabels.php';
 $printArray = array();
 if (!empty($_POST)) {
 // Store all spine labels and pocket label counterparts in new, combined array.
-    for ($x = 0; $x < $barcodeCount; $x++) {
-        if ($barcodes[$x] !== '') {
-            $printArray[] = quicklabels($barcodes[$x], $printPocketLabel[$x]);
+    $setup_options = [
+    'clientId'                => WSKEY,
+    'clientSecret'            => SECRET,
+    'urlAuthorize'            => 'https://oauth.oclc.org/auth',
+    'urlAccessToken'          => 'https://oauth.oclc.org/token',
+    'urlResourceOwnerDetails' => ''
+    ];
+    
+    
+    $basicAuth_provider = new HttpBasicAuthOptionProvider();
+    $provider = new GenericProvider($setup_options, ['optionProvider' => $basicAuth_provider]);
+    
+    try {
+        
+        // Try to get an access token using the client credentials grant.
+        $accessToken = $provider->getAccessToken('client_credentials', ['scope' => 'WMS_COLLECTION_MANAGEMENT']);
+        for ($x = 0; $x < $barcodeCount; $x++) {
+            if ($barcodes[$x] !== '') {
+                $printArray[] = quicklabels($barcodes[$x], $printPocketLabel[$x], $accessToken);
+            }
         }
-    }
-
-// Add empty rows to print_array to start print on specified label.
-    if (isset($labelStart) === true && $labelStart !== '') {
-        for ($x = 1; $x < $labelStart; $x++) {
-            array_unshift($printArray, array('&nbsp;', '&nbsp;'));
+    
+    // Add empty rows to print_array to start print on specified label.
+        if (isset($labelStart) === true && $labelStart !== '') {
+            for ($x = 1; $x < $labelStart; $x++) {
+                array_unshift($printArray, array('&nbsp;', '&nbsp;'));
+            }
         }
+    } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
+        $printArray[] = array("&nbsp;", "Failed to get access token");
     }
 } else {
     $printArray = $_SESSION['printArray'];
