@@ -14,10 +14,10 @@ On the "Request a WSKey" page, here are the settings you need to utilize this ap
 
 
 * **Environment:** Production
+* **Select Application Type** Machine-to-Machine (M2M) App
 * **Services:** Check "WMS Collection Management API" and "WorldCat Search API"
 * **What is the reason for this request?** To use the University of New Mexico's custom labeling application
 * **Redirect URI:** Leave blank
-* **Usage:** Don't check anything
 
 
 ## Installation
@@ -38,6 +38,9 @@ Copy `config/crosswalks.php.example` to `config/crosswalks.php`. Open `config/cr
 
 Copy `scripts/laser.config.sample.php` to any `scripts/{name}.config.php` (Default: `laser.config.php`). Edit desired margins/spacing and settings for your label printer stock. **Note:** If you add label style
 files aside from `laser.config.php`, you will need to add extra radio inputs in `inc/fetch_labels.php`. Search for ```<div class="print-area">``` and add to the inputs below it.
+
+## Upgrading
+If you are upgrading from a version earlier than 3.0 please contact OCLC Developer Network to ensure a default user associated with the WSKey you are using for this application. 
 
 ## Setup
 
