@@ -28,7 +28,6 @@ if (defined('SECRET') === FALSE) {
 if (isset($inst_id) === FALSE) {
     $inst_id = 'Your InstitutionID/Registry ID';
 }
-}
 
 if (defined('URL') === FALSE) {
     define('URL', 'https://circ.{your datacenter}.worldcat.org/LHR');
