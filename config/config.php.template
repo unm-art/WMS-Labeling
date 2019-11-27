@@ -28,13 +28,6 @@ if (defined('SECRET') === FALSE) {
 if (isset($inst_id) === FALSE) {
     $inst_id = 'Your InstitutionID/Registry ID';
 }
-
-if (defined('PRINCIPALID') === FALSE) {
-    define('PRINCIPALID', 'Your PrincipleID/PrincipalDNS. Should be in the form of xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx or similar.');
-}
-
-if (defined('PRINCIPALIDNS') === FALSE) {
-    define('PRINCIPALIDNS', 'urn:oclc:wms:da');
 }
 
 if (defined('URL') === FALSE) {
@@ -47,8 +40,4 @@ if (defined('BIBURL') === FALSE) {
 
 if (defined('METHOD') === FALSE) {
     define('METHOD', 'GET');
-}
-
-if (defined('BODYHASH') === FALSE) {
-    define('BODYHASH', '');
 }
