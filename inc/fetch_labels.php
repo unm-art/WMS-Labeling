@@ -46,7 +46,7 @@ $_SESSION['labelStartOptions'] = $labelStartOptions;
 
 if (isset($_SESSION['saved_form']['barcodes']) === true && $_SESSION['saved_form']['barcodes'] !== '') {
     $barcodes     = $_SESSION['saved_form']['barcodes'];
-    $barcodeCount = count($barcodes);
+    $barcodeCount = count( (array) $barcodes);
     $tmp          = '';
 
     for ($i = 0; $i < $barcodeCount; $i++) {
@@ -109,7 +109,7 @@ if (!empty($_POST)) {
 //require 'edited.php';
     $labelRow = '';
     $labelPage = '';
-    $printCount = count($printArray);
+    $printCount = count( (array) $printArray);
 // Build labels using divs.
     for ($x = 0; $x < $printCount; $x++) {
         $labelRow .= '<div class="label_container">' . "\n";
@@ -134,7 +134,7 @@ if (!empty($_POST)) {
         }
 
         // Test whether we have eight labels for 2-col printing, or are on the last label.
-        if ((($x + 1) % $labelStartOptions === 0) || ($x + 1) >= count($printArray)) {
+        if ((($x + 1) % $labelStartOptions === 0) || ($x + 1) >= count( (array) $printArray)) {
             $labelPage .= '<div class="label_page">' . $labelRow . '</div>' . "\n";
             $labelRow = '';
         }

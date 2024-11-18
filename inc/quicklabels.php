@@ -67,13 +67,13 @@ function quicklabels($nums, $title_p = "0", $accessToken) {
         	$branch = $copy->holdingLocation;
         	$callnum = $copy->shelvingDesignation->information;
         	//Add extra space to any callnumbers with more than one period
-        	if (substr_count($callnum, ".") > 1) {
+        	if (substr_count( (array) $callnum, ".") > 1) {
         		$d = strrpos($callnum, ".");
         		$callnum = substr_replace($callnum, " .", $d, 1);
         	}
         	
         	if ($rectype == "SERIAL") {
-        		$i = count($copy->holding);
+        		$i = count( (array) $copy->holding);
         		for ($j = 0; $j < $i; $j++) {
         			$itemid = $copy->holding[$j]->pieceDesignation[0];
         			if ($itemid == $barcode) {
@@ -82,7 +82,7 @@ function quicklabels($nums, $title_p = "0", $accessToken) {
         		}
         		
         		$itemparts = $copy->shelvingDesignation->itemPart;
-        		$result = count($itemparts);
+        		$result = count( (array) $itemparts);
         		if ($result > 0) {
         			for ($k = 0; $k < $result; $k++) {
         				$itempart = $itemparts[$k];
@@ -91,7 +91,7 @@ function quicklabels($nums, $title_p = "0", $accessToken) {
         		}
         		
         		$enumerations = $copy->holding[$j]->caption->enumeration;
-        		$result = count($enumerations);
+        		$result = count( (array) $enumerations);
         		for ($k = 0; $k < $result; $k++) {
         			$label = $enumerations[$k]['label'];
         			if ($label == "(year)") {
@@ -112,7 +112,7 @@ function quicklabels($nums, $title_p = "0", $accessToken) {
         		$season = "";
         		$quarter = "";
         		$chronologies = $copy->holding[$j]->caption->chronology;
-        		$result = count($chronologies);
+        		$result = count( (array) $chronologies);
         		for ($k = 0; $k < $result; $k++) {
         			if ($chronologies[$k]['label'] == "(year)") {
         				$year = $chronologies[$k];
@@ -159,7 +159,7 @@ function quicklabels($nums, $title_p = "0", $accessToken) {
         		
         		//Add copy number / suffix to callnum
         		$suffixes = $copy->shelvingDesignation->suffix;
-        		$result = count($suffixes);
+        		$result = count( (array) $suffixes);
         		if ($result > 0) {
         			for ($k = 0; $k < $result; $k++) {
         				$suffix = $suffixes[$k];
@@ -168,7 +168,7 @@ function quicklabels($nums, $title_p = "0", $accessToken) {
         		}
         	} elseif ($rectype == "SINGLE_PART") {        # MONOGRAPH
         		$itemparts = $copy->shelvingDesignation->itemPart;
-        		$result = count($itemparts);
+        		$result = count( (array) $itemparts);
         		
         		if ($result > 0) {
         			for ($k = 0; $k < $result; $k++) {
@@ -184,7 +184,7 @@ function quicklabels($nums, $title_p = "0", $accessToken) {
         		}
         		
         		$suffixes = $copy->shelvingDesignation->suffix;
-        		$result = count($suffixes);
+        		$result = count( (array) $suffixes);
         		if ($result > 0) {
         			for ($k = 0; $k < $result; $k++) {
         				$suffix = $suffixes[$k];
@@ -193,7 +193,7 @@ function quicklabels($nums, $title_p = "0", $accessToken) {
         		}
         	} elseif ($rectype == "MULTI_PART" || $rectype == "UNKNOWN") {
         		# MULTIPART-MONOGRAPH
-        		$i = count($copy->holding);
+        		$i = count( (array) $copy->holding);
         		for ($j = 0; $j < $i; $j++) {
         			$itemid = $copy->holding[$j]->pieceDesignation[0];
         			if ($itemid == $barcode) {
@@ -202,7 +202,7 @@ function quicklabels($nums, $title_p = "0", $accessToken) {
         		}
         		
         		$itemparts = $copy->shelvingDesignation->itemPart;
-        		$result = count($itemparts);
+        		$result = count( (array) $itemparts);
         		if ($result > 0) {
         			for ($k = 0; $k < $result; $k++) {
         				$itempart = $itemparts[$k];
@@ -216,14 +216,14 @@ function quicklabels($nums, $title_p = "0", $accessToken) {
         		}
         		
         		$suffixes = $copy->shelvingDesignation->suffix;
-        		$result = count($suffixes);
+        		$result = count( (array) $suffixes);
         		for ($i = 0; $i < $result; $i++) {
         			$suffix = $suffixes[$i];
         			$callnum = $callnum . " " . $suffix;
         		}
         		
         		$enumerations = $copy->holding[$j]->caption->enumeration;
-        		$result = count($enumerations);
+        		$result = count( (array) $enumerations);
         		for ($i = 0; $i < $result; $i++) {
         			$label = $enumerations[$i]->label;
         			$value = $enumerations[$i]->value;
@@ -290,7 +290,7 @@ function quicklabels($nums, $title_p = "0", $accessToken) {
         			$subtitle = "";
         			if (count($field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='a']")) > 0) {
         				$title = $field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='a']");
-        				if (count($field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='b']")) > 0) {
+        				if (count( (array) $field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='b']")) > 0) {
         					$subtitle = $field->xpath("marc:datafield[@tag='245']/marc:subfield[@code='b']");
         				}
         				$full_title = (string) $title[0];
@@ -312,17 +312,17 @@ function quicklabels($nums, $title_p = "0", $accessToken) {
         				$return_title = "$full_title";
         			}
         			// Author information
-        			if (count($field->xpath("marc:datafield[@tag='100']/marc:subfield[@code='a']")) > 0) {
+        			if (count( (array) $field->xpath("marc:datafield[@tag='100']/marc:subfield[@code='a']")) > 0) {
         				$author = $field->xpath("marc:datafield[@tag='100']/marc:subfield[@code='a']");
-        			} elseif (count($field->xpath("marc:datafield[@tag='110']/marc:subfield[@code='a']")) > 0) {
+        			} elseif (count( (array) $field->xpath("marc:datafield[@tag='110']/marc:subfield[@code='a']")) > 0) {
         				$author = $field->xpath("marc:datafield[@tag='110']/marc:subfield[@code='a']");
-        			} elseif (count($field->xpath("marc:datafield[@tag='111']/marc:subfield[@code='a']")) > 0) {
+        			} elseif (count( (array) $field->xpath("marc:datafield[@tag='111']/marc:subfield[@code='a']")) > 0) {
         				$author = $field->xpath("marc:datafield[@tag='111']/marc:subfield[@code='a']");
-        			} elseif (count($field->xpath("marc:datafield[@tag='700']/marc:subfield[@code='a']")) > 0) {
+        			} elseif (count( (array) $field->xpath("marc:datafield[@tag='700']/marc:subfield[@code='a']")) > 0) {
         				$author = $field->xpath("marc:datafield[@tag='700']/marc:subfield[@code='a']");
-        			} elseif (count($field->xpath("marc:datafield[@tag='710']/marc:subfield[@code='a']")) > 0) {
+        			} elseif (count( (array) $field->xpath("marc:datafield[@tag='710']/marc:subfield[@code='a']")) > 0) {
         				$author = $field->xpath("marc:datafield[@tag='710']/marc:subfield[@code='a']");
-        			} elseif (count($field->xpath("marc:datafield[@tag='711']/marc:subfield[@code='a']")) > 0) {
+        			} elseif (count( (array) $field->xpath("marc:datafield[@tag='711']/marc:subfield[@code='a']")) > 0) {
         				$author = $field->xpath("marc:datafield[@tag='711']/marc:subfield[@code='a']");
         			} else {
         				$author = array("");
