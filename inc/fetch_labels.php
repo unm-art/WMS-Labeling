@@ -1,4 +1,5 @@
 <?php
+
 use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 use League\OAuth2\Client\Provider\GenericProvider;
 session_start();
@@ -89,7 +90,7 @@ if (!empty($_POST)) {
         $accessToken = $provider->getAccessToken('client_credentials', ['scope' => 'WMS_COLLECTION_MANAGEMENT']);
         for ($x = 0; $x < $barcodeCount; $x++) {
             if ($barcodes[$x] !== '') {
-                $printArray[] = quicklabels($barcodes[$x], $printPocketLabel[$x], $accessToken);
+                $printArray[] = quicklabels($barcodes[$x], $accessToken, $printPocketLabel[$x]);
             }
         }
     

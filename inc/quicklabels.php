@@ -26,7 +26,7 @@ use GuzzleHttp\Exception\RequestException;
  *   - call number
  *   - pocket label text or empty string
  */
-function quicklabels($nums, $title_p = "0", $accessToken) {
+function quicklabels($nums, $accessToken,  $title_p = "0") {
 
     require('../config/config.php');
     require('../config/crosswalks.php');
@@ -67,7 +67,7 @@ function quicklabels($nums, $title_p = "0", $accessToken) {
         	$branch = $copy->holdingLocation;
         	$callnum = $copy->shelvingDesignation->information;
         	//Add extra space to any callnumbers with more than one period
-        	if (substr_count( (array) $callnum, ".") > 1) {
+        	if (substr_count($callnum, ".") > 1) {
         		$d = strrpos($callnum, ".");
         		$callnum = substr_replace($callnum, " .", $d, 1);
         	}
