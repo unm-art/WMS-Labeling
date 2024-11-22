@@ -153,7 +153,7 @@ function quicklabels($nums, $accessToken,  $title_p = "0") {
         		
         		//Add description field to callnum
         		$description = $copy->holding[$j]->caption->description;
-        		if ($description) {
+        		if ($description  && strlen($description) <= $DESC_LEN) {
         			$callnum = $callnum . " " . $description;
         		}
         		
