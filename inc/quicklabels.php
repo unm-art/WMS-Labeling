@@ -363,7 +363,7 @@ function quicklabels($nums, $accessToken, $metadataToken, $title_p = "0"){
 	        		$message = $error_xml->children('http://worldcat.org/xmlschemas/response')->message;
 	        		$detail = $error_xml->children('http://worldcat.org/xmlschemas/response')->detail;
         		} else {
-        			$message = "hello?";
+        			$message = "";
         			$detail = "";
         		}
         	} else {
