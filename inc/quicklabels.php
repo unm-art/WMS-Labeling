@@ -26,7 +26,7 @@ use GuzzleHttp\Exception\RequestException;
  *   - call number
  *   - pocket label text or empty string
  */
-function quicklabels($nums, $accessToken,  $title_p = "0") {
+function quicklabels($nums, $accessToken, $metadataToken, $title_p = "0"){
 
     require('../config/config.php');
     require('../config/crosswalks.php');
@@ -56,6 +56,7 @@ function quicklabels($nums, $accessToken,  $title_p = "0") {
         	if (isset($xml->entry->content->copy)) {
         		$copy = $xml->entry->content->copy;
         	} else {
+				// UH how old is this "temp fix"
         		//Temp fix for now
         		header("HTTP/1.1 500 Internal Server Error");
         		exit();
@@ -270,17 +271,19 @@ function quicklabels($nums, $accessToken,  $title_p = "0") {
         	}
         	// Prepare pocket label text if called for
         	if ($print_title) {
-        		$worldcat_url = BIBURL . '/' . $oclc . '?wskey=' . BIBKEY;
-        		
-        		// Try up to 10 times to get a response; avoid failure due to network
-        		for ($i = 0; $i < 10; $i++) {
-        			$xml = simplexml_load_file($worldcat_url);
-        			if (!$xml || $xml == "") {
-        				continue;
-        			} else {
-        				break;
-        			}
-        		}
+				// use the new metadata api
+        		$metadataUrl = "https://metadata.api.oclc.org/worldcat/manage/bibs/" . urlencode($oclc);
+
+				$response = $client->request('GET', $metadataUrl, [
+					'headers' => [
+						'Authorization' => 'Bearer ' . $metadataToken->getToken(),
+						'Accept'        => 'application/marcxml+xml' // request MARCXML format
+					],
+				]);
+
+				$xmlString = (string) $response->getBody();
+				$xml = new SimpleXMLElement($xmlString);
+
         		$xml->registerXPathNamespace("marc", "http://www.loc.gov/MARC21/slim");
         		
         		foreach ($xml->xpath('//marc:record') as $book) {
@@ -385,7 +388,7 @@ function quicklabels($nums, $accessToken,  $title_p = "0") {
         	} elseif ($status == 'Bad HTTP request'){
         		return array("&nbsp;", "Please check your config.php file. Your URL may be invalid. <br/>" . $message);
         	} else{
-        		return array("&nbsp;", "WMS Collection Management Service is unavailable");
+				return array("&nbsp;", "WMS Collection Management Service is unavailable: ". $message);
         	}
         }
 

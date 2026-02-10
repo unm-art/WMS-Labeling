@@ -25,6 +25,18 @@ if (defined('SECRET') === FALSE) {
     define('SECRET', 'Your Secret pass');
 }
 
+// New Metadata API configuration for now these are only used for the metadata endpoint but we should replace other 
+// calls with it too
+if (defined("METADATAKEY") === FALSE)
+{
+  define('METADATAKEY', 'your metadata key');
+}
+if (defined("METADATASECRET") === FALSE)
+{
+  define('METADATASECRET', 'your metadata secret');
+}
+
+
 if (isset($inst_id) === FALSE) {
     $inst_id = 'Your InstitutionID/Registry ID';
 }
