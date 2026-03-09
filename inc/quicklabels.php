@@ -5,6 +5,51 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
 
+
+
+function parse_callnum($callnum, $scheme){
+	// Add extra space to any callnumbers with more than one period
+	if (substr_count($callnum, ".") > 1) {
+		$d = strrpos($callnum, ".");
+		$callnum = substr_replace($callnum, " .", $d, 1);
+	}
+
+	// handle based on the scheme.
+	if ($scheme == "LIBRARY_OF_CONGRESS" || $scheme == "UNKNOWN") {
+		// Ensure space before cutters beginning with decimal
+		$d = strcspn($callnum, ".");
+		if (($d > 0) && !is_numeric(substr($callnum, $d + 1, 1)) && (substr($callnum, $d - 1, 1) != ' ')) {
+			$newcallnum = substr($callnum, 0, $d) . " " . substr($callnum, $d);
+			$callnum = $newcallnum;
+		}
+		// Ensure space before second cutter
+		$e = strcspn($callnum, ".", $d);
+		if (($e > 0) && !is_numeric(substr($callnum, $d + $e + 1, 1)) && (substr($callnum, $d + $e - 1, 1) != ' ')) {
+			$newcallnum = substr($callnum, 0, $d + $e) . " " . substr($callnum, $d + $e);
+			$callnum = $newcallnum;
+		}
+		// Ensure space between class number's letters and numbers
+		$c = strcspn($callnum, "0123456789");
+		if (($c > 0) && (substr($callnum, $c - 1, 1) != ' ')) {
+			$newcallnum = substr($callnum, 0, $c) . " " . substr($callnum, $c);
+			$callnum = $newcallnum;
+		}
+	}
+	elseif ($scheme == "DEWEY_DECIMAL") {
+		// If Dewey, split on the decimal if the Dewey string is more than 6 digits
+		// If more than 6 numbers in the number after the cutter, put the decimal on a new line
+		$f = strcspn($callnum, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+		if ($f > 7) {
+			$deweyparts = explode(".", $callnum);
+			$newcallnum = $deweyparts[0] . "." . " " . $deweyparts[1];
+			$callnum = $newcallnum;
+		}
+	}
+
+	return $callnum;
+}
+
+
 /* Fetch labels using OCLC Auth and Guzzle
  * 
  * Put into a function, added author information, and made
@@ -44,11 +89,8 @@ function quicklabels($nums, $accessToken, $metadataToken, $title_p = "0"){
         
         
         $client = new Client();
-        $headers = array();
-        $headers['Authorization'] = "Bearer " . $metadataToken->getToken();
         
         try {
-        	var_dump($url);
 			// Make api request to barcode and then laod the data
 			$response = $client->request('GET', $url, [
 				'headers' => [
@@ -58,45 +100,40 @@ function quicklabels($nums, $accessToken, $metadataToken, $title_p = "0"){
 			]);
 
 			$data = json_decode($response->getBody(), true);
-
-			var_dump($data);
-			// 
 			if ($data["numberOfHoldings"] > 0  && !isset($data['detailedHoldings'][0])) {
 				return array("&nbsp;", "$barcode<br/>This barcode was not found in WMS holdings.");
 			}
 			$entry = $data['detailedHoldings'][0];
 
-        	var_dump($url);
-
+			// NOTE no rectype in new api? theres an item type but i think its different	
+			// $rectype = $entry[holdingParts]['recordType'] ?? "";
 
 			// Pull out the main information; note oclc can be multiple things
 			$oclc = $entry['oclcNumber']
 				?? $entry['currentOclcNumber']
 				?? $entry['requestedOclcNumber']
 				?? "";
+			$branch = $entry["location"]['sublocationCollection'] ?? "";
+			$shelving = $entry["location"]['shelvingLocation'] ?? "";
 			$callnum = $entry['callNumber']['displayCallNumber'] ?? "";
-			$branch = $entry["location"]['holdingLocation'] ?? "";
-			$location = $entry["location"]['shelvingLocation'] ?? "";
-			$rectype = $entry['recordType'] ?? "";
+        	$scheme = $entry["callNumber"]['shelvingScheme'] ?? "UNKNOWN";
 
-			var_dump($location);
-        	
-        	// Add extra space to any callnumbers with more than one period
-        	if (substr_count($callnum, ".") > 1) {
-        		$d = strrpos($callnum, ".");
-        		$callnum = substr_replace($callnum, " .", $d, 1);
-        	}
-        	
-			// Mapping for location
-			// TODO: this isnt the same as our previous version... how to get csel
-			$location_full = $branch;
+			// parse the colnum based on scheme
+			$callnum = parse_callnum($callnum, $scheme);
 
-			$return_title = "";
-			$return_author = "";
-
-
+			// Mapping for location; lookup unm names from shelf_loc
+			// note: dont think this cleanup is needed with the new api
+			$location = $shelving;
+        	$c = strcspn($location, ":");
+        	$location = substr($location, 0, $c);
+        	$location_full = $shelf_loc[(string)$branch][(string)$location];
+			
         	// Prepare pocket label text if called for
         	if ($print_title) {
+				// setup title and author for later
+				$return_title = "";
+				$return_author = "";
+
 				// use the new metadata api
         		$metadataUrl = BIBURL . urlencode($oclc);
 
@@ -185,7 +222,6 @@ function quicklabels($nums, $accessToken, $metadataToken, $title_p = "0"){
         if ($error->getResponse()) {
             $status = $error->getResponse()->getStatusCode();
         } else {
-			var_dump($error);
             $status = "Bad HTTP request";
         }
         return array("&nbsp;", "WMS Metadata API error ($status)");
