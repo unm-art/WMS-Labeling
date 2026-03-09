@@ -70,6 +70,7 @@ Launch `yoursite.com/labeling` and scan in a barcode and indicate whether a pock
 
 In the preview screen, click anywhere on the call number to edit it if needed. Make your changes and click OK.
 
+Barcode: A14427790132
 ![Editing](img/example2.png)
 
 Select "Laser Printer" or any other config that you've added. Click "Print Labels". A PDF will be generated. Press Ctrl + P to send the PDF to your printer.

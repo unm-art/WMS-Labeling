@@ -38,241 +38,67 @@ function quicklabels($nums, $accessToken, $metadataToken, $title_p = "0"){
         $print_title = 0;
     }
 
-        $barcode = trim($nums);
-        
-        $url = URL . '/?q=barcode:' . $barcode;
-        
+        $barcode = urlencode(trim($nums));
+		// use the metadata barcode endpoint
+        $url = BARCODEURL . $barcode;
         
         
         $client = new Client();
         $headers = array();
-        $headers['Authorization'] = "Bearer " . $accessToken->getToken();
+        $headers['Authorization'] = "Bearer " . $metadataToken->getToken();
         
         try {
-        	$response = $client->request('GET', $url, ['headers' => $headers]);
-        	$xml = new SimpleXMLElement($response->getBody());
+        	var_dump($url);
+			// Make api request to barcode and then laod the data
+			$response = $client->request('GET', $url, [
+				'headers' => [
+					'Authorization' => 'Bearer ' . $metadataToken->getToken(),
+					'Accept' => 'application/json'
+				]
+			]);
+
+			$data = json_decode($response->getBody(), true);
+
+			var_dump($data);
+			// 
+			if ($data["numberOfHoldings"] > 0  && !isset($data['detailedHoldings'][0])) {
+				return array("&nbsp;", "$barcode<br/>This barcode was not found in WMS holdings.");
+			}
+			$entry = $data['detailedHoldings'][0];
+
+        	var_dump($url);
+
+
+			// Pull out the main information; note oclc can be multiple things
+			$oclc = $entry['oclcNumber']
+				?? $entry['currentOclcNumber']
+				?? $entry['requestedOclcNumber']
+				?? "";
+			$callnum = $entry['callNumber']['displayCallNumber'] ?? "";
+			$branch = $entry["location"]['holdingLocation'] ?? "";
+			$location = $entry["location"]['shelvingLocation'] ?? "";
+			$rectype = $entry['recordType'] ?? "";
+
+			var_dump($location);
         	
-        	// Set item information
-        	if (isset($xml->entry->content->copy)) {
-        		$copy = $xml->entry->content->copy;
-        	} else {
-				// UH how old is this "temp fix"
-        		//Temp fix for now
-        		header("HTTP/1.1 500 Internal Server Error");
-        		exit();
-        	}
-        	$bib = $copy->bib;
-        	$oclc = substr($bib, 6);
-        	$copynum = $copy->copyNumber;
-        	$rectype = $copy->recordType;
-        	$branch = $copy->holdingLocation;
-        	$callnum = $copy->shelvingDesignation->information;
-        	//Add extra space to any callnumbers with more than one period
+        	// Add extra space to any callnumbers with more than one period
         	if (substr_count($callnum, ".") > 1) {
         		$d = strrpos($callnum, ".");
         		$callnum = substr_replace($callnum, " .", $d, 1);
         	}
         	
-        	if ($rectype == "SERIAL") {
-        		$i = count( (array) $copy->holding);
-        		for ($j = 0; $j < $i; $j++) {
-        			$itemid = $copy->holding[$j]->pieceDesignation[0];
-        			if ($itemid == $barcode) {
-        				break;
-        			}
-        		}
-        		
-        		$itemparts = $copy->shelvingDesignation->itemPart;
-        		$result = count( (array) $itemparts);
-        		if ($result > 0) {
-        			for ($k = 0; $k < $result; $k++) {
-        				$itempart = $itemparts[$k];
-        				$callnum = $callnum . " " . $itempart;
-        			}
-        		}
-        		
-        		$enumerations = $copy->holding[$j]->caption->enumeration;
-        		$result = count( (array) $enumerations);
-        		for ($k = 0; $k < $result; $k++) {
-        			$label = $enumerations[$k]['label'];
-        			if ($label == "(year)") {
-        				$label = "";
-        			}
-        			if ($label == "(month)") {
-        				$label = "";
-        			}
-        			$value = $enumerations[$k];
-        			if ($label == "(month)") {
-        				$value = $months[(int) $enumerations[$k]];
-        			}
-        			$callnum = $callnum . " " . $label . $value;
-        		}
-        		
-        		$year = "";
-        		$month = "";
-        		$season = "";
-        		$quarter = "";
-        		$chronologies = $copy->holding[$j]->caption->chronology;
-        		$result = count( (array) $chronologies);
-        		for ($k = 0; $k < $result; $k++) {
-        			if ($chronologies[$k]['label'] == "(year)") {
-        				$year = $chronologies[$k];
-        			} elseif ($chronologies[$k]['label'] == "(month)") {
-        				$month = $chronologies[$k];
-        			} elseif ($chronologies[$k]['label'] == "(season)") {
-        				$season = $chronologies[$k];
-        			} elseif ($chronologies[$k]['label'] == "(quarter)") {
-        				$quarter = $chronologies[$k];
-        			}
-        		}
-        		if ($year) {
-        			$callnum = $callnum . " " . $year;
-        		}
-        		if ($month) {
-        			if (stristr($month, "/")) {
-        				$split = explode("/", $month);
-        				$callnum = $callnum . " " . $months[(int) $split[0]];
-        				$callnum = $callnum . "/" . $months[(int) $split[1]];
-        			} elseif (is_numeric($month)) {
-        				$callnum = $callnum . " " . $months[(int) $month];
-        			} else {
-        				$callnum = $callnum . " " . $month;
-        			}
-        		}
-        		if ($season) {
-        			if (stristr($season, "/")) {
-        				$split = explode("/", $season);
-        				$callnum = $callnum . " " . $seasons[(int) $split[0]];
-        				$callnum = $callnum . "/" . $seasons[(int) $split[1]];
-        			} elseif (is_numeric($season)) {
-        				$callnum = $callnum . " " . $seasons[(int) $season];
-        			}
-        		}
-        		if ($quarter) {
-        			$callnum .= " " . $quarters[(int) $quarter];
-        		}
-        		
-        		//Add description field to callnum
-        		$description = $copy->holding[$j]->caption->description;
-        		if ($description  && strlen($description) <= $DESC_LEN) {
-        			$callnum = $callnum . " " . $description;
-        		}
-        		
-        		//Add copy number / suffix to callnum
-        		$suffixes = $copy->shelvingDesignation->suffix;
-        		$result = count( (array) $suffixes);
-        		if ($result > 0) {
-        			for ($k = 0; $k < $result; $k++) {
-        				$suffix = $suffixes[$k];
-        				$callnum = $callnum . " " . $suffix;
-        			}
-        		}
-        	} elseif ($rectype == "SINGLE_PART") {        # MONOGRAPH
-        		$itemparts = $copy->shelvingDesignation->itemPart;
-        		$result = count( (array) $itemparts);
-        		
-        		if ($result > 0) {
-        			for ($k = 0; $k < $result; $k++) {
-        				$itempart = $itemparts[$k];
-        				$callnum = $callnum . " " . $itempart;
-        			}
-        		}
-        		
-        		//moves caption description (876$3) under item part so it appears at the end of the call number
-        		if (isset($copy->holding[0]->caption->description)) {
-        			$description = $copy->holding[0]->caption->description;
-        			$callnum = $callnum . " " . $description;
-        		}
-        		
-        		$suffixes = $copy->shelvingDesignation->suffix;
-        		$result = count( (array) $suffixes);
-        		if ($result > 0) {
-        			for ($k = 0; $k < $result; $k++) {
-        				$suffix = $suffixes[$k];
-        				$callnum = $callnum . " " . $suffix;
-        			}
-        		}
-        	} elseif ($rectype == "MULTI_PART" || $rectype == "UNKNOWN") {
-        		# MULTIPART-MONOGRAPH
-        		$i = count( (array) $copy->holding);
-        		for ($j = 0; $j < $i; $j++) {
-        			$itemid = $copy->holding[$j]->pieceDesignation[0];
-        			if ($itemid == $barcode) {
-        				break;
-        			}
-        		}
-        		
-        		$itemparts = $copy->shelvingDesignation->itemPart;
-        		$result = count( (array) $itemparts);
-        		if ($result > 0) {
-        			for ($k = 0; $k < $result; $k++) {
-        				$itempart = $itemparts[$k];
-        				$callnum = $callnum . " " . $itempart;
-        			}
-        		}
-        		
-        		$description = $copy->holding[$j]->caption->description;
-        		if ($description) {
-        			$callnum = $callnum . " " . $description;
-        		}
-        		
-        		$suffixes = $copy->shelvingDesignation->suffix;
-        		$result = count( (array) $suffixes);
-        		for ($i = 0; $i < $result; $i++) {
-        			$suffix = $suffixes[$i];
-        			$callnum = $callnum . " " . $suffix;
-        		}
-        		
-        		$enumerations = $copy->holding[$j]->caption->enumeration;
-        		$result = count( (array) $enumerations);
-        		for ($i = 0; $i < $result; $i++) {
-        			$label = $enumerations[$i]->label;
-        			$value = $enumerations[$i]->value;
-        			$callnum = $callnum . " " . $label . $value;
-        		}
-        	}
-        	
-        	// Set building/location using $shelf_loc array
-        	$location = $copy->shelvingLocation;
-        	$c = strcspn($location, ":");
-        	$location = substr($location, 0, $c);
-        	$location_full = $shelf_loc[(string)$branch][(string)$location];
-        	$scheme = $copy->shelvingDesignation['scheme'];
-        	
-        	if ($scheme == "LIBRARY_OF_CONGRESS" || $scheme == "UNKNOWN") {
-        		// Ensure space before cutters beginning with decimal
-        		$d = strcspn($callnum, ".");
-        		if (($d > 0) && !is_numeric(substr($callnum, $d + 1, 1)) && (substr($callnum, $d - 1, 1) != ' ')) {
-        			$newcallnum = substr($callnum, 0, $d) . " " . substr($callnum, $d);
-        			$callnum = $newcallnum;
-        		}
-        		// Ensure space before second cutter
-        		$e = strcspn($callnum, ".", $d);
-        		if (($e > 0) && !is_numeric(substr($callnum, $d + $e + 1, 1)) && (substr($callnum, $d + $e - 1, 1) != ' ')) {
-        			$newcallnum = substr($callnum, 0, $d + $e) . " " . substr($callnum, $d + $e);
-        			$callnum = $newcallnum;
-        		}
-        		// Ensure space between class number's letters and numbers
-        		$c = strcspn($callnum, "0123456789");
-        		if (($c > 0) && (substr($callnum, $c - 1, 1) != ' ')) {
-        			$newcallnum = substr($callnum, 0, $c) . " " . substr($callnum, $c);
-        			$callnum = $newcallnum;
-        		}
-        	}
-        	// If Dewey, split on the decimal if the Dewey string is more than 6 digits
-        	if ($scheme == "DEWEY_DECIMAL") {
-        		//If more than 6 numbers in the number after the cutter, put the decimal on a new line
-        		$f = strcspn($callnum, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-        		if ($f > 7) {
-        			$deweyparts = explode(".", $callnum);
-        			$newcallnum = $deweyparts[0] . "." . " " . $deweyparts[1];
-        			$callnum = $newcallnum;
-        		}
-        	}
+			// Mapping for location
+			// TODO: this isnt the same as our previous version... how to get csel
+			$location_full = $branch;
+
+			$return_title = "";
+			$return_author = "";
+
+
         	// Prepare pocket label text if called for
         	if ($print_title) {
 				// use the new metadata api
-        		$metadataUrl = "https://metadata.api.oclc.org/worldcat/manage/bibs/" . urlencode($oclc);
+        		$metadataUrl = BIBURL . urlencode($oclc);
 
 				$response = $client->request('GET', $metadataUrl, [
 					'headers' => [
@@ -312,7 +138,7 @@ function quicklabels($nums, $accessToken, $metadataToken, $title_p = "0"){
         				}
         				
         				$full_title = $clean_title;
-        				$return_title = "$full_title";
+        				$return_title = rtrim($full_title, " /");
         			}
         			// Author information
         			if (count( (array) $field->xpath("marc:datafield[@tag='100']/marc:subfield[@code='a']")) > 0) {
@@ -342,57 +168,28 @@ function quicklabels($nums, $accessToken, $metadataToken, $title_p = "0"){
         		$print_call_num = "";
         	}
         	
-        	 //removes extra space after location <br />
-
-                if ($location_full == "") {
-                  $return_call_number = "$location_full";
-                } else {
-                  $return_call_number = "$location_full<br />";
-                }      	
+        	// removes extra space after location <br />
+			if ($location_full == "") {
+				$return_call_number = "$location_full";
+			} else {
+				$return_call_number = "$location_full<br />";
+			}      	
         	
-        	//$return_call_number = "$location_full<br />";
+        	// $return_call_number = "$location_full<br />";
         	$return_call_number .= str_replace(" ", "<br />", $callnum);
         	
         	// Return array of call number, pocket label text
         	return array("$return_call_number", "$return_title<br />$return_author<br />$print_call_num");
-        } catch (RequestException $error) {
-        	if ($error->getResponse()){
-        		$status = $error->getResponse()->getStatusCode();
-        		if (implode($error->getResponse()->getHeader('Content-Type')) !== 'text/html;charset=utf-8'){
-	        		$error_xml = new SimpleXMLElement($error->getResponse()->getBody());
-	        		$message = $error_xml->children('http://worldcat.org/xmlschemas/response')->message;
-	        		$detail = $error_xml->children('http://worldcat.org/xmlschemas/response')->detail;
-        		} else {
-        			$message = "";
-        			$detail = "";
-        		}
-        	} else {
-        		$status = 'Bad HTTP request';
-        		$message = 'Curl Error - ' . $error->getHandlerContext()['errno'] . ' - ' . $error->getHandlerContext()['error'];
-        		$detail = '';
-        	}
-        	
-        	// If barcode not found, return immediately with that info
-        	if (stristr($detail, "Unknown piece designation")) {
-        		return array("&nbsp;", "$barcode<br/>This barcode was not found in WMS.");
-        	// If user invalid, return immediately with that info
-        	} elseif (stristr($detail, "No SecurityContext present.") || stristr($message, "AuthorizationException.defaultMessage")){
-        		return array("&nbsp;", "Please check your config.php file. Your principalID and principalIDNS are invalid");
-        	// If Wskey is for the wrong service
-        	}elseif (stristr($message, "&quot;WMS Collection Management&quot; (WMS_COLLECTION_MANAGEMENT) not found on WSKey")){
-        		return array("&nbsp;", "Please check your config.php file. Your Wskey is not for the right web service");
-        	// If Wskey is invalid, return immediately with that info	
-        	} elseif ($status == '401' || $status == '403'){
-        		return array("&nbsp;", "Please check your config.php file. Your Wskey is invalid");
-        	// if URL bad, return immediately with that info
-        	} elseif ($status == 'Bad HTTP request'){
-        		return array("&nbsp;", "Please check your config.php file. Your URL may be invalid. <br/>" . $message);
-        	} else{
-				return array("&nbsp;", "WMS Collection Management Service is unavailable: ". $message);
-        	}
-        }
+        }  catch (RequestException $error) {
 
-        
+        if ($error->getResponse()) {
+            $status = $error->getResponse()->getStatusCode();
+        } else {
+			var_dump($error);
+            $status = "Bad HTTP request";
+        }
+        return array("&nbsp;", "WMS Metadata API error ($status)");
+    }
 }
 
 ?>
