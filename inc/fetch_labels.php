@@ -80,13 +80,13 @@ require_once 'quicklabels.php';
 $printArray = array();
 if (!empty($_POST)) {
     // Store all spine labels and pocket label counterparts in new, combined array.
-    $setup_options = [
-        'clientId'                => WSKEY,
-        'clientSecret'            => SECRET,
-        'urlAuthorize'            => 'https://oauth.oclc.org/auth',
-        'urlAccessToken'          => 'https://oauth.oclc.org/token',
-        'urlResourceOwnerDetails' => ''
-    ];
+    // $setup_options = [
+    //     'clientId'                => WSKEY,
+    //     'clientSecret'            => SECRET,
+    //     'urlAuthorize'            => 'https://oauth.oclc.org/auth',
+    //     'urlAccessToken'          => 'https://oauth.oclc.org/token',
+    //     'urlResourceOwnerDetails' => ''
+    // ];
 
     $setup_options_meta = [
         'clientId'                => METADATAKEY,
@@ -97,18 +97,18 @@ if (!empty($_POST)) {
     ];
 
 
-    $basicAuth_provider = new HttpBasicAuthOptionProvider();
-    $provider = new GenericProvider($setup_options, ['optionProvider' => $basicAuth_provider]);
+    // $basicAuth_provider = new HttpBasicAuthOptionProvider();
+    // $provider = new GenericProvider($setup_options, ['optionProvider' => $basicAuth_provider]);
 
     $basicAuth_provider_meta = new HttpBasicAuthOptionProvider();
     $provider_meta = new GenericProvider($setup_options_meta, ['optionProvider' => $basicAuth_provider_meta]);
 
     try {
         // Try to get an access token using the client credentials grant.
-        $accessToken = $provider->getAccessToken('client_credentials', ['scope' => 'WMS_COLLECTION_MANAGEMENT']);
-        if (!$accessToken || !$accessToken->getToken()) {
-            throw new Exception("Missing WMS access token");
-        }
+        // $accessToken = $provider->getAccessToken('client_credentials', ['scope' => 'WMS_COLLECTION_MANAGEMENT']);
+        // if (!$accessToken || !$accessToken->getToken()) {
+        //     throw new Exception("Missing WMS access token");
+        // }
 
         // Fetch Metadata API token 
         $metadataToken = $provider_meta->getAccessToken('client_credentials', ['scope' => 'WorldCatMetadataAPI']);
@@ -121,7 +121,7 @@ if (!empty($_POST)) {
             if ($barcodes[$x] !== '') {
                 $printArray[] = quicklabels(
                     $barcodes[$x],
-                    $accessToken,
+                    NULL,
                     $metadataToken,
                     $printPocketLabel[$x]
                 );
