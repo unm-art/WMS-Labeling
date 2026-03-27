@@ -70,10 +70,10 @@ function _decodeLeader($leader)
  * 
  * 
  */
-function _parseSuffixes($xml, $barcode, $description){
+function _parseSuffixes($xml, $barcode, $description)
+{
 	$suffixes = "";
 
-	
 	$copy = $xml->xpath(
 		"//marc:datafield[@tag='863'][marc:subfield[@code='p' and text()='$barcode']]/marc:subfield[@code='t']"
 	);
@@ -81,30 +81,31 @@ function _parseSuffixes($xml, $barcode, $description){
 		"//marc:datafield[@tag='853'][marc:subfield[@code='3' and text()='$description']]/marc:subfield[@code='t']"
 	);
 
-	// try grabbing from 876 instead
-	if(!$copy){
+	// try grabbing from 876 instead if it doesnt exist
+	if (!$copy) {
 		$copy = $xml->xpath(
-		"//marc:datafield[@tag='876'][marc:subfield[@code='p' and text()='$barcode']]/marc:subfield[@code='t']"
+			"//marc:datafield[@tag='876'][marc:subfield[@code='p' and text()='$barcode']]/marc:subfield[@code='t']"
 		);
 	}
 
-	if($copy_label){
+
+	if ($copy_label) {
 		$copy_label = (string)$copy_label[0];
-	} else{
+	} else {
 		// TODO choose placeholder for copy label?
 		$copy_label = "";
 	}
-	if($copy){
+	if ($copy) {
 		$copy = (string)$copy[0];
 
 		// ignore adding the copy if its number 1?
 		// seems like all books have a copy number 
 		// populated even if its the only one
-		if($copy != "1"){
+		if ($copy != "1") {
 			$suffixes .= $copy_label . $copy;
 		}
-
 	}
+
 
 	return $suffixes;
 }
@@ -122,14 +123,13 @@ function _parseSuffixes($xml, $barcode, $description){
  */
 function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
 {
-	// load in the mappings & config
+	// load in the label mappings
 	require('../config/crosswalks.php');
 
 	// request the LHR info from metadatapi
 	$lhrControlNumber = $entry["lhrControlNumber"];
 	$url = LHRURL . $lhrControlNumber;
 
-	var_dump($url);
 	// main quicklabels func will handle errors
 	$response = $client->request('GET', $url, [
 		'headers' => [
@@ -143,12 +143,9 @@ function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
 	// determine the type from the LHR leader
 	$record_type = _decodeLeader((string)$xml->leader);
 
-	print_r($record_type);
-
 	// parts we might pull out of the data based on the type
 	$description = "";
 	$suffix_info = "";
-	$copy_number = "";
 	$chronology_info = "";
 	$enumeration_info = "";
 
@@ -161,7 +158,8 @@ function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
 		//	 - 853: enum/chron labels: https://www.loc.gov/marc/holdings/hd853855.html
 		// 	 - 863: enum/chron general info: https://www.loc.gov/marc/holdings/hd863865.html
 		// - get the description (this is the 876$3)
-		// - TODO add copy number / suffix is this 853/863/876 $t - copy (NR)?
+		// - add copy number / suffix
+
 
 		// search all of 876 fields and locate our specific barcode
 		$description = $xml->xpath(
@@ -169,7 +167,7 @@ function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
 		);
 
 		if ($description) {
-			$description = (string)$enum[0];
+			$description = (string)$description[0];
 			$chron = NULL;
 			$chron_text = NULL;
 
@@ -181,14 +179,12 @@ function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
 			);
 
 			// locate matching 853 (chronology labels) by Materials specified 853$3 = 876$3
-			// the $3 field is on 876 and 853, I dont see other notable common fields
+			// the $3 field is on 876 and 853, and is noted as a linker field in the docs, but not for these two...
 			$chron_text = $xml->xpath(
 				"//marc:datafield[@tag='853'][marc:subfield[@code='3' and normalize-space(text())='$description']]"
 			);
 
-			var_dump("CRONS:", $chron, $chron_text);
-
-			if ($chron_text && $cron){
+			if ($chron_text && $cron) {
 				$chron = $chron[0];
 				$chron_text = $chron_text[0];
 
@@ -198,18 +194,18 @@ function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
 				$quarter = "";
 
 				// loop over all the date chronology subfields
-				foreach(["i", "j", "k", "l", "m", "v"] as $subfield){
+				foreach (["i", "j", "k", "l", "m", "v"] as $subfield) {
 					$path = "marc:subfield[@code='" . $subfield . "']";
 
 					// pull the data from 863 and the label for it from 853
 					$field_data = $chron->xpath($path);
-					$field_label= $chron_text->xpath($path);
+					$field_label = $chron_text->xpath($path);
 
 					// if either doesnt exist then we continue
 					// note that you can have data without a label but
 					// our old code heavily relied on checking the label
 					// so for consistency we check the label here too
-					if(!$field_data || !$field_label){
+					if (!$field_data || !$field_label) {
 						continue;
 					}
 
@@ -217,7 +213,7 @@ function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
 					$field_data = (string)$field_data[0];
 					$field_label = (string)$field_label[0];
 
-					switch($field_label){
+					switch ($field_label) {
 						case "(year)":
 							$year = $field_data;
 						case "(month)":
@@ -227,7 +223,6 @@ function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
 						case "(month)":
 							$month = $field_data;
 					}
-
 				}
 
 				// handle creation of the chronology_info string
@@ -258,19 +253,18 @@ function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
 					$chronology_info .= " " . $quarters[(int)$quarter];
 				}
 			}
-		}
 
-		// Suffix Handling (Copy Number, ..., TODO figure out what the old api considered suffixes)
-		$suffix_info = _parseSuffixes($xml, $barcode, $description);
+			// Suffix Handling (Copy Number, ..., TODO figure out what the old api considered suffixes)
+			$suffix_info = _parseSuffixes($xml, $barcode, $description);
+		}
 
 	} elseif ($record_type == RTYPE_SINGLEPART) {
 		// Handle Singlepart records:
 		// - get and append description (materials specified 876$3) to callnum
-		// 
 		// - TODO: append shelving designation suffix (might already be done in new api...)
 		// 	 could be detailedHoldings-> X -> location -> sublocationCollection
 		// 	 this does just seem to be our branch mapping tho...
-		
+
 		// Pull out description by matching on barcode
 		// NOTE: may not need to do this for singlepart items, could just
 		//       grab the first 876 (and supposedly only) and get its $3
@@ -278,12 +272,10 @@ function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
 			"//marc:datafield[@tag='876'][marc:subfield[@code='p' and text()='$barcode']]/marc:subfield[@code='3']"
 		);
 		if ($description) {
-			$description = (string)$enum[0];
+			$description = (string)$description[0];
+			// Suffix Handling (Copy Number, ..., TODO figure out what the old api considered suffixes)
+			$suffix_info = _parseSuffixes($xml, $barcode, $description);
 		}
-
-		// Suffix Handling (Copy Number, ..., TODO figure out what the old api considered suffixes)
-		$suffix_info = _parseSuffixes($xml, $barcode, $description);
-
 	} elseif ($record_type == RTYPE_MULTIPART || $record_type == RTYPE_UNKNOWN) {
 		// handle multipart and unknown type items
 		// - get and append description (materials specified 876$3) to callnum
@@ -296,11 +288,11 @@ function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
 			"//marc:datafield[@tag='876'][marc:subfield[@code='p' and text()='$barcode']]/marc:subfield[@code='3']"
 		);
 		if ($description) {
-			$description = (string)$enum[0];
+			$description = (string)$description[0];
+			// Suffix Handling (Copy Number, ..., TODO figure out what the old api considered suffixes)
+			$suffix_info = _parseSuffixes($xml, $barcode, $description);
 		}
 
-		// Suffix Handling (Copy Number, ..., TODO figure out what the old api considered suffixes)
-		$suffix_info = _parseSuffixes($xml, $barcode, $description);
 
 		// handle enumerations
 		// locate matching 863 (enumeration data) by barcode 863$p 
@@ -309,28 +301,26 @@ function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
 		);
 		// locate matching 853 (enumeration labels) by Materials specified 853$3 = 876$3
 		$enumeration_label = NULL;
-		if($description){
+		if ($description) {
 			$enumeration_label = $xml->xpath(
 				"//marc:datafield[@tag='853'][marc:subfield[@code='3' and normalize-space(text())='$description']]"
 			);
 		}
 
-		var_dump("CRONS:", $enumeration, $enumeration_label);
-
-		if ($enumeration && $enumeration_label){
+		if ($enumeration && $enumeration_label) {
 			$enumeration = $enumeration[0];
 			$enumeration_label = $enumeration_label[0];
 
 			// loop over all the date chronology subfields
-			foreach(["a", "b", "c", "d", "e", "f", "g", "h"] as $subfield){
+			foreach (["a", "b", "c", "d", "e", "f", "g", "h"] as $subfield) {
 				$path = "marc:subfield[@code='" . $subfield . "']";
 
 				// pull the data from 863 and the label for it from 853
 				$field_data = $enumeration->xpath($path);
-				$field_label= $enumeration_label->xpath($path);
+				$field_label = $enumeration_label->xpath($path);
 
 				// if either doesnt exist then we continue
-				if(!$field_data || !$field_label){
+				if (!$field_data || !$field_label) {
 					continue;
 				}
 
@@ -345,25 +335,25 @@ function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
 	}
 
 	// add on the  chron info if it exists (should only be serials with this)
-	if($chronology_info){
+	if ($chronology_info) {
 		$callnum .= " " . $chronology_info;
 	}
 
 	// add on the description if it exists (876$3)
 	// NOTE: these can be very long for some serial records as they 
-	// 		 may use the 876$3 field as a summary of very item belonging
+	// 		 may use the 876$3 field as a summary of every item belonging
 	//		 to the serial collection rather than invididual label per item
-	if ($description && strlen($description) > MAX_DESCRIPTION_LEN) {
+	if ($description && strlen($description) < MAX_DESCRIPTION_LEN) {
 		$callnum .= " " . $description;
 	}
 
 	// add on suffix info if it exists
-	if ($suffix_info){
+	if ($suffix_info) {
 		$callnum .= " " . $suffix_info;
 	}
 
 	// add on enumeration details if they exist
-	if($enumeration_info){
+	if ($enumeration_info) {
 		$callnum .= " " . $enumeration_info;
 	}
 
@@ -613,7 +603,6 @@ function quicklabels($nums, $accessToken, $metadataToken, $title_p = "0")
 		} else {
 			$status = "Bad HTTP request";
 		}
-		var_dump($error);
 		return array("&nbsp;", "WMS Metadata API error ($status)");
 	}
 }
