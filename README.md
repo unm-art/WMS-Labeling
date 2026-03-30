@@ -39,6 +39,12 @@ Copy `config/crosswalks.php.example` to `config/crosswalks.php`. Open `config/cr
 Copy `scripts/laser.config.sample.php` to any `scripts/{name}.config.php` (Default: `laser.config.php`). Edit desired margins/spacing and settings for your label printer stock. **Note:** If you add label style
 files aside from `laser.config.php`, you will need to add extra radio inputs in `inc/fetch_labels.php`. Search for ```<div class="print-area">``` and add to the inputs below it.
 
+## Testing
+
+*Here is 1 barcode from Werke oclc # 16100623 https://unm.share.worldcat.org/wms/cmnd/circ/bibs/16100623 that contains many 20 and 20 plus characters in its description field: A14419562290 (Description field = Reihe 1 Bd.12 Suppl.)
+*Here is a barcode that contains 21 characters in its description field: A14419562680 (Description field = Reihe 25 Bd.10 Suppl.)
+
+
 ## Upgrading
 If you are upgrading from a version earlier than 3.0 please contact OCLC Developer Network to ensure a default user associated with the WSKey you are using for this application. 
 
@@ -64,6 +70,7 @@ Launch `yoursite.com/labeling` and scan in a barcode and indicate whether a pock
 
 In the preview screen, click anywhere on the call number to edit it if needed. Make your changes and click OK.
 
+Barcode: A14427790132
 ![Editing](img/example2.png)
 
 Select "Laser Printer" or any other config that you've added. Click "Print Labels". A PDF will be generated. Press Ctrl + P to send the PDF to your printer.

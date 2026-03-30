@@ -13,28 +13,33 @@ $page_title = 'ILS Labeling';
 */
 $labelStartOptions = 12;
 
-if (defined('WSKEY') === FALSE) {
-    define('WSKEY', 'Your WSKey');
+// New Metadata API configuration (replaces collection management)
+if (defined("METADATAKEY") === FALSE)
+{
+  define('METADATAKEY', 'your metadata key');
+}
+if (defined("METADATASECRET") === FALSE)
+{
+  define('METADATASECRET', 'your metadata secret');
 }
 
-if (defined('BIBKEY') === FALSE) {
-    define('BIBKEY', 'Your BIBKey. Use WSKey unless told otherwise');
+// used in quicklabels: used to look up an item by its barcode 
+if (defined('BARCODEURL') === FALSE) {
+  define('BARCODEURL', 'https://metadata.api.oclc.org/worldcat/search/my-holdings?barcode=');
 }
 
-if (defined('SECRET') === FALSE) {
-    define('SECRET', 'Your Secret pass');
+// used in quicklabels: fetches the bib information in marcxml for pocket label generation
+if (defined('BIBURL') === FALSE) {
+  define('BIBURL', 'https://metadata.api.oclc.org/worldcat/manage/bibs/');
+}
+
+// used in quicklabels; needed to fetch the LHR extra info
+if (defined('LHRURL') === FALSE) {
+  define('LHRURL', 'https://metadata.api.oclc.org/worldcat/manage/lhrs/');
 }
 
 if (isset($inst_id) === FALSE) {
     $inst_id = 'Your InstitutionID/Registry ID';
-}
-
-if (defined('URL') === FALSE) {
-    define('URL', 'https://circ.{your datacenter}.worldcat.org/LHR');
-}
-
-if (defined('BIBURL') === FALSE) {
-    define('BIBURL', 'http://www.worldcat.org/webservices/catalog/content');
 }
 
 if (defined('METHOD') === FALSE) {
