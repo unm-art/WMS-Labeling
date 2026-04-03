@@ -365,9 +365,17 @@ function _callnumHandleType($callnum, $barcode, $entry, $client, $metadataToken)
  */
 function _callnumHandleScheme($callnum, $scheme)
 {
-
 	// handle based on the scheme.
-	if ($scheme == "LIBRARY_OF_CONGRESS" || $scheme == "UNKNOWN") {
+	if ($scheme == "DEWEY_DECIMAL") {
+		// If Dewey, split on the decimal if the Dewey string is more than 6 digits
+		// If more than 6 numbers in the number after the cutter, put the decimal on a new line
+		$f = strcspn($callnum, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+		if ($f > 7) {
+			$deweyparts = explode(".", $callnum);
+			$newcallnum = $deweyparts[0] . "." . " " . $deweyparts[1];
+			$callnum = $newcallnum;
+		}
+	} elseif ($scheme == "LIBRARY_OF_CONGRESS" || $scheme == "UNKNOWN" || $scheme == "Library of Congress classification") {
 		// Ensure space before cutters beginning with decimal
 		$d = strcspn($callnum, ".");
 		if (($d > 0) && !is_numeric(substr($callnum, $d + 1, 1)) && (substr($callnum, $d - 1, 1) != ' ')) {
@@ -386,16 +394,28 @@ function _callnumHandleScheme($callnum, $scheme)
 			$newcallnum = substr($callnum, 0, $c) . " " . substr($callnum, $c);
 			$callnum = $newcallnum;
 		}
-	} elseif ($scheme == "DEWEY_DECIMAL") {
-		// If Dewey, split on the decimal if the Dewey string is more than 6 digits
-		// If more than 6 numbers in the number after the cutter, put the decimal on a new line
-		$f = strcspn($callnum, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-		if ($f > 7) {
-			$deweyparts = explode(".", $callnum);
-			$newcallnum = $deweyparts[0] . "." . " " . $deweyparts[1];
+	} else {
+		// Ensure space before cutters beginning with decimal
+		// TODO: Add error handling
+		$d = strcspn($callnum, ".");
+		if (($d > 0) && !is_numeric(substr($callnum, $d + 1, 1)) && (substr($callnum, $d - 1, 1) != ' ')) {
+			$newcallnum = substr($callnum, 0, $d) . " " . substr($callnum, $d);
+			$callnum = $newcallnum;
+		}
+		// Ensure space before second cutter
+		$e = strcspn($callnum, ".", $d);
+		if (($e > 0) && !is_numeric(substr($callnum, $d + $e + 1, 1)) && (substr($callnum, $d + $e - 1, 1) != ' ')) {
+			$newcallnum = substr($callnum, 0, $d + $e) . " " . substr($callnum, $d + $e);
+			$callnum = $newcallnum;
+		}
+		// Ensure space between class number's letters and numbers
+		$c = strcspn($callnum, "0123456789");
+		if (($c > 0) && (substr($callnum, $c - 1, 1) != ' ')) {
+			$newcallnum = substr($callnum, 0, $c) . " " . substr($callnum, $c);
 			$callnum = $newcallnum;
 		}
 	}
+
 	return $callnum;
 }
 
@@ -407,7 +427,6 @@ function parseCallnum($entry, $barcode, $client, $metadataToken)
 	// load in relevant parts from the entry
 	$scheme = $entry["callNumber"]['shelvingScheme'] ?? "UNKNOWN";
 	$callnum = $entry['callNumber']['displayCallNumber'] ?? "";
-
 
 	// Add extra space to any callnumbers with more than one period
 	if (substr_count($callnum, ".") > 1) {
