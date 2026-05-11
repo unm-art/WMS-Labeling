@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -27,7 +27,7 @@
 
 <div class="header-container">
   <header class="wrapper clearfix">
-    <img id="logo" src="<?php echo $base_url ?>/img/ul_logo.png" />
+    <img id="logo" src="<?php echo $base_url ?>/img/ul_logo.png" alt="UNM University Libraries Logo"/>
     <h1 class="title"><?php echo $site_title ?></h1>
   </header>
   <div class="nav-container">
@@ -38,5 +38,5 @@
     </nav>
   </div>
 </div>
-<div class="main-container">
+<main class="main-container">
   <div id="main_content" class="main wrapper clearfix">
