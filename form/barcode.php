@@ -38,7 +38,7 @@ include(__DIR__ . '/../inc/header.php') ;
                     <table id="barcodes_table">
                         <thead>
                         <tr>
-                            <th>Barcode No.</th><th>Pocket Label?</th>
+                            <th id="labelbarcode">Barcode No.</th><th id="labelpocket">Pocket Label?</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -47,10 +47,10 @@ include(__DIR__ . '/../inc/header.php') ;
                             ?>
                             <tr>
                                 <td>
-                                    <input type="text" name="barcodes[]" class="barcode_input" value="" <?php if ($i == 0) echo "autofocus"; ?>>
+                                    <input type="text" name="barcodes[]" class="barcode_input" value="" aria-labelledby="labelbarcode" <?php if ($i == 0) echo "autofocus"; ?>>
                                 </td>
                                 <td>
-                                    <input type="checkbox" name="print_pocket_label_cb" class="print_pocket_box">
+                                    <input type="checkbox" name="print_pocket_label_cb" class="print_pocket_box" aria-labelledby="labelpocket">
                                     <input type="hidden" value="0" name="print_pocket_label[]">
                                 </td>
                             </tr>
