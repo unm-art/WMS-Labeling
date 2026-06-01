@@ -185,8 +185,8 @@ if ($printCount > 0) {
     <form id="print_area_form">
         <div class="print-area">
             <div class="icon"><button id="print_button" type="submit"><img src="../img/icon-print.png" /><br />Print
-                    Labels</button></div>
-            <div>
+            Labels</button></div>
+            <div id="printer-options">
                 <label><input type="radio" name="printer" value="dot_matrix" id="dot_matrix" /> Okidata Dot Matrix (IE Only)</label><br />
                 <label><input type="radio" name="printer" value="laser" id="laser" /> Laser Printer (IE/Chrome Only)</label><br />
                 <label><input type="radio" name="printer" value="laser_old" id="laser_old" /> Old Laser Layout (IE/Chrome Only)</label><br />
@@ -194,8 +194,9 @@ if ($printCount > 0) {
             </div>
         </div>
     </form>
-
-
+    
+    
+    <!-- TODO JS snippet to dump and read from session to auto select a previously selected option -->
     <script>
         $(document).ready(function() {
             function setPrinterDisplay(printer) {
@@ -233,11 +234,18 @@ if ($printCount > 0) {
     <?php echo $labelPage ?>
 
     <script>
-        var printfunc = function() {
+
+        var updatestick = function(){
             printer_css = $("input[name=printer]:checked").val();
 
             // save the printer to set as preferred
             document.cookie = "prefLabelPrinter=" + printer_css + "; expires=Fri, 31 Dec 9999 23:59:59 GMT;"
+            console.log(document.cookie)
+
+            return printer_css
+        }
+        var printfunc = function() {
+            printer_css = updatestick();
 
             switch (printer_css) {
                 case "dymo":
@@ -276,6 +284,10 @@ if ($printCount > 0) {
         $("#print_button").click(function(e) {
             e.preventDefault();
             printfunc();
+        });
+
+        $("#printer-options input").click(function(e) {
+            updatestick();
         });
     </script>
 <?php
