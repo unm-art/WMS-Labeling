@@ -238,7 +238,6 @@ if ($printCount > 0) {
 
             // save the printer to set as preferred
             document.cookie = "prefLabelPrinter=" + printer_css + "; expires=Fri, 31 Dec 9999 23:59:59 GMT;"
-            console.log(document.cookie)
 
             return printer_css
         }
