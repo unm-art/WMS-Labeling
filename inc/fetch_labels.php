@@ -195,8 +195,6 @@ if ($printCount > 0) {
         </div>
     </form>
     
-    
-    <!-- TODO JS snippet to dump and read from session to auto select a previously selected option -->
     <script>
         $(document).ready(function() {
             function setPrinterDisplay(printer) {
