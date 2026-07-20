@@ -591,7 +591,7 @@ function quicklabels($nums, $accessToken, $metadataToken, $title_p = "0")
 		$location = $shelving;
 		$c = strcspn($location, ":");
 		$location = substr($location, 0, $c);
-		$location_full = $shelf_loc[(string)$branch][(string)$location];
+		$location_full = $shelf_loc[(string)$branch][(string)$location] ?? "";
 
 		// removes extra space after location <br />
 		if ($location_full == "") {
