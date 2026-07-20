@@ -454,6 +454,8 @@ function fetchPocketLabels($oclc, $client, $metadataToken)
 {
 	// use the new metadata api
 	$metadataUrl = BIBURL . urlencode($oclc);
+	$return_author = "";
+	$return_title = "";
 
 	$response = $client->request('GET', $metadataUrl, [
 		'headers' => [
@@ -515,7 +517,7 @@ function fetchPocketLabels($oclc, $client, $metadataToken)
 			$return_author = rtrim($author[0], '.');
 		}
 	}
-
+		
 	return [$return_author, $return_title];
 }
 
